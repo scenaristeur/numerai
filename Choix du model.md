@@ -162,3 +162,10 @@ check : Il y a très longtemps, dans un coin obscur et lointain de la galaxie, v
 check : la population humaine. Les habitants d'Edenia étaient une race intelligente et pacifique qui s'occupait des sciences et de la philosophie. Ils avaient le don de communiquer télépathiquement avec leurs congénères et avec la nature entière. Le peuple d'Edenia avait mis au point un système de gouvernement harmonieux et respectait à la lettre le principe de non-violence. Cependant, une nuit (Henk717/airochronos-33B) 
 check : étrange, un phénomène inexplicable se produisit sur Edenia. Tout le monde s'endormait tranquillement dans leurs maisons rustiques et à leur réveil, ils découvrirent qu'ils avaient des pouvoirs extraordinaires ! Les plus âgés pouvaient voler, les jeunes pousseraient des branches et des feuilles de leur dos et les enfants pourraient communiquer avec les (aphrodite/Undi95/Emerhyst-20B) 
 */
+
+
+# A exclure
+incohérent 
+check : Je veux aller au vaisseau spatial *** ### 2) Le hackathon interplanétaire est commençé... Les adolescents se mettent ensemble dans leur chambre, quelques couches distanciée entre eux, une table à dos et cinq chaises. Dans la limite du froid, il semble assez chaud sur la planète. Un appareil a (KoboldAI/OPT-13B-Erebus) 
+
+check : Tu dois faire du sport avec Fred, Amélie, Julie et Tong. Te rendrai compte que la beauté même de ton corps est un beau bien. Tu devras donner un coup de main aux Jeunes gens pour leur apprendre à s'exercer physiquement et quand il sera temps, on allera au hackathon. Ne lâche rien, ne te fatigue pas trop (KoboldAI/OPT-13B-Erebus) 

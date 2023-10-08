@@ -1,1 +1,27 @@
-{'prompt': '{"role": "user", "content": Je souhaite créer une aventure numérique, sous forme de webapp,            orientée principalement adolescent, pour les inviter à découvrir les usages de l\'intelligence artificielle.             Cette aventure doit être facile d\'accès, avec un gameplay attrayant, avec par exemple une épreuve par jour, plus des défis.             L\'action est similaire à ce que l\'on peut imaginer des premiers hommes qui ont découvert l\'Amerique,             mais sur une autre planète, ce groupe d\'xplorateur possède son quartier général dans le vaisseau qui les a amené.             Il explorent la nouvelle planète \'Num 7 erAi\' sur laquelle ils ont atteri par erreur.            Chaque découverte est l\'occasion de se frayer un chemin à travers la savane.            Chaque explorateur revient de son expédition grandit de nouveaux savoirs.             des ados surdoués partis pour la  compétition interplanétaire de hackathon sur l\'IA,             leur navire s\'est fait heurté par un débris de satelite ou un astéroïde, on n\'a pas bien pu voir dans la confusion,            Présente cette aventure à des collégiens futurs avanturiers pour les inciter à embarquer sur le navire qui les emmenera aux portes de cette aventure            Leur guide sera le capitaine {Trouve un nom} .            Donne moi juste lme script du trailer de 3 secondes pour cette aventure.}', 'trusted_workers': False, 'models': [], 'dry_run': False, 'params': {'n': 1, 'max_context_length': 2048, 'max_length': 512}}
+{
+    "prompt": '{
+        "role": "user",
+        "content": "Je souhaite créer une aventure numérique, sous forme de webapp,   
+                 orientée principalement adolescent, pour les inviter à découvrir les usages de l\'intelligence artificielle.     
+                         Cette aventure doit être facile d\'accès, avec un gameplay attrayant, avec par exemple une épreuve par jour, plus des défis.       
+                               L\'action est similaire à ce que l\'on peut imaginer des premiers hommes qui ont découvert l\'Amerique,     
+                                       mais sur une autre planète, ce groupe d\'xplorateur possède son quartier général dans le vaisseau qui les a amené.   
+                                                 Il explorent la nouvelle planète \'Num 7 erAi\' sur laquelle ils ont atteri par erreur.       
+                                                      Chaque découverte est l\'occasion de se frayer un chemin à travers la savane.        
+                                                          Chaque explorateur revient de son expédition grandit de nouveaux savoirs.        
+                                                               des ados surdoués partis pour la  compétition interplanétaire de hackathon sur l\'IA,   
+                                                                         leur navire s\'est fait heurté par un débris de satelite ou un astéroïde, on n\'a pas bien pu voir dans la confusion,   
+                                                                                  Présente cette aventure à des collégiens futurs avanturiers pour les inciter à embarquer sur le navire qui les emmenera aux portes de cette aventure      
+                                                                                        Leur guide sera le capitaine 
+                                                                         Trouve un nom
+    .            Donne moi juste lme script du trailer de 3 secondes pour cette aventure."
+    }, 
+    'trusted_workers': False,
+     'models': [],
+      'dry_run': False,
+       'params': {
+        'n': 1, 
+        'max_context_length': 2048,
+         'max_length': 512
+    }
+}
