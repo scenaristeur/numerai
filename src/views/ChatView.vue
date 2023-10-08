@@ -1,7 +1,7 @@
 <template>
     <div>
-        <input type="radio" v-model="lang" value="fr" checked />Français
-        <input type="radio" v-model="lang" value="en" />English
+        <!-- <input type="radio" v-model="lang" value="fr" checked />Français
+        <input type="radio" v-model="lang" value="en" />English -->
         Prénom: <input ref="prenom" v-model="prenom" placeholder="Ton prénom" />
         <input type="radio" v-model="sexe" value="garçon" checked />Garçon
         <input type="radio" v-model="sexe" value="fille" />Fille
