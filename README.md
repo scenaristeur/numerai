@@ -18,6 +18,7 @@ voir le fichier Choix_du model.md
  - https://js.langchain.com/docs/modules/data_connection/
 
 # GH-pages hosting
+- old méthod : https://dev.to/shashannkbawa/deploying-vite-app-to-github-pages-3ane
 - https://vitejs.dev/guide/static-deploy.html#github-pages
 
 ## Recommended IDE Setup

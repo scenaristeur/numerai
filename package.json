@@ -10,7 +10,6 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@zeldafan0225/ai_horde": "^5.0.8",
     "axios": "^1.5.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
@@ -22,6 +21,7 @@
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "prettier": "^3.0.3",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vite-plugin-pwa": "^0.16.5"
   }
 }
