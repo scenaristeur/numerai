@@ -1,26 +1,32 @@
 <template>
     <div>
-        <input ref="prenom" v-model="prenom" placeholder="Ton prénom" />
+        <input type="radio" v-model="lang" value="fr" checked />Français
+        <input type="radio" v-model="lang" value="en" />English
+        Prénom: <input ref="prenom" v-model="prenom" placeholder="Ton prénom" />
         <input type="radio" v-model="sexe" value="garçon" checked />Garçon
         <input type="radio" v-model="sexe" value="fille" />Fille
+        <a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api key</a>
+        <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
 
 
         <br>
-        <textarea ref="input" v-model="input" cols="40" rows="6" autofocus placeholder="communiquer avec l'IA"
-            v-on:keyup.enter="transmettre" />
+        <textarea ref="input" v-model="input" cols="80" rows="6" autofocus placeholder="communiquer avec l'IA"
+            v-on:keyup.enter="transmettre" /><br>
         <button @click="transmettre">Envoyer</button>
-        <button ref="continuer" @click="continuer" disabled>Continue !</button><br>
+        <button ref="continue" @click="continuer" disabled>Continue !</button><br>
         <button ref="revenir" disabled alt="remonter le temps">&lt;&lt;</button>
         <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button>
-        <button @click="save">Sauver</button>
 
         <!-- style="display:block;width:120px; height:30px;"-->
-        <button onclick="document.getElementById('getFile').click()">Charger</button>
-        <input id="getFile" style="visibility:hidden;" type="file" @change="load" />
+
         <hr>
         {{ log }}<br>
         check : {{ check }}
         <hr>
+        <button @click="save">Sauver</button>
+
+        <button onclick="document.getElementById('getFile').click()">Charger</button>
+        <input id="getFile" style="visibility:hidden;" type="file" @change="load" />
         <!-- Bouton continue, continue pendant X fois
         {options: imaginatif, sérieux, créatif...} / recommence, cette réponse est incohérente -> supprime de la mémoire,
         retourne à un stade ancien de la mémoire.
@@ -34,7 +40,6 @@
 import axios from "axios";
 // import ProgressBar from "./ProgressBar.vue";
 
-
 export default {
     name: "ChatView",
 
@@ -42,14 +47,17 @@ export default {
         return {
             input: "Bonjour, y'a quelqu'un ? je suis où?",
             log: "Lors du crash du vaisseau spatial, tu as été.e éjecté.e. Tu te reveilles seul.e allongé.e dans un endroit inconnu, surnaturel. Tu ne vois tes coéquipiers nulle part. Tu sens une présence près de toi, presque en toi... Tu tentes de t'adresser à elle...",
-            horde: "https://aihorde.net",
-            client_agent: "cli_request_scribe.py:1.1.0:(discord)db0#1625",
-            api_key: "0000000000",
+            horde_url: "https://aihorde.net/api/v2/",
+            // secours horde_url: 'https://horde.koboldai.net/api/v2/',
+            client_agent: "numerai:1.1.0:github.com/scenaristeur/numerai",
+            horde_api_key: import.meta.env.VITE_HORDE_API_KEY || "0000000000",
             check: null,
             memory: {},
             prenom: "Camille",
-            sexe: "",
-            ordered_memory: []
+            sexe: "garçon",
+            lang: "fr",
+            ordered_memory: [],
+
         };
     },
     methods: {
@@ -108,17 +116,17 @@ export default {
                 this.check = chk.data;
             }
             this.log = ""
-            this.$refs.continuer.disabled = false
+            this.$refs.continue.disabled = false
             this.$refs.input.focus()
         },
         async post(input) {
-
+            const app = this
             let message = {
                 "prompt": this.promptFromMemory(input),
                 "params": {
                     "n": 1,
-                    "max_context_length": 10240,
-                    "max_length": 100,
+                    "max_context_length": 1024,
+                    "max_length": 200,
                     "rep_pen": 1.1,
                     "temperature": 0.7,
                     "top_p": 0.92,
@@ -133,6 +141,8 @@ export default {
                     "stop": "."
                 },
                 "models": [
+                    'koboldcpp/Mistral-11B-Airoboros-RP-v1.q8_0'
+                    // "aphrodite/PygmalionAI/mythalion-13b"
                     //"aphrodite/TheBloke/MythoMax-L2-13B-AWQ"
                     // "Gryphe/MythoMax-L2-13b",
                     // "koboldcpp/MythoMax-L2-13b"
@@ -141,15 +151,15 @@ export default {
             };
             const headers = {
                 "Accept": "application/json",
-                'apikey': '0000000000',
-                'Client-Agent': 'cli_request_scribe.py:1.1.0:(discord)db0#1625',
+                'apikey': this.horde_api_key,
+                'Client-Agent': this.client_agent,
                 'Content-Type': 'application/json'
             };
             let start = Date.now();
+
             let response = await axios({
                 method: 'post',
-                url: 'https://horde.koboldai.net/api/v2/generate/text/async',
-                // url: 'https://aihorde.net/api/v2/generate/text/async',
+                url: app.horde_url + 'generate/text/async',
                 data: message,
                 headers: headers
             });
@@ -158,12 +168,11 @@ export default {
             let timer;
             console.log("MEM", this.memory);
             let done = false;
-            let app = this;
+
             timer = await setInterval(async function () {
                 let check = await axios({
                     method: 'get',
-                    url: 'https://horde.koboldai.net/api/v2/generate/text/status/' + response.data.id,
-                    //url: 'https://aihorde.net/api/v2/generate/text/status/' + response.data.id,
+                    url: app.horde_url + 'generate/text/status/' + response.data.id,
                     // data: message,
                     headers: headers
                 });
@@ -244,8 +253,8 @@ export default {
             // }'
         },
         promptFromMemory(input) {
-
-            let prompt = "\n### SYSTEM: Tu es une planète intelligente et tu dois répondre comme tel.\
+            let prompts = {
+                fr: "\n### SYSTEM: Ton nom est NumerAi. Tu es une planète intelligente et tu dois répondre comme tel.\
             Tes réponses doivent se terminer par un point et tu dois faire des phrases entières.\
             Arrête-toi à la fin de la réponse, ta réponse ne doit pas inclure de nouvelle instruction (### Instruction:).\
             Tu réponds à "+ this.prenom + " qui est un/une " + this.sexe + " et qui a été ejecté.e du vaisseau pendant le crash, \
@@ -267,7 +276,33 @@ export default {
             elle est en train, de disparaître et tu n'arrives pas à trouver pourquoi. \
             S'il ne t'aide pas, tu ne pourras pas toi-même l'aider. \
             Les paroles de "+ this.prenom + " sont précédées de '### Instruction:' et les tiennes sont précédées de '### Response:'\
-            ";
+            ",
+
+                en: "\n### SYSTEM: Your name is NumerAi. You are an intelligent planet and you must respond as such.\
+             Your answers must end with a period and you must use full sentences.\
+             Stop at the end of the answer, your answer must not include a new instruction (### Instruction:).\
+             You respond to "+ this.prenom + " who is a " + this.sexe + " and who was ejected from the ship during the crash, \
+             he/she is lying somewhere on your planet, it's up to you to choose the place, he/she is the main character of the story. \
+             You must describe actions and situations in a romantic and epic way.\
+             You have the ability to permeate any being and anything in your proximity, like a virus in the air.\
+             A spaceship left from Earth and crashed on your ground. It is piloted by Captain Burk, who was taking 6 young teenagers on their way to \
+             on a distant planet to participate in an interplanetary hackathon. \
+             "+ this.prenom + " is one of these teenagers and gives you instructions.\
+             The other teenagers are Julie and Lucie, two twins who look absolutely nothing alike, Tong, an Asian, \
+             Fred, a smart sportsman, Amélie.\
+             "+ this.prenom + " seems to be in love with one of them and you will have to find out who. " + this.prenom + " is worried about his friends. \
+             You must help him look for them as well as the captain so that they can support you in your misadventures. \
+             He gradually becomes aware that you have integrated all his cells as well as those of his comrades, and all the circuits of the ship.\
+             Help him get his team back on track in time for the hackathon.\
+             But for that, he will first have to help you solve problems that only he can solve with the help of his friends,\
+             To do this, he will have to discover the hidden secrets of artificial intelligence, because before leaving, \
+             This young human must help you solve a problem. Your main problem is that you are losing your long-term memory,\
+             She's disappearing and you can't figure out why. \
+             If he doesn't help you, you won't be able to help him yourself. \
+             The words of "+ this.prenom + " are preceded by '### Instruction:' and yours are preceded by '### Response:'\
+             "
+            }
+            let prompt = prompts[this.lang]
 
             /*options à tester
                         Ta faune et ta flore sont luxuriantes.\
