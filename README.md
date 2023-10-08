@@ -12,6 +12,14 @@ On ne peut pas communiquer directement avec la fille, il faut passer par l'oisea
 https://lite.koboldai.net/#
 voir le fichier Choix_du model.md
 
+
+# todo
+ long term Memory
+ - https://js.langchain.com/docs/modules/data_connection/
+
+# GH-pages hosting
+- https://vitejs.dev/guide/static-deploy.html#github-pages
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
