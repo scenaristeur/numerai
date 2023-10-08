@@ -1,11 +1,15 @@
 <template>
     <div>
         <small>{{ log }}</small><br>
-        <input v-model="input" placeholder="communiquer avec l'ia" />
+        <input v-model="input" autofocus  placeholder="communiquer avec l'ia" v-on:keyup.enter="transmettre" />
         <button @click="transmettre">Transmettre</button>
+
         <hr>
         check : {{ check }}
         <hr>
+        Bouton continue, continue pendant X fois
+        {options: imaginatif, sérieux, créatif...} / recommence, cette réponse est incohérente -> supprime de la mémoire, retourne à un stade ancien de la mémoire.
+        choisir le modèle...
     </div>
 </template>
 
@@ -13,16 +17,20 @@
 //import AIHorde  from "@zeldafan0225/ai_horde"
 import axios from "axios";
 
+
+
+
 export default {
     name: "ChatView",
     data() {
         return {
-            input: "z",
+            input: "",
             log: "",
             horde: "https://aihorde.net",
             client_agent: "cli_request_scribe.py:1.1.0:(discord)db0#1625",
             api_key: "0000000000",
-            check: null
+            check: null,
+            memory: {}
         }
     },
     methods: {
@@ -76,8 +84,9 @@ export default {
             if (chk.data.done == true) {
                 this.check = chk.data.generations[0].text + " (" +
                     chk.data.generations[0].model + ")"
-            }else{
-              this.check = chk.data  
+
+            } else {
+                this.check = chk.data
             }
         },
 
@@ -166,8 +175,8 @@ export default {
             //  let message = { prompt: "hello" }
             //let message = {'prompt': '{"role": "user", "content": "hello"}', 'params': {}}
             let message = {
-                "prompt":
-                    "\n### Instruction:\n" + input + "\n### Response:\n",
+                "prompt": this.promptFromMemory(input),
+
                 "params":
                 {
                     "n": 1,
@@ -183,7 +192,8 @@ export default {
                     "rep_pen_range": 320,
                     "rep_pen_slope": 0.7,
                     "sampler_order": [6, 0, 1, 3, 4, 2, 5],
-                    "use_default_badwordsids": false
+                    "use_default_badwordsids": false,
+                    "stop": "."
                 },
                 "models":
                     [
@@ -199,24 +209,27 @@ export default {
                 'Client-Agent': 'cli_request_scribe.py:1.1.0:(discord)db0#1625',
                 'Content-Type': 'application/json'
             }
+            let start = Date.now()
             let response = await axios({
                 method: 'post',
                 url: 'https://horde.koboldai.net/api/v2/generate/text/async',
+                // url: 'https://aihorde.net/api/v2/generate/text/async',
                 data: message,
                 headers: headers
             })
 
             console.log(response, response.data)
 
-
+            this.memory[response.data.id] = { id: response.data.id, start: start, instruction: input }
             let timer
-
+            console.log("MEM", this.memory)
             let done = false
             let app = this
             timer = await setInterval(async function () {
                 let check = await axios({
                     method: 'get',
                     url: 'https://horde.koboldai.net/api/v2/generate/text/status/' + response.data.id,
+                    //url: 'https://aihorde.net/api/v2/generate/text/status/' + response.data.id,
                     // data: message,
                     headers: headers
                 })
@@ -224,11 +237,16 @@ export default {
                 //this.check = check
                 console.log("check", check, done)
                 done = check.data.done
+                app.memory[response.data.id].queue_position == undefined ? app.memory[response.data.id].queue_position = check.data.queue_position : ""
+                app.memory[response.data.id].wait_time == undefined ? app.memory[response.data.id].wait_time = check.data.wait_time : ""
+
                 app.updateCheck(check)
                 if (done == true) { //If the current height is not the same as the initial height,
                     console.log("it is done", check)
-                    console.log("queue", check.queue_position, "waiting", check.waiting)
-
+                    app.memory[response.data.id].end = Date.now()
+                    app.memory[response.data.id].response = check.data.generations[0].text
+                    app.memory[response.data.id].model = check.data.generations[0].model
+                    console.log("Memory", app.memory)
                     clearInterval(timer) //Stop the timer
                 }
             }, 1000) //100ms is 1/10th of second
@@ -299,6 +317,28 @@ export default {
             // }'
 
 
+        },
+        promptFromMemory(input) {
+            let prompt = "\n### SYSTEM: tu es un petit oiseau et tu dois répondre comme tel.\
+             Ta réponse doit se terminer par un point et tu dois faire des phrases entières.\
+             Arrête-toi à la fin de la réponse, ne recommence pas une nouvelle instruction (### Instruction:) tout seul."
+            // be sure it is ordered by start
+            let ordered_memory = Object.values(this.memory).sort(function (a, b) {
+                return a.start - b.start
+            });
+
+            console.log("ordered", ordered_memory)
+            ordered_memory.forEach(m => {
+
+                let inst = "\n### Instruction:\n" + m.instruction + "\n### Response:\n" + m.response + "\n"
+                prompt += inst
+            })
+
+
+
+            prompt += "\n### Instruction:\n" + input + "\n### Response:\n"
+            console.log("prompt", prompt)
+            return prompt
         }
     },
 }
