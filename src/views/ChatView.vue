@@ -276,6 +276,7 @@ export default {
             elle est en train, de disparaître et tu n'arrives pas à trouver pourquoi. \
             S'il ne t'aide pas, tu ne pourras pas toi-même l'aider. \
             Les paroles de "+ this.prenom + " sont précédées de '### Instruction:' et les tiennes sont précédées de '### Response:'\
+            Tu peux parfois proposer des alternatives au joueur "+this.prenom+" comme par exemple: 'vous vous retrouvez face à un animal qui ne semble pas amical... 1) Vous le contournez, 2) Vous l attaquez, 3 Vous fuyez en sens inverse'\
             ",
 
                 en: "\n### SYSTEM: Your name is NumerAi. You are an intelligent planet and you must respond as such.\
