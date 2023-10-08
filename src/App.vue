@@ -1,18 +1,19 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import HistoryGalery from './views/HistoryGalery.vue';
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
+    <HistoryGalery />
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Planète Numerai" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Accueil</RouterLink>
+        <RouterLink to="/about">Memoire</RouterLink>
       </nav>
     </div>
   </header>

@@ -12,51 +12,41 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>Documentation</template>
-
-    Vue’s
-    <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
-    provides you with all information you need to get started.
+    <template #heading>Le contexte</template>
+    A la suite d'un malencontreux accident, vous vous retrouverez sur la planète Num 7 erAi,
+    une terre inexplorée où l'intelligence artificielle règne en maître.
+    Votre objectif sera de découvrir les secrets cachés de cette planète
+    afin de permettre à votre équipe de participer au hackathon interplanétaire sur l'IA.
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
       <ToolingIcon />
     </template>
-    <template #heading>Tooling</template>
+    <template #heading>L'aventure</template>
 
-    This project is served and bundled with
-    <a href="https://vitejs.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
-    recommended IDE setup is
-    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a> +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank" rel="noopener">Volar</a>. If
-    you need to test your components and web pages, check out
-    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a> and
-    <a href="https://on.cypress.io/component" target="_blank" rel="noopener"
-      >Cypress Component Testing</a
-    >.
+    Ne manquez pas cette occasion incroyable de vous lancer dans l'aventure du siècle et de découvrir les merveilles de
+    l'intelligence artificielle. Embarquez dès maintenant dans la navette spatiale et préparez-vous à être fasciné par les
+    trésors cachés de Num 7 erAi ! 🌏🚀
 
-    <br />
+    <!-- <br />
 
-    More instructions are available in <code>README.md</code>.
+    More instructions are available in <code>README.md</code>. -->
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
       <EcosystemIcon />
     </template>
-    <template #heading>Ecosystem</template>
+    <template #heading>La collaboration</template>
 
-    Get official tools and libraries for your project:
-    <a href="https://pinia.vuejs.org/" target="_blank" rel="noopener">Pinia</a>,
-    <a href="https://router.vuejs.org/" target="_blank" rel="noopener">Vue Router</a>,
-    <a href="https://test-utils.vuejs.org/" target="_blank" rel="noopener">Vue Test Utils</a>, and
-    <a href="https://github.com/vuejs/devtools" target="_blank" rel="noopener">Vue Dev Tools</a>. If
-    you need more resources, we suggest paying
-    <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
-    a visit.
+    N'hésitez pas à partager cette aventure avec vos amis et à les inviter à rejoindre notre communauté d'explorateurs
+    d'AI.
+    Nous sommes ravis de vous accueillir dans ce monde unique et poussif, où les limites sont celles que vous vous
+    donnerez.
+
   </WelcomeItem>
-
+  <!-- 
   <WelcomeItem>
     <template #icon>
       <CommunityIcon />
@@ -66,9 +56,8 @@ import SupportIcon from './icons/IconSupport.vue'
     Got stuck? Ask your question on
     <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>, our official
     Discord server, or
-    <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener"
-      >StackOverflow</a
-    >. You should also subscribe to
+    <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener">StackOverflow</a>. You
+    should also subscribe to
     <a href="https://news.vuejs.org" target="_blank" rel="noopener">our mailing list</a> and follow
     the official
     <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
@@ -84,5 +73,5 @@ import SupportIcon from './icons/IconSupport.vue'
     As an independent project, Vue relies on community backing for its sustainability. You can help
     us by
     <a href="https://vuejs.org/sponsor/" target="_blank" rel="noopener">becoming a sponsor</a>.
-  </WelcomeItem>
+  </WelcomeItem> -->
 </template>
