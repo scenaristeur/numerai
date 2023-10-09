@@ -21,6 +21,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
   <RouterView />
 </template>
 
+
 <style scoped>
 header {
   line-height: 1.5;

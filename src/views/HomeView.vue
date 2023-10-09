@@ -5,7 +5,7 @@ import ChatView from '@/views/ChatView.vue'
 
 <template>
   <main>
-    <ChatView />
     <TheWelcome />
+    <ChatView />
   </main>
 </template>

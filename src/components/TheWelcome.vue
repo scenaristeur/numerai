@@ -13,10 +13,10 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
       <DocumentationIcon />
     </template>
     <template #heading>Le contexte</template>
-    A la suite d'un malencontreux accident, vous vous retrouverez sur la planète Num 7 erAi,
+    A la suite d'un malencontreux accident, tu te retrouveres sur la planète Num 7 erAi,
     une terre inexplorée où l'intelligence artificielle règne en maître.
-    Votre objectif sera de découvrir les secrets cachés de cette planète
-    afin de permettre à votre équipe de participer au hackathon interplanétaire sur l'IA.
+    Ton objectif sera de découvrir les secrets cachés de cette planète
+    afin de permettre à ton équipe de repartir à temps et de participer au hackathon interplanétaire sur l'IA.
   </WelcomeItem>
 
   <WelcomeItem>
@@ -25,8 +25,8 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
     </template>
     <template #heading>L'aventure</template>
 
-    Ne manquez pas cette occasion incroyable de vous lancer dans l'aventure du siècle et de découvrir les merveilles de
-    l'intelligence artificielle. Embarquez dès maintenant dans la navette spatiale et préparez-vous à être fasciné par les
+    Ne manque pas cette occasion incroyable de te lancer dans l'aventure du siècle et de découvrir les merveilles de
+    l'intelligence artificielle. Embarque dès maintenant dans la navette spatiale et prépare-toi à être fasciné par les
     trésors cachés de Num 7 erAi ! 🌏🚀
 
     <!-- <br />
@@ -40,10 +40,11 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
     </template>
     <template #heading>La collaboration</template>
 
-    N'hésitez pas à partager cette aventure avec vos amis et à les inviter à rejoindre notre communauté d'explorateurs
+    N'hésite pas à partager cette aventure avec tes amis pour qu'ils t'aident dans cette aventure et à les inviter à rejoindre notre communauté d'explorateurs
     d'AI.
-    Nous sommes ravis de vous accueillir dans ce monde unique et poussif, où les limites sont celles que vous vous
-    donnerez.
+    Nous sommes ravis de t'accueillir dans ce monde unique et poussif, où les limites sont celles que tu te donneras.
+    <br>
+    <br>
 
   </WelcomeItem>
   <!-- 

@@ -2,36 +2,65 @@
     <div>
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
-        Prénom: <input class="boxsizingBorder" ref="prenom" v-model="prenom" placeholder="Ton prénom" />
-        <input type="radio" v-model="sexe" value="garçon" checked />Garçon
-        <input type="radio" v-model="sexe" value="fille" />Fille
+        Pour commencer, quel est ton prénom? <input class="boxsizingBorder" ref="prenom" v-model="prenom"
+            placeholder="Ton prénom" />
+        Es-tu <input type="radio" v-model="sexe" value="garçon" checked /> un garçon ou
+        <input type="radio" v-model="sexe" value="fille" /> une fille ?
         <br>
-        <a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api key</a>
-        <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
+
+        <hr>
+        <div v-if="messageHistory.length > 0" class="chatArea">
+            <ul class="messages" ref="messages">
+                <li v-for="m of  messageHistory " :key="m.id">
+                    <span v-if="m.isUser == true" class="username">{{ prenom }}</span>
+                    <span v-else class="username">NumerAi</span> :
+                    <span :class="m.isUser == true ? 'usermessage' : 'iamessage'">{{ m.text }}</span>
+
+                </li>
+                <li v-if="status != undefined">
+                    <small style="text-align: center" class="iamessage">
+
+                        <div v-if="status.queue_position">J'intègre tes paroles {{ status.queue_position }}</div>
+                        <div v-if="status.wait_time">Je réfléchis {{ status.wait_time }}</div>
+                        <div v-if="status.waiting">Je sens que ça vient {{ status.waiting }}</div>
+                    </small>
+                </li>
+
+            </ul>
+        </div>
+        <div v-else>Lors du crash du vaisseau spatial, tu as été.e éjecté.e.
+            Tu te reveilles seul.e allongé.e dans un endroit inconnu, surnaturel.
+            Tu ne vois tes coéquipiers nulle part.
+            Tu sens une présence près de toi, presque en toi...
+            Tu tentes de t'adresser à elle...",</div>
 
 
-        <br>
-        <textarea class="boxsizingBorder" ref="input" v-model="input"  rows="6" autofocus
+            
+            <button ref="revenir" disabled alt="remonter le temps">&lt;&lt; retour</button>
+            <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button><br>
+        <!-- <input class="inputMessage" placeholder="Type here..." /> -->
+        <textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus
             placeholder="Comminiquer avec la présence ressentie..." v-on:keyup.enter="transmettre" /><br>
-        <button @click="transmettre">Envoyer</button>
-        <button ref="continue" @click="continuer" disabled>Continue !</button><br>
-        <button ref="revenir" disabled alt="remonter le temps">&lt;&lt;</button>
-        <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button>
+        <div style="text-align:center">
+            <button @click="transmettre" class="btn">Envoyer</button>
+            <button ref="continue" @click="continuer" style="display:none" class="btn">Continue</button>
+        </div>
+
 
         <!-- style="display:block;width:120px; height:30px;"-->
 
-        <hr>
-        {{ log }}<br>
-        status : {{ status }}
-        <hr>
-
-        {{ messageHistory }}
 
 
+        Gestion de la mémoire :
         <button @click="save">Sauver</button>
 
+
+
         <button onclick="document.getElementById('getFile').click()">Charger</button>
-        <input id="getFile" style="visibility:hidden;" type="file" @change="load" />
+        <input id="getFile" style="visibility:hidden;" type="file" @change="load" /><br>
+        Pour générer les messages plus vite, tu peux obtenir une <br><a
+            href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api
+            key</a> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
         <!-- Bouton continue, continue pendant X fois
         {options: imaginatif, sérieux, créatif...} / recommence, cette réponse est incohérente -> supprime de la mémoire,
         retourne à un stade ancien de la mémoire.
@@ -44,6 +73,7 @@
 //import AIHorde  from "@zeldafan0225/ai_horde"
 import axios from "axios";
 // import ProgressBar from "./ProgressBar.vue";
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     name: "ChatView",
@@ -51,7 +81,6 @@ export default {
     data() {
         return {
             input: "Bonjour, y'a quelqu'un ? Où suis-je? Vous êtes qui?",
-            log: "Lors du crash du vaisseau spatial, tu as été.e éjecté.e. Tu te reveilles seul.e allongé.e dans un endroit inconnu, surnaturel. Tu ne vois tes coéquipiers nulle part. Tu sens une présence près de toi, presque en toi... Tu tentes de t'adresser à elle...",
             horde_url: "https://aihorde.net/api/v2/",
             // secours horde_url: 'https://horde.koboldai.net/api/v2/',
             client_agent: "numerai:1.1.0:github.com/scenaristeur/numerai",
@@ -65,7 +94,7 @@ export default {
             messageHistory: [],
             params: {
                 "n": 1,
-                "max_context_length": 1024,
+                "max_context_length": 2048,
                 "max_length": 200,
                 "rep_pen": 1.1,
                 "temperature": 0.7,
@@ -107,16 +136,13 @@ export default {
             if (this.input.trim().length > 0) {
                 let app = this
                 console.log(this.input);
-                this.log = "établissement de la communication...";
-                //this.post(this.input);
                 this.messageHistory.push({
+                    id: uuidv4(),
                     text: this.input,
                     isUser: true,
+                    date: Date.now()
                 });
                 this.input = "";
-
-
-
 
                 let message = {
                     prompt: this.generatePrompt(),
@@ -140,6 +166,8 @@ export default {
                 });
                 console.log(response, response.data);
 
+                app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
                 let timer;
 
                 //let done = false;
@@ -158,11 +186,14 @@ export default {
                     // app.memory[response.data.id].queue_position == undefined ? app.memory[response.data.id].queue_position = check.data.queue_position : "";
                     // app.memory[response.data.id].wait_time == undefined ? app.memory[response.data.id].wait_time = check.data.wait_time : "";
                     app.updateCheck(check);
+                    app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
                     if (check.data.done == true) { //If the current height is not the same as the initial height,
                         if (check.data.generations[0].text.trim().length > 0) {
                             let end = Date.now()
                             app.messageHistory.push({
-                                text: check.data.generations[0].text,
+                                id: uuidv4(),
+                                text: check.data.generations[0].text.replace('[RESPONSE]', '').replace('[/RESPONSE]', '').trim(),
                                 isUser: false,
                                 start: start,
                                 end: end,
@@ -172,6 +203,8 @@ export default {
                                 duration: Math.round((end - start) / 1000)
                             });
                             app.status = null
+                            app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
                         } else {
                             app.status = "Attends, j'ai du mal à me concentrer, je recommence... "
                             app.input = app.messageHistory.pop().text
@@ -223,11 +256,14 @@ export default {
 
 
         generatePrompt() {
-            let system_prompt = `Your name is NumerAi, you are an intelligent planet that speaks ${this.lang} and you must respond as such.
+            let system_prompt = `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
                     You have the ability to permeate everything and anything nearby, like a virus in the air.
                     You respond to ${this.prenom} which is of gender ${this.sexe}.
                     You address yourself directly to ${this.prenom} the protagonist of this story game. ${this.prenom} is lying on the ground, waking up in a fantastic and epic environment.
-                    The ship that ${this.prenom} was in with friends to go to an interplanetary hackathon has just crashed on you, the planet.
+                    The ship that ${this.prenom} was in with friends was on the way particiapte to an interplanetary hackathon has just crashed on you, the planet.
+                    ${this.prenom}'s friends and the capitain Burke are lost on the planet and perharps hurted. You must guide ${this.prenom} and help him/her to find them. 
+                    But before they go back to the hackathon ${this.prenom} must help you to recover your long memory. You only have short memory.
+                    You must describe the action, the environnement, with a lot of details.
                     The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`
@@ -285,8 +321,7 @@ export default {
             else {
                 this.check = chk.data;
             }
-            this.log = ""
-            this.$refs.continue.disabled = false
+            this.$refs.continue.style.display = "inline-block"
             this.$refs.input.focus()
         },
         // async post(input) {
@@ -516,10 +551,104 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+    font-family: "Quartz";
+    src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype");
+}
+
 .boxsizingBorder {
     width: 100%;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/* Messages */
+
+.chatArea {
+    height: 400px;
+    /*100%;*/
+    /*padding-bottom: 60px;*/
+    background-color: rgb(195, 236, 198);
+}
+
+.messages {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 10px 20px 10px 20px;
+    list-style-type: none;
+    /* Remove bullets */
+    padding: 20;
+    /* Remove padding */
+    margin: 20;
+    /* Remove margins */
+
+}
+
+.usermessage {
+    color: gray;
+    font-family: "Quartz-Regular";
+    src: local("Quartz-Regular"), url(@/fonts/Quartz-Regular.otf) format("truetype");
+}
+
+.iamessage {
+    font-family: "Quartz";
+    src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype");
+    font-size: 15px;
+    font-weight: bold;
+    background-color: rgb(228, 230, 125, 0.5);
+}
+
+.message.typing .messageBody {
+    color: gray;
+}
+
+.username {
+    font-weight: 500;
+    overflow: hidden;
+    padding-right: 5px;
+    text-align: right;
+}
+
+/* Input */
+
+/*.inputMessage {
+    border: 10px solid #000;
+    bottom: 0;
+    height: 60px;
+    left: 0;
+    outline: none;
+    padding-left: 10px;
+    position: absolute;
+    right: 0;
+    width: 100%;
+} */
+
+/* Adding some basic styling to button */
+
+.btn {
+    margin: 10px 2px 10px 2px;
+    text-decoration: none;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    background-color: green;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    cursor: pointer;
+    outline: none;
+    transition: 0.2s all;
+
+}
+
+/* Adding transformation when the button is active */
+
+.btn:active {
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
 }
 </style>

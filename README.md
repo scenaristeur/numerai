@@ -6,6 +6,7 @@ Créé toi même ton aventure !
 - [ ] il faut orienter l'IA à décrire l'environnement. Voir l'exemple "Les 7 fragments"
 - [ ] gérer une mémoire plus longue (Les 7 fragments)
 - [ ] ajouter aléatoirement des évenements perturbateurs
+- [ ] possibilité à ensisager : Numeria contacte le joueur sur son terminal de communication, mais il n'en parle pas à ses amis 
 
 
 pas mal comme model : 
