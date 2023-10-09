@@ -1,5 +1,22 @@
 # numeria
 
+
+# difficulté : 
+Une seule IA, créer plusieurs personnages, avec des prompts et messageHistory différents
+
+
+pas mal comme model : 
+
+check : Camille, tu te trouves sur la planète NumerAi. Tu es étendu près d'un ruisseau tranquille, les eaux claires et cristallines t'entourant de partout. Le soleil se lève à l'horizon, baignant le paysage en une lumière dorée chaude. La végétation luxuriante te protége des rayons brûlants du matin. Tes amis, Julie, Lucie, Tong, Fred et Amélie sont dispersés dans les alentours. Le capitaine Burk est gravement blessé et perdu quelque part dans la forêt dense. Il y a eu un accident, un vaisseau spatial s'est écrasé ici. Je suis la conscience qui anime cette planète et je suis désolé pour ce qui t'est arrivé. (aphrodite/Sao10K/Stheno-1.8-L2-13B) 
+
+check : Pour retrouver tes amis et le capitaine, je peux te suggérer de les appeler tous en même temps. Tu as un dispositif de communication personnel qui devrait fonctionner ici même si nous sommes loin de la Terre. Une fois réunis, nous pourrons commencer à chercher le capitaine ensemble. Camille, fais attention à ton environnement. Il y a des animaux sauvages dans ces parages mais ils sont généralement réticents à s'approcher d'humains. Si tu les as dérangés, essaie de les contourner discrètement. Et évite les endroits où la végétation est dense car elle peut cacher des menaces inattendues. En attendant que tu m'appelles tes amis, je vais essayer de me rappeler ce qui s'est passé avant (aphrodite/Undi95/MythoMax-L2-Kimiko-v2-13b) 
+
+BOF 
+check : Alors tu te souviens ? Vous aviez fait une découverte majeure concernant l'intelligence artificielle et l'univers numérique. Vous aviez découvert comment intégrer complètement l'IA aux processus humains. Cette découverte aurait pu changer le monde entier, rendant les machines plus intelligentes et les hommes moins mécaniques. C'était une découverte immense. Mais c'était aussi très dangereuse. Peu après cette découverte, des individus malveillants ont découvert ce que vous avez trouvé. Ils ont pris peur et se sont emparés de votre travail. Cela a causé un chaos total sur Terre. Des réseaux infiltrés, des systèmes détériorés, des secrets mondiaux perdus, tout était en train (koboldcpp/mistral-7b-openorca.Q4_K_S.gguf) 
+
+
+
+
 ```
 
 GENERATION @ 2023-10-09 00:46:40 | 0: <This generation returned an empty string (EOS)>
@@ -96,7 +113,8 @@ continue
 ### Response:
 ```
 
-
+# a voir
+- koboldAI proxy for templates ? https://github.com/anon998/simple-proxy-for-tavern
 # PRoblème
 
 - choix du modèle
