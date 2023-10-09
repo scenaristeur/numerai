@@ -1,8 +1,11 @@
 # numeria
-
+Créé toi même ton aventure ! 
 
 # difficulté : 
-Une seule IA, créer plusieurs personnages, avec des prompts et messageHistory différents
+- [ ] Une seule IA, créer plusieurs personnages, avec des prompts et messageHistory différents
+- [ ] il faut orienter l'IA à décrire l'environnement. Voir l'exemple "Les 7 fragments"
+- [ ] gérer une mémoire plus longue (Les 7 fragments)
+- [ ] ajouter aléatoirement des évenements perturbateurs
 
 
 pas mal comme model : 

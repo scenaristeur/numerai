@@ -2,15 +2,16 @@
     <div>
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
-        Prénom: <input ref="prenom" v-model="prenom" placeholder="Ton prénom" />
+        Prénom: <input class="boxsizingBorder" ref="prenom" v-model="prenom" placeholder="Ton prénom" />
         <input type="radio" v-model="sexe" value="garçon" checked />Garçon
         <input type="radio" v-model="sexe" value="fille" />Fille
+        <br>
         <a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api key</a>
         <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
 
 
         <br>
-        <textarea ref="input" v-model="input" cols="80" rows="6" autofocus
+        <textarea class="boxsizingBorder" ref="input" v-model="input"  rows="6" autofocus
             placeholder="Comminiquer avec la présence ressentie..." v-on:keyup.enter="transmettre" /><br>
         <button @click="transmettre">Envoyer</button>
         <button ref="continue" @click="continuer" disabled>Continue !</button><br>
@@ -207,7 +208,7 @@ export default {
                      Vous répondez à ${this.prenom} qui est du genre ${this.sexe}.
                      Vous vous adressez directement à ${this.prenom} le protagoniste de cette histoire. ${this.prenom} est allongé sur le sol, se réveillant dans un environnement fantastique et épique.
                      Le vaisseau dans lequel ${this.prenom} se trouvait avec ses amis pour participer à un hackathon interplanétaire vient de s'écraser sur vous, la planète.
-                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
+                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
                      <</SYS>>\n\n`
             }
             let history = this.messageHistory
@@ -514,4 +515,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.boxsizingBorder {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+</style>
