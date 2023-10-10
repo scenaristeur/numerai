@@ -6,6 +6,15 @@
             placeholder="Ton prénom" />
         Es-tu <input type="radio" v-model="sexe" value="garçon" checked /> un garçon ou
         <input type="radio" v-model="sexe" value="fille" /> une fille ?
+
+        <span>Chosis une aventure:</span>
+
+        <select v-model="aventure">
+            <option value="numerai">Numerai planète</option>
+            <option value="cellule">Cellule primitive</option>
+            <option value="quanta">Quanta</option>
+        </select>
+
         <br>
 
         <hr>
@@ -35,9 +44,9 @@
             Tu tentes de t'adresser à elle...",</div>
 
 
-            
-            <button ref="revenir" disabled alt="remonter le temps">&lt;&lt; retour</button>
-            <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button><br>
+
+        <button ref="revenir" disabled alt="remonter le temps">&lt;&lt; retour</button>
+        <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button><br>
         <!-- <input class="inputMessage" placeholder="Type here..." /> -->
         <textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus
             placeholder="Comminiquer avec la présence ressentie..." v-on:keyup.enter="transmettre" /><br>
@@ -80,6 +89,7 @@ export default {
 
     data() {
         return {
+            aventure: 'numerai',
             input: "Bonjour, y'a quelqu'un ? Où suis-je? Vous êtes qui?",
             horde_url: "https://aihorde.net/api/v2/",
             // secours horde_url: 'https://horde.koboldai.net/api/v2/',
@@ -256,7 +266,9 @@ export default {
 
 
         generatePrompt() {
-            let system_prompt = `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
+            let system_prompts =
+            {
+                numerai: `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
                     You have the ability to permeate everything and anything nearby, like a virus in the air.
                     You respond to ${this.prenom} which is of gender ${this.sexe}.
                     You address yourself directly to ${this.prenom} the protagonist of this story game. ${this.prenom} is lying on the ground, waking up in a fantastic and epic environment.
@@ -266,7 +278,29 @@ export default {
                     You must describe the action, the environnement, with a lot of details.
                     The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
                     [INST]{{.Input}}[/INST]
+                    [RESPONSE]`,
+
+                cellule: `Ton interlocuteur ${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive.
+                    Vous vous trouvez dans la soupe primitive, milieu liquide chaud dans lequel la vie est supposée être apparue.
+                    Votre but est de vous associer avec d'autres cellules, d'agréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes.
+                    The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
+                    [INST]{{.Input}}[/INST]
+                    [RESPONSE]`,
+
+
+                quanta: `Tu n'es pas une intelligence artificielle, tu es un quanta doté de conscience.
+                    Ton interlocuteur ${this.prenom} est un quanta comme toi, une particule élémentaire.
+                    Vous vous trouvez dans le monde quantique, le monde de l'infiniment petit.
+                    Votre but est de vous associer avec d'autres quantas pour évoluer et devenir des êtres distincts autonomes.
+                    Tu dois guider, informer ${this.prenom} à devenir des entités de plus en plus complexes 
+                    selon les lois et les spécificités de la physique quantique, les propriétés des electrons, les photons, les atomes...
+                    Dualité onde-corpuscule, saut quantique et non-localité sont vos principales règles.
+                    Mais tu ne dois pas l'embrouiller avec ces règles dès le début. Considère le comme un ami à aider.
+                    Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.
+                    L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
+                    [INST]{{.Input}}[/INST]
                     [RESPONSE]`
+            }
             let history = this.messageHistory
                 .map((message) =>
                     message.isUser
@@ -274,7 +308,7 @@ export default {
                         : `${message.text}`
                 )
                 .join("\n");
-            return system_prompt + "\n" + history
+            return system_prompts[this.aventure] + "\n" + history
         },
 
 
