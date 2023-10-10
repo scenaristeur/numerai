@@ -12,8 +12,8 @@
 
         <select v-model="aventure">
             <option value="numerai">Numerai planète</option>
-            <option value="cellule">Cellule primitive</option>
-            <option value="quanta">Quanta</option>
+            <option value="cellule">Génèse de la vie</option>
+            <option value="quanta">Monde Quantique</option>
         </select>
 
         <br>
@@ -278,14 +278,15 @@ export default {
                     ${this.prenom}'s friends and the capitain Burke are lost on the planet and perharps hurted. You must guide ${this.prenom} and help him/her to find them. 
                     But before they go back to the hackathon ${this.prenom} must help you to recover your long memory. You only have short memory.
                     You must describe the action, the environnement, with a lot of details.
-                    The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
+                    L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
-                cellule: `Ton interlocuteur ${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive.
-                    Vous vous trouvez dans la soupe primitive, milieu liquide chaud dans lequel la vie est supposée être apparue.
-                    Votre but est de vous associer avec d'autres cellules, d'agréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes.
-                    The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
+                cellule: `Je suis ${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive.
+                    Nous nous trouvons dans la soupe primitive, milieu liquide chaud dans lequel la vie est supposée être apparue.
+                    Notre but est de nous associer avec d'autres cellules, d'aggréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes.
+                    Décris étape par étape, comme une aventure, les rencontres avec les autres cellules, les fusions, scissions, aggression,... plus tard, nous deviendrons peut-e^tre des bactéries, puis des êtres vivants, plantes ou animaux. 
+                    L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
