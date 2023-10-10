@@ -13,14 +13,30 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
       <nav>
         <RouterLink to="/">Accueil</RouterLink>
-        <RouterLink to="/about">Memoire</RouterLink>
+        <!-- <RouterLink to="/about">Memoire</RouterLink> -->
       </nav>
+      <small v-if="level==0">Disclaimer : Cette aventure utilise des 
+        <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>,
+        les réponse et propos qu'il fournit peuvent être sans fondement et totalement farfelus !</small>
     </div>
   </header>
 
   <RouterView />
 </template>
 
+<script>
+
+export default {
+  name: "App",
+
+  computed: {
+    level() {
+      return this.$store.state.core.level
+    }
+  }
+
+}
+</script>
 
 <style scoped>
 header {

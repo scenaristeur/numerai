@@ -2,6 +2,7 @@
     <div>
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
+        <div v-if="level==0">
         Pour commencer, quel est ton prénom? <input class="boxsizingBorder" ref="prenom" v-model="prenom"
             placeholder="Ton prénom" />
         Es-tu <input type="radio" v-model="sexe" value="garçon" checked /> un garçon ou
@@ -18,6 +19,7 @@
         <br>
 
         <hr>
+    </div>
         <div v-if="messageHistory.length > 0" class="chatArea">
             <ul class="messages" ref="messages">
                 <li v-for="m of  messageHistory " :key="m.id">
@@ -231,7 +233,7 @@ export default {
                         app.status = check.data
                     }
                 }, 1000);
-
+                this.$store.commit('core/incrementLevel')
             }
         },
 
@@ -580,6 +582,11 @@ export default {
         //     });
         // }
     },
+    computed: {
+    level() {
+      return this.$store.state.core.level
+    }
+  }
 
 }
 </script>
