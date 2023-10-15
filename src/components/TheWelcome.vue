@@ -12,22 +12,16 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>Le contexte</template>
-    A la suite d'un malencontreux accident, tu te retrouveres sur la planète Num 7 erAi,
-    une terre inexplorée où l'intelligence artificielle règne en maître.
-    Ton objectif sera de découvrir les secrets cachés de cette planète
-    afin de permettre à ton équipe de repartir à temps et de participer au hackathon interplanétaire sur l'IA.
-  </WelcomeItem>
+    <template #heading>{{ $t('context_title') }}</template>
+    {{ $t('context_content') }}</WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
       <ToolingIcon />
     </template>
-    <template #heading>L'aventure</template>
+    <template #heading>{{ $t('adventure_title') }}</template>
 
-    Ne manque pas cette occasion incroyable de te lancer dans l'aventure du siècle et de découvrir les merveilles de
-    l'intelligence artificielle. Embarque dès maintenant dans la navette spatiale et prépare-toi à être fasciné par les
-    trésors cachés de Num 7 erAi ! 🌏🚀
+    {{ $t('adventure_content') }} 🌏🚀
 
     <!-- <br />
 
@@ -38,12 +32,9 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
     <template #icon>
       <EcosystemIcon />
     </template>
-    <template #heading>La collaboration</template>
+    <template #heading>{{ $t('collab_title') }}</template>
 
-    N'hésite pas à partager cette aventure avec tes amis pour qu'ils t'aident dans cette aventure et à les inviter à rejoindre notre communauté d'explorateurs
-    d'AI.
-    Nous sommes ravis de t'accueillir dans ce monde unique et poussif, où les limites sont celles que tu te donneras.
-    <br>
+    {{ $t('collab_content') }} <br>
     <br>
 
   </WelcomeItem>

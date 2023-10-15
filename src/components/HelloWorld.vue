@@ -9,9 +9,16 @@ defineProps({
 
 <template>
   <div class="greetings">
+    <label for="locale">locale</label>
+    <select v-model="$i18n.locale">
+        <option>fr</option>
+        <option>en</option>
+        <!-- <option>ja</option> -->
+    </select>
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      L'épopée des aventuriers du numérique et de l'IA.
+      {{ $t('epopee') }}
+      <!-- L'épopée des aventuriers du numérique et de l'IA. -->
       <!-- <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. -->
     </h3>

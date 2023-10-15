@@ -9,17 +9,22 @@ import HistoryGalery from './views/HistoryGalery.vue';
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
     <HistoryGalery />
     <div class="wrapper">
-      <HelloWorld msg="Planète Numerai" />
+      <HelloWorld :msg="$t('Numerai_Planet')" />
 
       <nav>
-        <RouterLink to="/">Accueil</RouterLink>
-        <!-- <RouterLink to="/about">Memoire</RouterLink> -->
+        <RouterLink to="/">{{ $t('home') }}</RouterLink>
+        <RouterLink to="/about">{{ $t('about') }}</RouterLink>
       </nav>
-      <small v-if="level==0">Disclaimer : Cette aventure utilise des 
-        <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>,
-        les réponse et propos qu'il fournit peuvent être sans fondement et totalement farfelus !</small>
+      <small v-if="level == 0">
+        {{ $t('disclaimer') }}
+
+        <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>.
+
+        <hr>
+        0.0.1-stable-diff
+      </small>
     </div>
-    0.0.1-stable-diff
+
   </header>
 
   <RouterView />

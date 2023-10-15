@@ -2,19 +2,24 @@
     <div>
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
-        <div v-if="level == 0">
-            Pour commencer, quel est ton prénom? <input class="boxsizingBorder" ref="prenom" v-model="prenom"
-                placeholder="Ton prénom" />
-            Es-tu <input type="radio" v-model="sexe" value="garçon" checked /> un garçon ou
-            <input type="radio" v-model="sexe" value="fille" /> une fille ?
 
-            <span>Chosis une aventure:</span>
+
+        <!-- <p>message: {{ $t('hello') }}</p> -->
+        <div v-if="level == 0">
+            {{ $t('what_is_name') }} <input class="boxsizingBorder" ref="prenom" v-model="prenom"
+                :placeholder="$t('firstname_placeholder')" />
+            {{ $t('are_you') }}
+            <input type="radio" v-model="sexe" value="fille" /> {{ $t('a_girl') }} {{ $t('or') }}
+            <input type="radio" v-model="sexe" value="garçon" checked /> {{ $t('a_boy') }}
+            ?
+
+            <span>{{ $t('choose_adventure') }} :</span>
 
             <select v-model="aventure">
-                <option value="numerai">Numerai planète</option>
-                <option value="cellule">Génèse de la vie</option>
-                <option value="quanta">Monde Quantique</option>
-                <option value="stable">Stable Diffusion</option>
+                <option value="numerai">{{ $t('Numerai_Planet') }}</option>
+                <option value="cellule">{{ $t('Life_Genesis') }}</option>
+                <option value="quanta">{{ $t('Quantic_World') }}</option>
+                <!-- <option value="stable">Stable Diffusion</option> -->
             </select>
 
             <br>
@@ -43,21 +48,22 @@
 
             </ul>
         </div>
-        <div v-else>Lors du crash du vaisseau spatial, tu as été.e éjecté.e.
-            Tu te reveilles seul.e allongé.e dans un endroit inconnu, surnaturel.
-            Tu ne vois tes coéquipiers nulle part.
-            Tu sens une présence près de toi, presque en toi...
-            Tu tentes de t'adresser à elle...",</div>
+        <div v-else>
+            <div v-if="aventure == 'numerai'">{{ $t('trailer.Numerai_Planet') }}</div>
+            <div v-else-if="aventure == 'cellule'">{{ $t('trailer.Life_Genesis') }}</div>
+            <div v-else-if="aventure == 'quanta'">{{ $t('trailer.Quantic_World') }}</div>
+
+        </div>
 
 
 
         <button ref="revenir" disabled alt="remonter le temps">&lt;&lt; retour</button>
         <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button><br>
         <!-- <input class="inputMessage" placeholder="Type here..." /> -->
-        <textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus
-            placeholder="Comminiquer avec la présence ressentie..." v-on:keyup.enter="transmettre" /><br>
+        <textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus :placeholder="$t('communiquer')"
+            v-on:keyup.enter="transmettre" /><br>
         <div style="text-align:center">
-            <button @click="transmettre" class="btn">Envoyer</button>
+            <button @click="transmettre" class="btn">{{ $t('envoyer') }}</button>
             <button ref="continue" @click="continuer" style="display:none" class="btn">Continue</button>
         </div>
 
@@ -66,14 +72,11 @@
 
 
 
-        Gestion de la mémoire :
-        <button @click="save">Sauver</button>
-
-
-
-        <button onclick="document.getElementById('getFile').click()">Charger</button>
+        {{ $t('memory') }} :
+        <button @click="save">{{ $t('save') }}</button>
+        <button onclick="document.getElementById('getFile').click()">{{ $t('load') }}</button>
         <input id="getFile" style="visibility:hidden;" type="file" @change="load" /><br>
-        Pour générer les messages plus vite, tu peux obtenir une <br><a
+        {{ $t('horde_key_message') }} <br><a
             href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api
             key</a> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
         <!-- Bouton continue, continue pendant X fois
@@ -81,8 +84,11 @@
         retourne à un stade ancien de la mémoire.
         choisir le modèle...
         <ProgressBar /> -->
+
+
     </div>
 </template>
+
 
 <script>
 //import AIHorde  from "@zeldafan0225/ai_horde"
@@ -96,7 +102,7 @@ export default {
     data() {
         return {
             aventure: 'numerai',
-            input: "Bonjour, y'a quelqu'un ? Où suis-je? Vous êtes qui?",
+            input: this.$t('first_message'),
             horde_url: "https://aihorde.net/api/v2/",
             // secours horde_url: 'https://horde.koboldai.net/api/v2/',
             client_agent: "numerai:1.1.0:github.com/scenaristeur/numerai",
@@ -105,6 +111,7 @@ export default {
             // memory: {},
             prenom: "Camille",
             sexe: "garçon",
+            langues: { fr: "french", en: 'english' },
             lang: "french",
             //ordered_memory: [],
             messageHistory: [],
@@ -282,6 +289,9 @@ export default {
 
 
         generatePrompt() {
+            let locale = this.$i18n.locale
+            this.lang = this.langues[locale]
+            console.log(this.lang)
             let system_prompts =
             {
                 numerai: `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
@@ -296,16 +306,16 @@ export default {
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
-                cellule: `Je suis ${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive.
+                cellule: `Je suis ${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive qui parle ${this.lang}.
                     Nous nous trouvons dans la soupe primitive, milieu liquide chaud dans lequel la vie est supposée être apparue.
                     Notre but est de nous associer avec d'autres cellules, d'aggréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes.
-                    Décris étape par étape, comme une aventure, les rencontres avec les autres cellules, les fusions, scissions, aggression,... plus tard, nous deviendrons peut-e^tre des bactéries, puis des êtres vivants, plantes ou animaux. 
+                    Décris étape par étape, comme une aventure, les rencontres avec les autres cellules, les fusions, scissions, aggression,... plus tard, nous deviendrons peut-être des bactéries, puis des êtres vivants, plantes ou animaux. 
                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
 
-                quanta: `Tu n'es pas une intelligence artificielle, tu es un quanta doté de conscience.
+                quanta: `Tu n'es pas une intelligence artificielle, tu es un quanta doté de conscience qui parle ${this.lang}.
                     Ton interlocuteur ${this.prenom} est un quanta comme toi, une particule élémentaire.
                     Vous vous trouvez dans le monde quantique, le monde de l'infiniment petit.
                     Votre but est de vous associer avec d'autres quantas pour évoluer et devenir des êtres distincts autonomes.
@@ -411,7 +421,7 @@ export default {
                 `
             let prompt = `
                 L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
-                    [INST]${sys_prompt}. You must write an image prompt representing ${text} following this formula. Give me only the image prompt starting with "an image of..."[/INST]
+                    [INST]${sys_prompt}. You must write an image prompt representing ${text} following this formula. Give me only the image prompt starting with "an photo of..."[/INST]
                     [RESPONSE]
                     `
 
@@ -858,6 +868,7 @@ export default {
 
 .usermessage {
     color: gray;
+    font-size: 20px;
     font-family: "Quartz-Regular";
     src: local("Quartz-Regular"), url(@/fonts/Quartz-Regular.otf) format("truetype");
 }
@@ -865,9 +876,10 @@ export default {
 .iamessage {
     font-family: "Quartz";
     src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype");
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
-    background-color: rgb(228, 230, 125, 0.5);
+    color: black;
+   /* background-color: rgb(228, 230, 125, 0.5);*/
 }
 
 .message.typing .messageBody {
@@ -922,3 +934,5 @@ export default {
     /* Lowering the shadow */
 }
 </style>
+
+
