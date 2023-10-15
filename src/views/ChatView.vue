@@ -215,7 +215,7 @@ export default {
                     app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
 
                     if (check.data.done == true) { //If the current height is not the same as the initial height,
-                        if (check.data.generations[0].text.trim().length > 0) {
+                        if (check.data.generations[0].text.trim().length > 0 || check.data.generations[0].text.trim() == ']') {
                             let end = Date.now()
                             app.messageHistory.push({
                                 id: uuidv4(),
