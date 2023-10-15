@@ -19,6 +19,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
         <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>,
         les réponse et propos qu'il fournit peuvent être sans fondement et totalement farfelus !</small>
     </div>
+    0.0.1-stable-diff
   </header>
 
   <RouterView />
