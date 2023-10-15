@@ -2,24 +2,28 @@
     <div>
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
-        <div v-if="level==0">
-        Pour commencer, quel est ton prénom? <input class="boxsizingBorder" ref="prenom" v-model="prenom"
-            placeholder="Ton prénom" />
-        Es-tu <input type="radio" v-model="sexe" value="garçon" checked /> un garçon ou
-        <input type="radio" v-model="sexe" value="fille" /> une fille ?
+        <div v-if="level == 0">
+            Pour commencer, quel est ton prénom? <input class="boxsizingBorder" ref="prenom" v-model="prenom"
+                placeholder="Ton prénom" />
+            Es-tu <input type="radio" v-model="sexe" value="garçon" checked /> un garçon ou
+            <input type="radio" v-model="sexe" value="fille" /> une fille ?
 
-        <span>Chosis une aventure:</span>
+            <span>Chosis une aventure:</span>
 
-        <select v-model="aventure">
-            <option value="numerai">Numerai planète</option>
-            <option value="cellule">Génèse de la vie</option>
-            <option value="quanta">Monde Quantique</option>
-        </select>
+            <select v-model="aventure">
+                <option value="numerai">Numerai planète</option>
+                <option value="cellule">Génèse de la vie</option>
+                <option value="quanta">Monde Quantique</option>
+                <option value="stable">Stable Diffusion</option>
+            </select>
 
-        <br>
+            <br>
 
-        <hr>
-    </div>
+            <hr>
+        </div>
+        <div v-else>
+            <img v-for="image in images" :src="image.img" :key="image.id" width="256" />
+        </div>
         <div v-if="messageHistory.length > 0" class="chatArea">
             <ul class="messages" ref="messages">
                 <li v-for="m of  messageHistory " :key="m.id">
@@ -134,7 +138,17 @@ export default {
                 // "Gryphe/MythoMax-L2-13b",
                 // "koboldcpp/MythoMax-L2-13b"
             ],
+            imgen_params: {
+                "n": 1,
+                "width": 64 * 8,
+                "height": 64 * 8,
+                "steps": 20,
+                "sampler_name": "k_euler_a",
+                "cfg_scale": 7.5,
+                "denoising_strength": 0.6,
+            },
             "workers": [],
+            images: [],
             status: null
 
         };
@@ -302,7 +316,27 @@ export default {
                     Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.
                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
                     [INST]{{.Input}}[/INST]
-                    [RESPONSE]`
+                    [RESPONSE]`,
+
+                stable: `
+                Here’s a formula for a Stable Diffusion image prompt:
+                 An image of [adjective] [subject] [doing action], [creative lighting style],
+                  detailed, realistic, trending on artstation, in style of [famous artist 1], [famous artist 2], [famous artist 3].
+                  Examples of high quality prompt for stunning photorealistic full body illustration of ana de armas for text-to-image models (Stable Diffusion, midjourney or Dalle2) are
+
+    full body portrait of beautiful happy young ana de armas, ethereal, realistic anime, trending on pixiv, detailed, clean lines, sharp lines, crisp lines, award winning illustration, masterpiece, 4k, eugene de blaas and ross tran, vibrant color scheme, intricately detailed
+    full body portrait of a gorgeous young ana de armas, A highly detailed and hyper realistic lisa frank, trending on artstation, butterflies, floral, sharp focus, studio photo, intricate details, highly detailed, by Tvera and wlop and artgerm, alberto seveso and geo2099 style,
+
+    Give me more examples
+
+                `
+
+                /* resppnse : 
+                An image of innocent little girl, playing with her favorite stuffed bear, warm and cozy fireplace lighting, detailed, realistic, trending on artstation, in style of Norman Rockwell, Rembrandt, and Mary Cassatt.
+                */
+
+
+
             }
             let history = this.messageHistory
                 .map((message) =>
@@ -339,6 +373,7 @@ export default {
             console.log(event.target.result);
             var loaded = JSON.parse(event.target.result);
             console.log(loaded)
+
             this.messageHistory = [...loaded]
             // this.memory = {}
             // loaded.forEach(h => {
@@ -354,6 +389,7 @@ export default {
             if (chk.data.done == true) {
                 this.check = chk.data.generations[0].text + " (" +
                     chk.data.generations[0].model + ")";
+                this.generateImagePrompt(chk.data.generations[0].text)
             }
             else {
                 this.check = chk.data;
@@ -361,6 +397,198 @@ export default {
             this.$refs.continue.style.display = "inline-block"
             this.$refs.input.focus()
         },
+        async generateImagePrompt(text) {
+            let app = this
+            //               Other of high quality prompt for stunning photorealistic full body illustration of ana de armas for text - to - image models(Stable Diffusion, midjourney or Dalle2) are
+
+            // full body portrait of beautiful happy young ana de armas, ethereal, realistic anime, trending on pixiv, detailed, clean lines, sharp lines, crisp lines, award winning illustration, masterpiece, 4k, eugene de blaas and ross tran, vibrant color scheme, intricately detailed
+            // full body portrait of a gorgeous young ana de armas, A highly detailed and hyper realistic lisa frank, trending on artstation, butterflies, floral, sharp focus, studio photo, intricate details, highly detailed, by Tvera and wlop and artgerm, alberto seveso and geo2099 style,
+
+            console.log("generate image for ", text)
+            let sys_prompt = `Here’s a formula for a Stable Diffusion image prompt:
+                 An image of[adjective][subject][doing action], [creative lighting style],
+                detailed, realistic, trending on artstation, in style of[famous artist 1], [famous artist 2], [famous artist 3].
+                `
+            let prompt = `
+                L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
+                    [INST]${sys_prompt}. You must write an image prompt representing ${text} following this formula. Give me only the image prompt starting with "an image of..."[/INST]
+                    [RESPONSE]
+                    `
+
+            console.log("sd prompt before", prompt)
+
+            let message = {
+                prompt: prompt, //this.generatePrompt(),
+                params: this.params,
+                models: this.models,
+                workers: this.workers
+            }
+            const headers = {
+                "Accept": "application/json",
+                'apikey': this.horde_api_key,
+                'Client-Agent': this.client_agent,
+                'Content-Type': 'application/json'
+            };
+            // let start = Date.now();
+
+            let response = await axios({
+                method: 'post',
+                url: app.horde_url + 'generate/text/async',
+                data: message,
+                headers: headers
+            });
+            console.log(response, response.data);
+
+            // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+            let timer;
+
+            //let done = false;
+
+            timer = await setInterval(async function () {
+                let check = await axios({
+                    method: 'get',
+                    url: app.horde_url + 'generate/text/status/' + response.data.id,
+                    // data: message,
+                    headers: headers
+                });
+                //this.check = check
+                //console.log("check", check, done);
+                // done = check.data.done;
+
+                // app.memory[response.data.id].queue_position == undefined ? app.memory[response.data.id].queue_position = check.data.queue_position : "";
+                // app.memory[response.data.id].wait_time == undefined ? app.memory[response.data.id].wait_time = check.data.wait_time : "";
+                // app.updateCheck(check);
+                // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+                if (check.data.done == true) { //If the current height is not the same as the initial height,
+                    if (check.data.generations[0].text.trim().length > 0) {
+
+                        let sd_prompt = check.data.generations[0].text
+                        // let end = Date.now()
+
+                        console.log("THE SD PROMPT !!!!!", sd_prompt)
+                        app.generateImage(sd_prompt)
+
+
+                        // app.messageHistory.push({
+                        //     id: uuidv4(),
+                        //     text: check.data.generations[0].text.replace('[RESPONSE]', '').replace('[/RESPONSE]', '').trim(),
+                        //     isUser: false,
+                        //     start: start,
+                        //     end: end,
+                        //     model: check.data.generations[0].model,
+                        //     worker_id: check.data.generations[0].worker_id,
+                        //     worker_name: check.data.generations[0].worker_name,
+                        //     duration: Math.round((end - start) / 1000)
+                        // });
+                        // app.status = null
+                        // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+                    } else {
+                        app.status = "Attends, j'ai du mal à me concentrer, je recommence... "
+                        app.input = app.messageHistory.pop().text
+                        app.transmettre()
+
+                    }
+                    // console.log("it is done", check);
+                    // app.memory[response.data.id].end = Date.now();
+                    // app.memory[response.data.id].response = check.data.generations[0].text;
+                    // app.memory[response.data.id].model = check.data.generations[0].model;
+                    // console.log("Memory", app.memory);
+                    clearInterval(timer); //Stop the timer
+                } else {
+                    app.status = check.data
+                }
+            }, 1000);
+
+
+
+
+        },
+
+
+        async generateImage(sd_prompt) {
+            let app = this
+            let message = {
+                prompt: sd_prompt,
+                params: this.imgen_params,
+                //models: this.models,
+                workers: this.workers,
+                "nsfw": true,
+                "censor_nsfw": false,
+                "trusted_workers": false,
+                'models': [
+                    // "Comic-Diffusion"
+                ],
+                // "models": ["ICBINP - I Can't Believe It's Not Photography", "Dreamshaper"],
+                // "models": ["Dreamshaper", "stable_diffusion"],
+                "r2": true,
+                "dry_run": false
+            }
+            const headers = {
+                "Accept": "application/json",
+                'apikey': this.horde_api_key,
+                'Client-Agent': this.client_agent,
+                'Content-Type': 'application/json'
+            };
+            //let start = Date.now();
+
+            let response = await axios({
+                method: 'post',
+                url: app.horde_url + 'generate/async',
+                data: message,
+                headers: headers
+            });
+            console.log(response, response.data);
+
+            // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+            if (response.data.id != undefined) {
+                let timer;
+
+                //let done = false;
+
+                timer = await setInterval(async function () {
+                    let check = await axios({
+                        method: 'get',
+                        url: app.horde_url + 'generate/check/' + response.data.id,
+                        // data: message,
+                        headers: headers
+                    });
+                    //this.check = check
+                    console.log("check", check);
+                    // done = check.data.done;
+
+                    // app.memory[response.data.id].queue_position == undefined ? app.memory[response.data.id].queue_position = check.data.queue_position : "";
+                    // app.memory[response.data.id].wait_time == undefined ? app.memory[response.data.id].wait_time = check.data.wait_time : "";
+                    // app.updateCheck(check);
+                    //     app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+                    if (check.data.done == true) { //If the current height is not the same as the initial height,
+                        let status = await axios({
+                            method: 'get',
+                            url: app.horde_url + 'generate/status/' + response.data.id,
+                            // data: message,
+                            headers: headers
+                        });
+                        console.log("status", status)
+
+
+                        app.images.push(status.data.generations[0])
+                        // console.log("it is done", check);
+                        // app.memory[response.data.id].end = Date.now();
+                        // app.memory[response.data.id].response = check.data.generations[0].text;
+                        // app.memory[response.data.id].model = check.data.generations[0].model;
+                        // console.log("Memory", app.memory);
+                        clearInterval(timer); //Stop the timer
+                    } else {
+                        app.status = check.data
+                    }
+                }, 1000);
+            } else { console.log("id undefined", response) }
+
+
+        }
         // async post(input) {
         //     const app = this
         //     let message = {
@@ -584,10 +812,10 @@ export default {
         // }
     },
     computed: {
-    level() {
-      return this.$store.state.core.level
+        level() {
+            return this.$store.state.core.level
+        }
     }
-  }
 
 }
 </script>

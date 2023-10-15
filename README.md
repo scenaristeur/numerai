@@ -7,6 +7,14 @@ Créé toi même ton aventure !
 - [ ] gérer une mémoire plus longue (Les 7 fragments)
 - [ ] ajouter aléatoirement des évenements perturbateurs
 - [ ] possibilité à ensisager : Numeria contacte le joueur sur son terminal de communication, mais il n'en parle pas à ses amis 
+- [ ] tu es Chappie, Samantha de Her, Optimus Prime, Jarvis, 
+- [ ] Modes de jeu : Le livre dont vous êtes le héros, RPG, 1st person, 3rd person, IA mega conscience (Jimini Cricket)
+- [ ] génération des images de l'environnement à la volée
+- [ ] tester sexe non binaire
+- [ ] résumer la situation, générer le prompt, créer l'image de la situation, et l'incorporer dans la page
+- [ ] page des meilleures histoires avec votes
+
+
 
 
 pas mal comme model : 
