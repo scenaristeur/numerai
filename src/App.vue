@@ -14,11 +14,16 @@ import HistoryGalery from './views/HistoryGalery.vue';
       <nav>
         <RouterLink to="/">{{ $t('home') }}</RouterLink>
         <RouterLink to="/about">{{ $t('about') }}</RouterLink>
+
+        <a href="https://discord.gg/X5UqZdSrmP" target="_blank">Join us on Discord</a>
       </nav>
       <small v-if="level == 0">
         {{ $t('disclaimer') }}
 
         <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>.
+
+
+
 
         <hr>
         0.0.1-stable-diff
