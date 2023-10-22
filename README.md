@@ -13,6 +13,15 @@ Créé toi même ton aventure !
 - [ ] tester sexe non binaire
 - [ ] résumer la situation, générer le prompt, créer l'image de la situation, et l'incorporer dans la page
 - [ ] page des meilleures histoires avec votes
+- [ ] OpenAi
+- [ ] huggingface hosted https://huggingface.co/docs/api-inference/detailed_parameters#conversational-task
+- [ ] test with  other llm hosting decentralized https://www.reddit.com/r/LocalLLaMA/comments/1660abe/looking_for_testers_im_hosting_opensource_llms/?sort=new 
+- [ ] test another llms hosting https://github.com/bigscience-workshop/petals or petals https://petals.dev/  websocket https://github.com/petals-infra/chat.petals.dev#websocket-api-apiv2generate ne projete pas d'heberger stable diffusion https://github.com/bigscience-workshop/petals/issues/519
+- [ ] text to video https://huggingface.co/damo-vilab/text-to-video-ms-1.7b collab https://colab.research.google.com/drive/1iBt-WAQAJzpuRYQtfo2twN_orm3-EtRF?usp=sharing 
+- [ ] or image to video https://huggingface.co/spaces/kazuk/image-to-video-film or https://huggingface.co/spaces/Mishyface/image-to-video-film-3-kazuk-hugorowan-mishyface or https://huggingface.co/camenduru/damo-image-to-video/tree/main
+- [ ] replicate hosting https://replicate.com/p/35umrvdbuisod6dl67i2w2se6a video https://replicate.com/lucataco/hotshot-xl 2cts /gif
+- [ ] replicate sd-xl https://replicate.com/p/5rocea3bydhhnl7yrip7kfydgu ou https://replicate.com/p/jkgpfc3bhjapvmlfqkvdhpdeta 1cts/image
+- [ ] replicate 16 centimes text https://replicate.com/p/ra7qvm3b5ghpejmk6ldfpsye2q
 
 
 
