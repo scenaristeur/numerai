@@ -76,8 +76,8 @@
         <button @click="save">{{ $t('save') }}</button>
         <button onclick="document.getElementById('getFile').click()">{{ $t('load') }}</button>
         <input id="getFile" style="visibility:hidden;" type="file" @change="load" /><br>
-        {{ $t('horde_key_message') }} <br><a
-            href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api
+        {{ $t('horde_key_message') }} <br><a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration"
+            target="_blank">Horde api
             key</a> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
         <!-- Bouton continue, continue pendant X fois
         {options: imaginatif, sérieux, créatif...} / recommence, cette réponse est incohérente -> supprime de la mémoire,
@@ -516,6 +516,20 @@ export default {
 
 
         },
+        toDataURL(url, callback) {
+            //https://stackoverflow.com/questions/6150289/how-can-i-convert-an-image-into-base64-string-using-javascript
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    callback(reader.result);
+                }
+                reader.readAsDataURL(xhr.response);
+            };
+            xhr.open('GET', url);
+            xhr.responseType = 'blob';
+            xhr.send();
+        },
 
 
         async generateImage(sd_prompt) {
@@ -585,6 +599,31 @@ export default {
 
 
                         app.images.push(status.data.generations[0])
+
+
+                        const toDataURL = url => fetch(url)
+                            .then(response => response.blob())
+                            .then(blob => new Promise((resolve, reject) => {
+                                const reader = new FileReader()
+                                reader.onloadend = () => resolve(reader.result)
+                                reader.onerror = reject
+                                reader.readAsDataURL(blob)
+                            }))
+
+
+                        toDataURL(status.data.generations[0].img)
+                            .then(dataUrl => {
+                                console.log('RESULT:', dataUrl)
+                            })
+
+                        //                         app.toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {
+                        //   console.log('RESULT:', dataUrl)
+                        // })
+
+                        // app.toDataURL(status.data.generations[0])
+                        //     .then(dataUrl => {
+                        //         console.log('img Base 64 RESULT:', dataUrl)
+                        //     })
                         // console.log("it is done", check);
                         // app.memory[response.data.id].end = Date.now();
                         // app.memory[response.data.id].response = check.data.generations[0].text;
@@ -598,7 +637,9 @@ export default {
             } else { console.log("id undefined", response) }
 
 
-        }
+        },
+
+
         // async post(input) {
         //     const app = this
         //     let message = {
@@ -879,7 +920,7 @@ export default {
     font-size: 20px;
     font-weight: bold;
     color: black;
-   /* background-color: rgb(228, 230, 125, 0.5);*/
+    /* background-color: rgb(228, 230, 125, 0.5);*/
 }
 
 .message.typing .messageBody {
