@@ -21,6 +21,7 @@ const i18n = createI18n({
       epopee: "L'épopée des aventuriers du numérique et de l'IA.",
       Life_Genesis: 'Génèse de la vie',
       Quantic_World: 'Monde quantique',
+      Brou_enquete: 'Meurtre au Monastère de Brou',
       what_is_name: 'Pour commencer, quel est ton prénom?',
       firstname_placeholder: 'Ton prénom',
       are_you: 'Es-tu',
@@ -44,7 +45,11 @@ const i18n = createI18n({
         Vous devez tenter de devenir des entités de plus en plus complexes 
         selon les lois et les spécificités de la physique quantique, les propriétés des electrons, les photons, les atomes...
         Dualité onde-corpuscule, saut quantique et non-localité sont vos principales règles.
-        Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.`
+        Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.`,
+        Brou: `Un meurtre vient d'être commis au Monastère Royal de Brou.
+        Tu es l'inspecteur chargé de l'enquête.
+        La victime qui apparement se faisait passer pour une marchande d'art s'avère être une faussaire...
+        Avec l'aide de ton assistant numérique intelligent, tu devras trouver qui l'a tuée, pour quelle raison et dans quelles circonstances...`
       },
       first_message: "Bonjour, y'a quelqu'un ? Où suis-je? Vous êtes qui?",
       communiquer: 'Comminiquer avec la présence ressentie...',

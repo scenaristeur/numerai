@@ -23,8 +23,8 @@ Créé toi même ton aventure !
 - [ ] replicate sd-xl https://replicate.com/p/5rocea3bydhhnl7yrip7kfydgu ou https://replicate.com/p/jkgpfc3bhjapvmlfqkvdhpdeta 1cts/image
 - [ ] replicate 16 centimes text https://replicate.com/p/ra7qvm3b5ghpejmk6ldfpsye2q
 
-
-
+# prompt templates
+- https://gpus.llm-utils.org/llama-2-prompt-template/
 
 pas mal comme model : 
 

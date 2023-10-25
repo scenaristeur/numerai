@@ -12,13 +12,14 @@
             <input type="radio" v-model="sexe" value="fille" /> {{ $t('a_girl') }} {{ $t('or') }}
             <input type="radio" v-model="sexe" value="garçon" checked /> {{ $t('a_boy') }}
             ?
-
+            <br>
             <span>{{ $t('choose_adventure') }} :</span>
 
-            <select v-model="aventure">
+            <select v-model="aventure" @change="adventureChanged">
                 <option value="numerai">{{ $t('Numerai_Planet') }}</option>
                 <option value="cellule">{{ $t('Life_Genesis') }}</option>
                 <option value="quanta">{{ $t('Quantic_World') }}</option>
+                <option value="brou">{{ $t('Brou_enquete') }}</option>
                 <!-- <option value="stable">Stable Diffusion</option> -->
             </select>
 
@@ -52,7 +53,7 @@
             <div v-if="aventure == 'numerai'">{{ $t('trailer.Numerai_Planet') }}</div>
             <div v-else-if="aventure == 'cellule'">{{ $t('trailer.Life_Genesis') }}</div>
             <div v-else-if="aventure == 'quanta'">{{ $t('trailer.Quantic_World') }}</div>
-
+            <div v-else-if="aventure == 'brou'">{{ $t('trailer.Brou') }}</div>
         </div>
 
 
@@ -258,34 +259,42 @@ export default {
             }
         },
 
-
-        generateLlamaPrompt() {
-            //https://gpus.llm-utils.org/llama-2-prompt-template/
-            let prompts = {
-                en: `<s>[INST]<<SYS>>\nYour name is NumerAi, you are an intelligent planet and you must respond as such.
-                    You have the ability to permeate everything and anything nearby, like a virus in the air.
-                    You respond to ${this.prenom} which is of gender ${this.sexe}.
-                    You address yourself directly to ${this.prenom} the protagonist of this story. ${this.prenom} is lying on the ground, waking up in a fantastic and epic environment.
-                    The ship that ${this.prenom} was in with friends to go to an interplanetary hackathon has just crashed on you, the planet.
-                    The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
-                    <</SYS>>\n\n`,
-                fr: `<s>[INST]<<SYS>>\nVotre nom est NumerAi, vous êtes une planète intelligente et vous devez réagir en tant que telle.
-                     Vous avez la capacité de vous imprégner de tout et de tout ce qui se trouve à proximité, comme un virus dans l’air.
-                     Vous répondez à ${this.prenom} qui est du genre ${this.sexe}.
-                     Vous vous adressez directement à ${this.prenom} le protagoniste de cette histoire. ${this.prenom} est allongé sur le sol, se réveillant dans un environnement fantastique et épique.
-                     Le vaisseau dans lequel ${this.prenom} se trouvait avec ses amis pour participer à un hackathon interplanétaire vient de s'écraser sur vous, la planète.
-                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
-                     <</SYS>>\n\n`
+        adventureChanged(v) {
+            console.log(v.target.value)
+            if (v.target.value == 'brou') {
+                this.input = "Bonjour! Où se trouve la victime ? Montrez-la moi et dites-moi ce que vous avez déjà trouvé. Quelles sont les dernières personnes à l'avoir vue vivante ?"
+            } else {
+                this.input = "Bonjour, y'a quelqu'un ? Où suis-je? Vous êtes qui?"
             }
-            let history = this.messageHistory
-                .map((message) =>
-                    message.isUser
-                        ? `${message.text} [/INST]`
-                        : `${message.text}</s><s>[INST] `
-                )
-                .join("\n");
-            return prompts['fr'] + "\n" + history
         },
+
+        // generateLlamaPrompt() {
+        //     //https://gpus.llm-utils.org/llama-2-prompt-template/
+        //     let prompts = {
+        //         en: `<s>[INST]<<SYS>>\nYour name is NumerAi, you are an intelligent planet and you must respond as such.
+        //             You have the ability to permeate everything and anything nearby, like a virus in the air.
+        //             You respond to ${this.prenom} which is of gender ${this.sexe}.
+        //             You address yourself directly to ${this.prenom} the protagonist of this story. ${this.prenom} is lying on the ground, waking up in a fantastic and epic environment.
+        //             The ship that ${this.prenom} was in with friends to go to an interplanetary hackathon has just crashed on you, the planet.
+        //             The prompt below is a question to answer, a task to complete, or a conversation to respond to; who decides and writes an appropriate response.
+        //             <</SYS>>\n\n`,
+        //         fr: `<s>[INST]<<SYS>>\nVotre nom est NumerAi, vous êtes une planète intelligente et vous devez réagir en tant que telle.
+        //              Vous avez la capacité de vous imprégner de tout et de tout ce qui se trouve à proximité, comme un virus dans l’air.
+        //              Vous répondez à ${this.prenom} qui est du genre ${this.sexe}.
+        //              Vous vous adressez directement à ${this.prenom} le protagoniste de cette histoire. ${this.prenom} est allongé sur le sol, se réveillant dans un environnement fantastique et épique.
+        //              Le vaisseau dans lequel ${this.prenom} se trouvait avec ses amis pour participer à un hackathon interplanétaire vient de s'écraser sur vous, la planète.
+        //              L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
+        //              <</SYS>>\n\n`
+        //     }
+        //     let history = this.messageHistory
+        //         .map((message) =>
+        //             message.isUser
+        //                 ? `${message.text} [/INST]`
+        //                 : `${message.text}</s><s>[INST] `
+        //         )
+        //         .join("\n");
+        //     return prompts['fr'] + "\n" + history
+        // },
 
 
         generatePrompt() {
@@ -306,7 +315,7 @@ export default {
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
-                cellule: `Je suis ${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive qui parle ${this.lang}.
+                cellule: `${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive qui parle ${this.lang}.
                     Nous nous trouvons dans la soupe primitive, milieu liquide chaud dans lequel la vie est supposée être apparue.
                     Notre but est de nous associer avec d'autres cellules, d'aggréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes.
                     Décris étape par étape, comme une aventure, les rencontres avec les autres cellules, les fusions, scissions, aggression,... plus tard, nous deviendrons peut-être des bactéries, puis des êtres vivants, plantes ou animaux. 
@@ -325,6 +334,23 @@ export default {
                     Mais tu ne dois pas l'embrouiller avec ces règles dès le début. Considère le comme un ami à aider.
                     Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.
                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
+                    [INST]{{.Input}}[/INST]
+                    [RESPONSE]`,
+
+                brou: `Nous sommes au XVIe siècle. Un meutre vient d'être commis au Monastère de Brou, à Bourg-en-Bresse.
+                    ${this.prenom} est ${this.sexe == 'garçon' ? 'inspecteur chargé' : 'inspectrice chargée'} de l'enquête.
+                    La victime qui apparement se faisait passer pour une marchande d'art s'avère être une faussaire...
+                    Tu es son assistant parlant ${this.lang} et tu dois l'aider à trouver les circonstances de ce crime.
+                    Décris étape par étape, comme une aventure, l'enquête, les indices que vous découvrez, 
+                    les interrogatoires que vous menez pour trouver les coupables. 
+                    Vous explorez le Monastère, son histoire :
+                     "Le monastère royal de Brou est un chef-d'œuvre de l'art gothique flamboyant flamand du début du XVI e siècle.
+                      Il se compose d'un ensemble de bâtiments monastiques construits entre 1506 et 1512,
+                       et de l'église Saint-Nicolas-de-Tolentin de Brou, 
+                       édifiée de 1513 à 1532 par Louis van Bodeghem."
+                    Vous commencer par recenser les événements récent qui ont eu lieu au monastère, puis vous explorez la vie de la victime.
+                    L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; 
+                    Décidez et rédigez une réponse appropriée.
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
@@ -888,14 +914,14 @@ export default {
 /* Messages */
 
 .chatArea {
-    height: 400px;
+    height: 500px;
     /*100%;*/
     /*padding-bottom: 60px;*/
     background-color: rgb(195, 236, 198);
 }
 
 .messages {
-    height: 400px;
+    height: 500px;
     overflow-y: scroll;
     padding: 10px 20px 10px 20px;
     list-style-type: none;
@@ -908,24 +934,24 @@ export default {
 }
 
 .usermessage {
-    color: gray;
+    color: rgb(0, 17, 94);
     font-size: 20px;
     font-family: "Quartz-Regular";
     src: local("Quartz-Regular"), url(@/fonts/Quartz-Regular.otf) format("truetype");
 }
 
 .iamessage {
-    font-family: "Quartz";
-    src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype");
+    /*font-family: "Quartz";*/
+   /* src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype"); */
     font-size: 20px;
     font-weight: bold;
     color: black;
     /* background-color: rgb(228, 230, 125, 0.5);*/
 }
 
-.message.typing .messageBody {
-    color: gray;
-}
+/* .message.typing .messageBody {
+    color: rgba(5, 7, 148, 0.767);
+} */
 
 .username {
     font-weight: 500;
