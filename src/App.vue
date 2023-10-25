@@ -26,7 +26,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
 
         <hr>
-        0.0.1-stable-diff
+        0.0.2-pwa
       </small>
     </div>
 
