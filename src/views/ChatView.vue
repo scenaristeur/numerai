@@ -59,11 +59,12 @@
 
 
         <!-- <input class="inputMessage" placeholder="Type here..." /> -->
-        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus :placeholder="$t('communiquer')"
-            v-on:keyup.enter="transmettre" /><br>
+        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus
+            :placeholder="$t('communiquer')" v-on:keyup.enter="transmettre" /><br>
         <div style="text-align:center">
-            <b-button  variant="success" @click="transmettre" class="btn">{{ $t('envoyer') }}</b-button>
-            <b-button variant="success" ref="continue" @click="continuer" style="display:none" class="btn">Continue</b-button>
+            <b-button variant="success" @click="transmettre" class="btn">{{ $t('envoyer') }}</b-button>
+            <b-button  v-if="messageHistory.length>0" variant="success" ref="continue" @click="continuer"
+                class="btn">Continue</b-button>
         </div>
 
 
@@ -85,14 +86,14 @@
 
 
 
-        {{ $t('memory') }} :
+        {{ $t('memory') }} :<br>
         <b-button @click="save">{{ $t('save') }}</b-button>
         <b-button onclick="document.getElementById('getFile').click()">{{ $t('load') }}</b-button>
         <input id="getFile" style="visibility:hidden;" type="file" @change="load" />
         <b-button @click="publish">{{ $t('publish') }}</b-button><br>
-        {{ $t('horde_key_message') }} <br><a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration"
-            target="_blank">Horde api
-            key</a> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
+        {{ $t('horde_key_message') }} <br><b-link
+            href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration" target="_blank">Horde api
+            key</b-link> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
         <!-- Bouton continue, continue pendant X fois
         {options: imaginatif, sérieux, créatif...} / recommence, cette réponse est incohérente -> supprime de la mémoire,
         retourne à un stade ancien de la mémoire.
@@ -413,17 +414,17 @@ export default {
         save() {
             console.log(this.messageHistory)
             this.download(JSON.stringify(this.messageHistory), Date.now() + '.json', 'application/json');
-  
+
         },
-        publish(){
+        publish() {
             let storyName = prompt("Please enter a name for your story", Date.now());
             let story = {
-                id : uuidv4(),
+                id: uuidv4(),
                 name: storyName,
                 date: Date.now(),
-                likes : 0,
-                adventure : this.aventure,
-                messages : this.messageHistory
+                likes: 0,
+                adventure: this.aventure,
+                messages: this.messageHistory
             }
             this.$store.dispatch('firestore/publishStory', story)
         },
@@ -459,7 +460,7 @@ export default {
             else {
                 this.check = chk.data;
             }
-            this.$refs.continue.style.display = "inline-block"
+            //this.$refs.continue.style.display = "inline-block"
             this.$refs.input.focus()
         },
         async generateImagePrompt(text) {
@@ -1004,8 +1005,9 @@ export default {
 } */
 
 /* Adding some basic styling to button */
-
-
+a {
+    color: hsla(160, 100%, 37%, 1);
+}
 </style>
 
 

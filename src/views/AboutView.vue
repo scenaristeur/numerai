@@ -4,9 +4,19 @@
     <!-- <hr>
     <br> -->
     <div>
-      <a href="https://github.com/scenaristeur/numerai/blob/main/README.md" target="_blank">
-        source code & contribution
-      </a>
+      How to contribute
+      <ul>
+        <li>
+          <a href="https://github.com/scenaristeur/numerai/issues/1" target="_blank">Translate </a></li>
+        <li>Create Adventures : <a href="https://github.com/scenaristeur/numerai/issues/3" target="_blank">Coming soon</a></li>
+        <li>Enhance Code :
+          <a href="https://github.com/scenaristeur/numerai/blob/main/README.md" target="_blank">
+            source code & contribution
+          </a>
+        </li>
+
+      </ul>
+
     </div>
   </div>
 </template>

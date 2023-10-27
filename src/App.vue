@@ -90,6 +90,10 @@ nav a {
   border-left: 1px solid var(--color-border);
 }
 
+a  {
+  color: hsla(160, 100%, 37%, 1);
+ }
+
 nav a:first-of-type {
   border: 0;
 }

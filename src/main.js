@@ -137,6 +137,8 @@ const i18n = createI18n({
 app.use(router)
 app.use(store)
 app.use(i18n)
-app.use(BootstrapVue3)
+app.use(BootstrapVue3, {
+  BLink: {variant: 'success'}
+})
 
 app.mount('#app')
