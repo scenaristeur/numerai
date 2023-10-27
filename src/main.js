@@ -72,7 +72,7 @@ const i18n = createI18n({
         "Disclaimer : Cette aventure utilise des models de language, les réponse et propos qu'il fournit peuvent être sans fondement et totalement farfelus ! ",
       context_title: 'Le Contexte',
       context_content:
-        "A la suite d'un malencontreux accident, tu te retrouveres sur la planète Num 7 erAi, une terre inexplorée où l'intelligence artificielle règne en maître.Ton objectif sera de découvrir les secrets cachés de cette planète afin de permettre à ton équipe de repartir à temps et de participer au hackathon interplanétaire sur l'IA.",
+        "A la suite d'un malencontreux accident, tu te retrouveres sur la planète Num 7 erAi, une terre inexplorée où l'intelligence artificielle règne en maître. Ton objectif sera de découvrir les secrets cachés de cette planète afin de permettre à ton équipe de repartir à temps et de participer au hackathon interplanétaire sur l'IA.",
       adventure_title: "L'aventure",
       adventure_content:
         "Ne manque pas cette occasion incroyable de te lancer dans l'aventure du siècle et de découvrir les merveilles de l'intelligence artificielle. Embarque dès maintenant dans la navette spatiale et prépare-toi à être fasciné par les trésors cachés de Num 7 erAi !",

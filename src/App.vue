@@ -3,10 +3,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
 import StoriesView from './views/StoriesView.vue';
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
+  <NavBar />
   <header>
+
+
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
     <HistoryGalery />
     <div class="wrapper">
@@ -27,6 +31,7 @@ import StoriesView from './views/StoriesView.vue';
 
 
     </div>
+    
 
   </header>
 

@@ -4,6 +4,7 @@
 // import { v4 as uuidv4 } from 'uuid';
 
 const state = () => ({
+  showConfig: false,
   level: 0
 })
 
@@ -14,7 +15,12 @@ const mutations = {
   },
   setConfig(state, c) {
     state.config = c
+  },
+  setShowConfig(state, value){
+    state.showConfig = value
+    console.log(this.setShowConfig)
   }
+
 }
 
 const actions = {

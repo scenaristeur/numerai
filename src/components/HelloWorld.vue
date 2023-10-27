@@ -20,11 +20,7 @@ defineProps({
           <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. -->
         </h3>
     
-        <select v-model="$i18n.locale">
-          <option value="fr">🇲🇫</option>
-          <option value="en">🇬🇧</option>
-          <!-- <option>ja</option> -->
-        </select>
+ 
   
 
   </div>
