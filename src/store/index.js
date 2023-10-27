@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import core from './modules/core'
+import firestore from './modules/firestore'
 
 export default createStore({
   state: {
@@ -11,6 +12,6 @@ export default createStore({
   actions: {
   },
   modules: {
-    core
+    core, firestore
   }
 })
