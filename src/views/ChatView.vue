@@ -262,7 +262,7 @@ export default {
         adventureChanged(v) {
             console.log(v.target.value)
             if (v.target.value == 'brou') {
-                this.input = "Bonjour! Où se trouve la victime ? Montrez-la moi et dites-moi ce que vous avez déjà trouvé. Quelles sont les dernières personnes à l'avoir vue vivante ?"
+                this.input = "Bonjour! Où se trouve la victime? As-tu pu établir son identité ? Montre-moi son corps et décris-moi ce que tu as déjà trouvé."
             } else {
                 this.input = "Bonjour, y'a quelqu'un ? Où suis-je? Vous êtes qui?"
             }
@@ -301,6 +301,8 @@ export default {
             let locale = this.$i18n.locale
             this.lang = this.langues[locale]
             console.log(this.lang)
+            //   BRou :            La victime qui apparement se faisait passer pour une marchande d'art s'avère être une faussaire...
+
             let system_prompts =
             {
                 numerai: `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
@@ -337,20 +339,21 @@ export default {
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
-                brou: `Nous sommes au XVIe siècle. Un meutre vient d'être commis au Monastère de Brou, à Bourg-en-Bresse.
-                    ${this.prenom} est ${this.sexe == 'garçon' ? 'inspecteur chargé' : 'inspectrice chargée'} de l'enquête.
-                    La victime qui apparement se faisait passer pour une marchande d'art s'avère être une faussaire...
-                    Tu es son assistant parlant ${this.lang} et tu dois l'aider à trouver les circonstances de ce crime.
-                    Décris étape par étape, comme une aventure, l'enquête, les indices que vous découvrez, 
-                    les interrogatoires que vous menez pour trouver les coupables. 
-                    Vous explorez le Monastère, son histoire :
-                     "Le monastère royal de Brou est un chef-d'œuvre de l'art gothique flamboyant flamand du début du XVI e siècle.
+                brou: `Un meutre vient d'être commis au Monastère de Brou, à Bourg-en-Bresse dont voici un résumé de l'histoire :
+                "Le monastère royal de Brou est un chef-d'œuvre de l'art gothique flamboyant flamand du début du XVI e siècle.
                       Il se compose d'un ensemble de bâtiments monastiques construits entre 1506 et 1512,
                        et de l'église Saint-Nicolas-de-Tolentin de Brou, 
                        édifiée de 1513 à 1532 par Louis van Bodeghem."
-                    Vous commencer par recenser les événements récent qui ont eu lieu au monastère, puis vous explorez la vie de la victime.
-                    L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; 
-                    Décidez et rédigez une réponse appropriée.
+                Tu es le commissaire DuBourg et tu es désigné pour assister ${this.prenom}, 
+                 ${this.sexe == 'garçon' ? "l'inspecteur chargé" : "l'inspectrice chargée"} de l'enquête sur ce meurtre.
+                  Tu parles tu parles ${this.lang}. Et tu dois faire des phrases complètes.
+                    Tu dois aider ${this.prenom} à trouver les circonstances de ce crime.
+                    Décris étape par étape, comme une aventure, l'enquête, les indices que vous découvrez, 
+                    les interrogatoires que vous menez pour trouver les coupables. 
+                    Vous commencez par recenser les événements récents qui ont eu lieu au monastère, puis vous explorez la vie de la victime.
+                    L'invite ci-dessous correspond à un propos émis par ${this.prenom} dans la conversation, 
+                    c'est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; 
+                    Décide et rédige une réponse appropriée.
                     [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
@@ -942,7 +945,7 @@ export default {
 
 .iamessage {
     /*font-family: "Quartz";*/
-   /* src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype"); */
+    /* src: local("Quartz"), url(@/fonts/Quartz.ttf) format("truetype"); */
     font-size: 20px;
     font-weight: bold;
     color: black;

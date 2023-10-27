@@ -13,6 +13,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
       <nav>
         <RouterLink to="/">{{ $t('home') }}</RouterLink>
+        <!-- <RouterLink to="/chat">{{ $t('Commencer') }}</RouterLink> -->
         <RouterLink to="/about">{{ $t('about') }}</RouterLink>
 
         <a href="https://discord.gg/X5UqZdSrmP" target="_blank">Join us on Discord</a>
