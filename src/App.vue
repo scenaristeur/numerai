@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
+import StoriesView from './views/StoriesView.vue';
 </script>
 
 <template>
@@ -29,6 +30,11 @@ import HistoryGalery from './views/HistoryGalery.vue';
         <hr>
         0.0.2-pwa
       </small>
+
+
+<StoriesView />
+
+
     </div>
 
   </header>

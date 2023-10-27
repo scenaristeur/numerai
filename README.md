@@ -31,6 +31,7 @@ Créé toi même ton aventure !
     }),
   ],
 ```
+- [ ] Firebase revoir secu https://firebase.google.com/docs/firestore/quickstart?hl=fr#secure_your_data
 
 # prompt templates
 - https://gpus.llm-utils.org/llama-2-prompt-template/
