@@ -13,23 +13,14 @@ import StoriesView from './views/StoriesView.vue';
       <HelloWorld :msg="$t('Numerai_Planet')" />
 
       <nav>
+        
         <RouterLink to="/">{{ $t('home') }}</RouterLink>
         <!-- <RouterLink to="/chat">{{ $t('Commencer') }}</RouterLink> -->
         <RouterLink to="/about">{{ $t('about') }}</RouterLink>
 
         <a href="https://discord.gg/X5UqZdSrmP" target="_blank">Join us on Discord</a>
       </nav>
-      <small v-if="level == 0">
-        {{ $t('disclaimer') }}
 
-        <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>.
-
-
-
-
-        <hr>
-        0.0.2-pwa
-      </small>
 
 
 

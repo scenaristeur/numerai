@@ -3,6 +3,13 @@
     <!-- <h1>This is an about page</h1> -->
     <!-- <hr>
     <br> -->
+
+    <b-alert :model-value="true">
+    {{ $t('disclaimer') }}
+
+    <a href="https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage" target="_blank">models de language</a>.
+    </b-alert>
+
     <div>
       How to contribute
       <ul>

@@ -5,6 +5,7 @@ import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import "bootswatch/dist/sketchy/bootstrap.min.css";
 
 import BootstrapVue3 from "bootstrap-vue-3";
 
@@ -22,6 +23,7 @@ const i18n = createI18n({
   messages: {
     fr: {
       //   hello: 'Salut！',
+      Commencer: "Commencer",
       Numerai_Planet: 'Planète Numerai',
       epopee: "L'épopée des aventuriers du numérique et de l'IA.",
       Life_Genesis: 'Génèse de la vie',
@@ -80,6 +82,7 @@ const i18n = createI18n({
     },
     en: {
       //   hello: 'Hello!',
+      Commencer: 'Start',
       Numerai_Planet: 'Numerai Planet',
       epopee: 'The epic tale of digital and AI adventurers.',
       Life_Genesis: 'Life Genesis',

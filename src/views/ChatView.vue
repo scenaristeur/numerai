@@ -3,7 +3,7 @@
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
 
-
+        <b-button @click="newStory" variant="success">{{ $t('Commencer') }}</b-button>
         <!-- <p>message: {{ $t('hello') }}</p> -->
         <div v-if="level == 0">
             {{ $t('what_is_name') }} <input class="boxsizingBorder" ref="prenom" v-model="prenom"
@@ -30,9 +30,9 @@
         <div v-else>
             <img v-for="image in images" :src="image.img" :key="image.id" width="256" />
         </div>
-        <div v-if="messageHistory.length > 0" class="chatArea">
+        <div v-if="story.messageHistory.length > 0" class="chatArea">
             <ul class="messages" ref="messages">
-                <li v-for="m of  messageHistory " :key="m.id">
+                <li v-for="m of  story.messageHistory " :key="m.id">
                     <span v-if="m.isUser == true" class="username">{{ prenom }}</span>
                     <span v-else class="username">NumerAi</span> :
                     <span :class="m.isUser == true ? 'usermessage' : 'iamessage'">{{ m.text }}</span>
@@ -63,7 +63,7 @@
             :placeholder="$t('communiquer')" v-on:keyup.enter="transmettre" /><br>
         <div style="text-align:center">
             <b-button variant="success" @click="transmettre" class="btn">{{ $t('envoyer') }}</b-button>
-            <b-button  v-if="messageHistory.length>0" variant="success" ref="continue" @click="continuer"
+            <b-button v-if="story.messageHistory.length > 0" variant="success" ref="continue" @click="continuer"
                 class="btn">Continue</b-button>
         </div>
 
@@ -110,6 +110,7 @@
 import axios from "axios";
 // import ProgressBar from "./ProgressBar.vue";
 import { v4 as uuidv4 } from 'uuid';
+import { Story } from '@/api/story.js';
 
 export default {
     name: "ChatView",
@@ -129,7 +130,9 @@ export default {
             langues: { fr: "french", en: 'english' },
             lang: "french",
             //ordered_memory: [],
-            messageHistory: [],
+            story: {
+                messageHistory: []
+            },
             params: {
                 "n": 1,
                 "max_context_length": 2048,
@@ -176,6 +179,10 @@ export default {
         };
     },
     methods: {
+        newStory() {
+            let story = new Story()
+            console.log("Story", story)
+        },
         continuer() {
             this.input = "continue"
             this.transmettre()
@@ -184,7 +191,7 @@ export default {
             if (this.input.trim().length > 0) {
                 let app = this
                 console.log(this.input);
-                this.messageHistory.push({
+                this.story.messageHistory.push({
                     id: uuidv4(),
                     text: this.input,
                     isUser: true,
@@ -239,7 +246,7 @@ export default {
                     if (check.data.done == true) { //If the current height is not the same as the initial height,
                         if (check.data.generations[0].text.trim().length > 0 || check.data.generations[0].text.trim() == ']') {
                             let end = Date.now()
-                            app.messageHistory.push({
+                            app.story.messageHistory.push({
                                 id: uuidv4(),
                                 text: check.data.generations[0].text.replace('[RESPONSE]', '').replace('[/RESPONSE]', '').trim(),
                                 isUser: false,
@@ -255,7 +262,7 @@ export default {
 
                         } else {
                             app.status = "Attends, j'ai du mal à me concentrer, je recommence... "
-                            app.input = app.messageHistory.pop().text
+                            app.input = app.story.messageHistory.pop().text
                             app.transmettre()
 
                         }
@@ -391,7 +398,7 @@ export default {
 
 
             }
-            let history = this.messageHistory
+            let history = this.story.messageHistory
                 .map((message) =>
                     message.isUser
                         ? `[INST] ${message.text} [/INST]`
@@ -412,8 +419,8 @@ export default {
         },
 
         save() {
-            console.log(this.messageHistory)
-            this.download(JSON.stringify(this.messageHistory), Date.now() + '.json', 'application/json');
+            console.log(this.story.messageHistory)
+            this.download(JSON.stringify(this.story.messageHistory), Date.now() + '.json', 'application/json');
 
         },
         publish() {
@@ -424,7 +431,7 @@ export default {
                 date: Date.now(),
                 likes: 0,
                 adventure: this.aventure,
-                messages: this.messageHistory
+                messages: this.story.messageHistory
             }
             this.$store.dispatch('firestore/publishStory', story)
         },
@@ -440,7 +447,7 @@ export default {
             var loaded = JSON.parse(event.target.result);
             console.log(loaded)
 
-            this.messageHistory = [...loaded]
+            this.story.messageHistory = [...loaded]
             // this.memory = {}
             // loaded.forEach(h => {
             //     console.log(h)
@@ -553,7 +560,7 @@ export default {
 
                     } else {
                         app.status = "Attends, j'ai du mal à me concentrer, je recommence... "
-                        app.input = app.messageHistory.pop().text
+                        app.input = app.story.messageHistory.pop().text
                         app.transmettre()
 
                     }
