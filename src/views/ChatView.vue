@@ -408,6 +408,9 @@ export default {
             let story = {
                 id : uuidv4(),
                 name: storyName,
+                date: Date.now(),
+                likes : 0,
+                adventure : this.aventure,
                 messages : this.messageHistory
             }
             this.$store.dispatch('firestore/publishStory', story)

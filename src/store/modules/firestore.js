@@ -136,7 +136,12 @@ const actions = {
     // const storiessCollectionRef = collection(db, 'stories');
     // console.log("000 Stories", storiessCollectionRef)
     let stories = []
-    const querySnapshot = await getDocs(collection(context.state.db, 'stories'))
+    //const querySnapshot = await getDocs(collection(context.state.db, 'stories'))
+    const storiesRef = collection(context.state.db, 'stories')
+       const q = query(storiesRef, orderBy('date', 'desc'), limit(10))
+    console.log('Q', q)
+
+    const querySnapshot = await getDocs(q)
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${doc.data()}`)
       stories.push(doc.data())

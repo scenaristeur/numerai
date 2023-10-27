@@ -7,7 +7,21 @@
         <button @click="stopListener">Stop Listener</button>
        
 <ul>
-    <li v-for="s in stories" :key="s.id">{{  s}}</li>
+    <li v-for="s in stories" :key="s.id">
+        {{  s.name}} / {{ s.messages.length }} / {{s.adventure }} / {{ s.date }} / {{ s.likes }}
+<ul>
+    <li v-for="m in s.messages" :key="m.id">
+        {{ m.isUser ? 'user' : 'ia' }} : {{ m.text }}
+        <div v-if="!m.isUser">
+
+        <small>{{ m.model }}, {{ m.worker }}, {{ m.duration }}</small>
+    </div>
+    </li>
+</ul>
+
+
+
+    </li>
 </ul>
 
     </div>
