@@ -58,26 +58,38 @@
 
 
 
-        <button ref="revenir" disabled alt="remonter le temps">&lt;&lt; retour</button>
-        <button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</button><br>
         <!-- <input class="inputMessage" placeholder="Type here..." /> -->
-        <textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus :placeholder="$t('communiquer')"
+        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus :placeholder="$t('communiquer')"
             v-on:keyup.enter="transmettre" /><br>
         <div style="text-align:center">
-            <button @click="transmettre" class="btn">{{ $t('envoyer') }}</button>
-            <button ref="continue" @click="continuer" style="display:none" class="btn">Continue</button>
+            <b-button  variant="success" @click="transmettre" class="btn">{{ $t('envoyer') }}</b-button>
+            <b-button variant="success" ref="continue" @click="continuer" style="display:none" class="btn">Continue</b-button>
         </div>
 
+
+        <!-- <b-button ref="revenir" disabled alt="remonter le temps">&lt;&lt; retour</b-button>
+        <b-button ref="pb" disabled alt="réponse incomprehensible">réponse incomprehensible</b-button><br> -->
+
+        <!-- <b-button-group class="mx-1">
+            <b-button variant="danger">new already exists</b-button>
+            <b-button>Undo</b-button>
+            <b-button>Redo</b-button>
+          </b-button-group>
+
+          <BButton>Button</BButton>
+<BButton variant="danger">Button</BButton>
+<BButton variant="success">Button</BButton>
+<BButton variant="outline-primary">Button</BButton> -->
 
         <!-- style="display:block;width:120px; height:30px;"-->
 
 
 
         {{ $t('memory') }} :
-        <button @click="save">{{ $t('save') }}</button>
-        <button onclick="document.getElementById('getFile').click()">{{ $t('load') }}</button>
+        <b-button @click="save">{{ $t('save') }}</b-button>
+        <b-button onclick="document.getElementById('getFile').click()">{{ $t('load') }}</b-button>
         <input id="getFile" style="visibility:hidden;" type="file" @change="load" />
-        <button @click="publish">{{ $t('publish') }}</button><br>
+        <b-button @click="publish">{{ $t('publish') }}</b-button><br>
         {{ $t('horde_key_message') }} <br><a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration"
             target="_blank">Horde api
             key</a> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
@@ -993,6 +1005,11 @@ export default {
 
 /* Adding some basic styling to button */
 
+
+</style>
+
+
+/*
 .btn {
     margin: 10px 2px 10px 2px;
     text-decoration: none;
@@ -1017,6 +1034,5 @@ export default {
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
     /* Lowering the shadow */
 }
-</style>
-
+*/
 

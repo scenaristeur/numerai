@@ -41,19 +41,16 @@ import CommunityIcon from './icons/IconCommunity.vue'
 
   </WelcomeItem>
 
-  <WelcomeItem>
+  <!-- <WelcomeItem>
     <template #icon>
       <EcosystemIcon />
     </template>
-    <!-- <template #heading>{{ $t('collab_title') }}</template>
-
-    {{ $t('collab_content') }} <br>
-    <br> -->
-
-    <!-- <RouterLink to="/chat" class="btn">{{ $t('Commencer') }}</RouterLink> -->
 
 
-  </WelcomeItem>
+    <RouterLink to="/chat" class="btn">{{ $t('Commencer') }}</RouterLink>
+
+
+  </WelcomeItem> -->
   <!-- 
   <WelcomeItem>
     <template #icon>

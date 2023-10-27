@@ -32,7 +32,7 @@ import StoriesView from './views/StoriesView.vue';
       </small>
 
 
-<StoriesView />
+
 
 
     </div>
@@ -40,6 +40,8 @@ import StoriesView from './views/StoriesView.vue';
   </header>
 
   <RouterView />
+
+  <StoriesView />
 </template>
 
 <script>
