@@ -69,6 +69,14 @@ const actions = {
     context.state.unsubscribe()
     console.log('listener stopped')
   },
+  async publishStory(context, story){
+    try {
+        const docRef = await addDoc(collection(context.state.db, 'stories'), story)
+        console.log('Document written with ID: ', docRef.id)
+      } catch (e) {
+        console.error('Error adding document: ', e)
+      }
+  },
   async addStory(context) {
     try {
       const docRef = await addDoc(collection(context.state.db, 'stories'), {
@@ -127,36 +135,39 @@ const actions = {
   async updateStories(context) {
     // const storiessCollectionRef = collection(db, 'stories');
     // console.log("000 Stories", storiessCollectionRef)
+    let stories = []
     const querySnapshot = await getDocs(collection(context.state.db, 'stories'))
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${doc.data()}`)
-    })
-
-    const docRef = doc(context.state.db, 'cities', 'SF')
-    const docSnap = await getDoc(docRef)
-
-    if (docSnap.exists()) {
-      console.log('Document data:', docSnap.data())
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log('No such document!')
-    }
-    const storiesRef = collection(context.state.db, 'stories')
-
-    const q = query(storiesRef, orderBy('last', 'desc'), limit(10))
-    console.log('Q', q)
-
-    const querySnapshot2 = await getDocs(q)
-    console.log('Q snap 2', querySnapshot2)
-    // context.state.stories = JSON.parse(JSON.stringify(querySnapshot2.docs))
-    let stories = []
-    console.log(querySnapshot2)
-    querySnapshot2.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, ' => ', doc.data())
       stories.push(doc.data())
     })
     context.state.stories = stories
+
+    // const docRef = doc(context.state.db, 'cities', 'SF')
+    // const docSnap = await getDoc(docRef)
+
+    // if (docSnap.exists()) {
+    //   console.log('Document data:', docSnap.data())
+    // } else {
+    //   // docSnap.data() will be undefined in this case
+    //   console.log('No such document!')
+    // }
+    // const storiesRef = collection(context.state.db, 'stories')
+
+    // const q = query(storiesRef, orderBy('last', 'desc'), limit(10))
+    // console.log('Q', q)
+
+    // const querySnapshot2 = await getDocs(q)
+    // console.log('Q snap 2', querySnapshot2)
+    // // context.state.stories = JSON.parse(JSON.stringify(querySnapshot2.docs))
+    // let stories = []
+    // console.log(querySnapshot2)
+    // querySnapshot2.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   console.log(doc.id, ' => ', doc.data())
+    //   stories.push(doc.data())
+    // })
+    // context.state.stories = stories
   }
   // async newDoc(context){
   //   let doc = Automerge.init()

@@ -76,7 +76,8 @@
         {{ $t('memory') }} :
         <button @click="save">{{ $t('save') }}</button>
         <button onclick="document.getElementById('getFile').click()">{{ $t('load') }}</button>
-        <input id="getFile" style="visibility:hidden;" type="file" @change="load" /><br>
+        <input id="getFile" style="visibility:hidden;" type="file" @change="load" />
+        <button @click="publish">{{ $t('publish') }}</button><br>
         {{ $t('horde_key_message') }} <br><a href="https://github.com/Haidra-Org/AI-Horde/wiki/Getting-Started#registration"
             target="_blank">Horde api
             key</a> : <input v-model="horde_api_key" type="password" placeholder="Horde API Key" />
@@ -400,6 +401,16 @@ export default {
         save() {
             console.log(this.messageHistory)
             this.download(JSON.stringify(this.messageHistory), Date.now() + '.json', 'application/json');
+  
+        },
+        publish(){
+            let storyName = prompt("Please enter a name for your story", Date.now());
+            let story = {
+                id : uuidv4(),
+                name: storyName,
+                messages : this.messageHistory
+            }
+            this.$store.dispatch('firestore/publishStory', story)
         },
         load(event) {
             var reader = new FileReader();
