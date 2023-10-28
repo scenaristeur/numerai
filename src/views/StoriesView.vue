@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3>Stories Caroussel</h3>
-        <button @click="userStories">My 10 last Stories</button>
+        <button v-if="user !=null" @click="userStories">My 10 last Stories</button>
         <button @click="updateStories">Last 10 Stories</button>
         <!-- <button @click="addStory">Add Story</button>
         <button @click="startListener">Start Listener</button>
@@ -42,7 +42,7 @@ export default {
         }
     },
     created() {
-      //  this.startListener()
+        //  this.startListener()
     },
     methods: {
         async startListener() {
@@ -64,6 +64,9 @@ export default {
     computed: {
         stories() {
             return this.$store.state.firestore.stories
+        },
+        user() {
+            return this.$store.state.firestore.user
         }
     }
 }

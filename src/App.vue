@@ -2,49 +2,14 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
-import StoriesView from './views/StoriesView.vue';
+//import StoriesView from './views/StoriesView.vue';
 import NavBar from './components/NavBar.vue'
-import MissionSelect from './views/MissionSelect.vue';
+//import MissionSelect from './views/MissionSelect.vue';
 
 
 </script>
 
 <template>
-
-<b-container fluid>
-  <NavBar />
-<b-row>
-  <b-col class="mobileHide">
-    <SideBar />
-  </b-col>
-  <b-col>
-    <MainView />
-  </b-col>
-</b-row>
-
-</b-container>
-
-
-
-
-
-  <!-- https://docs.minionmade.com/developer-tools/show-hide-specific-content-on-mobile-devices -->
-
-  <div class="mobileShow">
-
-    TEXT OR IMAGE FOR MOBILE HERE
-
-  </div>
-
-  <div class="mobileHide">
-
-    TEXT OR IMAGE FOR LARGE HERE
-
-  </div>
-
-
-Story : {{ story }}
-
 
   <header>
 
@@ -65,7 +30,7 @@ Story : {{ story }}
 
 
 
-
+      <StoriesView />
 
 
     </div>
@@ -73,12 +38,45 @@ Story : {{ story }}
 
   </header>
 
+  <b-container fluid>
+    <NavBar />
+  <b-row>
+    <b-col class="mobileHide">
+      <SideBar />
+    </b-col>
+    <b-col>
+      <MainView />
 
+<hr>
+
+  <!-- https://docs.minionmade.com/developer-tools/show-hide-specific-content-on-mobile-devices -->
+
+  <div class="mobileShow">
+
+    TEXT OR IMAGE FOR MOBILE HERE
+
+  </div>
+
+  <div class="mobileHide">
+
+    TEXT OR IMAGE FOR LARGE HERE
+
+  </div>
+
+  <ChatInput v-if="story != null"/>
+
+Story : {{ story }}
+
+    </b-col>
+  </b-row>
+  
+  </b-container>
+  
 
   <RouterView />
 
-  <StoriesView />
-  <MissionSelect />
+  <!-- <StoriesView />
+  <MissionSelect /> -->
 
   <footer></footer>
 </template>
@@ -86,11 +84,13 @@ Story : {{ story }}
 <script>
 import SideBar from '@/views/SideBar.vue';
 import MainView from '@/views/MainView.vue';
+import StoriesView from '@/views/StoriesView.vue';
+import ChatInput from '@/views/ChatInput.vue';
 
 export default {
   name: "App",
   components: {
-        SideBar, MainView
+        SideBar, MainView,StoriesView , ChatInput
     },
 
   mounted() {

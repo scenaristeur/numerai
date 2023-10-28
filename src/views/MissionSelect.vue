@@ -3,7 +3,7 @@
         Selectionne une mission
         <b-form-select v-model="mission" @change="missionChanged">
             <option v-for="mission, id in Object.entries(missions)" :value="mission" :key="id">
-                {{ mission[1].name[$i18n.locale] }}
+                {{ mission[1].name[$i18n.locale] }} {{ mission[1].version }}
             </option>
 
             <!-- <option value="stable">Stable Diffusion</option> -->
