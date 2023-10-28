@@ -1,7 +1,12 @@
     {
         "id": "numerai",
         "version": 1,
-        "name": "Planète Numerai",
-        "name_fr": "Planète Numerai",
-        "name_en": "Numerai Planet"
+        "name": {
+            "fr": "Planète Numerai",
+            "en": "Numerai Planet"
+        },
+        "trailer": {
+            "fr": "Lors du crash du vaisseau spatial, tu as été.e éjecté.e.\nTu te reveilles seul.e allongé.e dans un endroit inconnu, surnaturel. \nTu ne vois tes coéquipiers nulle part.\nTu sens une présence près de toi, presque en toi...\nTu tentes de t'adresser à elle...",
+            "en": "When the spaceship crashed, you were ejected. You wake up alone, lying in an unknown, supernatural place. You don't see your teammates anywhere. You feel a presence near you, almost within you... You try to speak to it..."
+        }
     }

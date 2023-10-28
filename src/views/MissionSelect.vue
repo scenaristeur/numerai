@@ -3,7 +3,7 @@
         Selectionne une mission
         <b-form-select v-model="mission" @change="missionChanged">
             <option v-for="mission, id in Object.entries(missions)" :value="mission" :key="id">
-                {{ mission[1].name }}
+                {{ mission[1].name[$i18n.locale] }}
             </option>
 
             <!-- <option value="stable">Stable Diffusion</option> -->
@@ -13,6 +13,10 @@
   
 
         <div v-if="mission != null">
+
+{{ mission[1].trailer[$i18n.locale] }}
+<br>
+
             {{ $t('what_is_name') }} <input class="boxsizingBorder" ref="prenom" v-model="prenom"
                 :placeholder="$t('firstname_placeholder')" /><br>
             {{ $t('are_you') }}<br>
@@ -61,10 +65,12 @@ export default {
     methods: {
         createStory() {
             let options = {
+                lang : this.$i18n.locale,
                 mission: this.mission,
                 heros: { prenom: this.prenom, sexe: this.sexe }
             }
             this.$store.commit('core/createStory', options)
+            this.mission = null
         },
         missionChanged(v) {
             console.log(v)

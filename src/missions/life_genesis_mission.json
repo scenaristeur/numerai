@@ -1,7 +1,13 @@
     {
         "id": "life_genesis",
         "version": 1,
-        "name": "Génèse de la Vie",
-        "name_fr": "Génèse de la vie",
-        "name_en": "Life Genesis"
+        "name": {
+            "fr": "Génèse de la vie",
+            "en": "Life Genesis"
+        },
+        "trailer": {
+            "fr": "Tu es est une cellule primitive et tu rencontres un autre cellule primitive. Vous vous trouvez dans la soupe primitive, milieu liquide chaud dans lequel la vie est supposée être apparue. Votre but est de vous associer avec d'autres cellules, d'aggréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes. Deviendrez-vous des bactéries, puis des êtres vivants, plantes ou animaux ?",
+            "en": "You are a primitive cell and you meet another primitive cell.You find yourself in the primitive soup, a warm liquid medium in which life is supposed to have appeared. Your goal is to associate with other cells, to aggregate molecules, proteins, to evolve and become distinct autonomous beings. Will you become bacteria, then living beings, plants or animals?"
+        }
+      
     }

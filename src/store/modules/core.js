@@ -2,7 +2,8 @@
 // import idb from '@/api/idb-nodes';
 // import * as Automerge from 'automerge'
 // import { v4 as uuidv4 } from 'uuid';
-import { Story } from '@/api/story.js';
+import { Story } from '@/api/story.js'
+
 
 const state = () => ({
   showMenu: false,
@@ -17,6 +18,8 @@ const mutations = {
     console.log(state, options)
     let story = new Story(options)
     console.log('STORY', story)
+    state.story = story
+    state.stories.push(story)
   },
   incrementLevel(state) {
     state.level = state.level + 1

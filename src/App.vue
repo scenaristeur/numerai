@@ -43,7 +43,7 @@ import MissionSelect from './views/MissionSelect.vue';
   </div>
 
 
-
+Story : {{ story }}
 
 
   <header>
@@ -100,6 +100,9 @@ export default {
   computed: {
     level() {
       return this.$store.state.core.level
+    },
+    story() {
+      return this.$store.state.core.story
     }
   }
 

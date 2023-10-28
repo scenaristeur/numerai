@@ -1,7 +1,12 @@
 {
     "id": "quanta",
     "version": 1,
-    "name": "Monde quantique",
-    "name_fr": "Monde Quantique",
-    "name_en": "Quantic World"
+    "name": {
+        "fr": "Monde Quantique",
+        "en": "Quantic World"
+    },
+    "trailer": {
+        "fr":"Tu es un quanta, une particule élémentaire, comme un électron, et tu rencontre un autre quanta, comme toi. Vous vous trouvez dans le monde quantique, le monde de l'infiniment petit. Votre but est de vous associer avec d'autres quantas pour évoluer et devenir des êtres distincts autonomes. Vous devez tenter de devenir des entités de plus en plus complexes selon les lois et les spécificités de la physique quantique, les propriétés des electrons, les photons, les atomes... Dualité onde-corpuscule, saut quantique et non-localité sont vos principales règles. Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.",
+        "en": "You are a quanta, an elementary particle, like an electron, and you encounter another quanta, like you. You find yourself in the quantum world, the world of the infinitely small. Your goal is to associate with other quanta to evolve and become autonomous, distinct beings. You must try to become more and more complex entities according to the laws and specificities of quantum physics, the properties of electrons, photons, atoms... Wave-particle duality, quantum jump and non-locality are your main rules. When you are of sufficient size you will conform to the rules of general physics."
+    }
 }
