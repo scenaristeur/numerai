@@ -6,10 +6,46 @@ import StoriesView from './views/StoriesView.vue';
 import NavBar from './components/NavBar.vue'
 import MissionSelect from './views/MissionSelect.vue';
 
+
 </script>
 
 <template>
+
+<b-container fluid>
   <NavBar />
+<b-row>
+  <b-col class="mobileHide">
+    <SideBar />
+  </b-col>
+  <b-col>
+    <MainView />
+  </b-col>
+</b-row>
+
+</b-container>
+
+
+
+
+
+  <!-- https://docs.minionmade.com/developer-tools/show-hide-specific-content-on-mobile-devices -->
+
+  <div class="mobileShow">
+
+    TEXT OR IMAGE FOR MOBILE HERE
+
+  </div>
+
+  <div class="mobileHide">
+
+    TEXT OR IMAGE FOR LARGE HERE
+
+  </div>
+
+
+
+
+
   <header>
 
 
@@ -28,7 +64,7 @@ import MissionSelect from './views/MissionSelect.vue';
       </nav>
 
 
-   
+
 
 
 
@@ -42,14 +78,20 @@ import MissionSelect from './views/MissionSelect.vue';
   <RouterView />
 
   <StoriesView />
-  <MissionSelect/>
+  <MissionSelect />
+
   <footer></footer>
 </template>
 
 <script>
+import SideBar from '@/views/SideBar.vue';
+import MainView from '@/views/MainView.vue';
 
 export default {
   name: "App",
+  components: {
+        SideBar, MainView
+    },
 
   mounted() {
     this.$store.dispatch('firestore/checkIfUserLoggedIn')
@@ -130,7 +172,35 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
+
 footer {
   height: 200px;
+}
+
+</style>
+<style>
+
+.mobileShow {
+  display: none;
+}
+
+/* Smartphone Portrait and Landscape */
+
+@media screen and (min-width : 320px) and (max-width : 968px) {
+  .mobileShow {
+    display: inline;
+  }
+}
+
+.mobileHide {
+  display: inline;
+}
+
+/* Smartphone Portrait and Landscape */
+
+@media only screen and (min-width : 320px) and (max-width : 968px) {
+  .mobileHide {
+    display: none;
+  }
 }
 </style>

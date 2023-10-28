@@ -4,23 +4,26 @@
 // import { v4 as uuidv4 } from 'uuid';
 
 const state = () => ({
+  showMenu: false,
   showConfig: false,
   level: 0
 })
 
 const mutations = {
   incrementLevel(state) {
-    state.level = state.level+1
+    state.level = state.level + 1
     console.log(state.level)
   },
   setConfig(state, c) {
     state.config = c
   },
-  setShowConfig(state, value){
+  showMenu(state, v) {
+    state.showMenu = v
+  },
+  setShowConfig(state, value) {
     state.showConfig = value
     console.log(this.setShowConfig)
   }
-
 }
 
 const actions = {

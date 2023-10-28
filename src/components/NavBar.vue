@@ -1,8 +1,9 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="info" sticky="true" fixed="bottom">
+        <b-navbar toggleable="lg" type="dark" variant="info"  >
             <b-navbar-brand href="#">Numerai</b-navbar-brand>
-            <UserView />
+             
+            <MenuView />
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -22,12 +23,12 @@
                     </b-nav-form> -->
 
                     <!-- 
-                    <b-nav-item-dropdown text="Lang" right >
+         <b-nav-item-dropdown text="Lang" right >
                         <b-dropdown-item href="#">EN</b-dropdown-item>
                         <b-dropdown-item href="#">ES</b-dropdown-item>
                         <b-dropdown-item href="#">RU</b-dropdown-item>
                         <b-dropdown-item href="#">FA</b-dropdown-item>
-                    </b-nav-item-dropdown>
+                    </b-nav-item-dropdown> -->
 
                     <b-nav-item-dropdown right >
                        
@@ -36,18 +37,13 @@
                         </template>
                         <b-dropdown-item href="#">Profile</b-dropdown-item>
                         <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-                    </b-nav-item-dropdown> -->
+                    </b-nav-item-dropdown> 
 
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
         <BModal title="Config" v-model="showConfig">
-            lang:
-            <select v-model="$i18n.locale">
-                <option value="fr">🇲🇫</option>
-                <option value="en">🇬🇧</option>
-                <!-- <option>ja</option> -->
-            </select>
+
 
 
         </BModal>
@@ -55,20 +51,27 @@
 </template>
 
 <script>
-import UserView from '@/views/UserView.vue';
+
+import MenuView from '@/views/MenuView.vue';
 export default {
     name: "NavBar",
     components: {
-        UserView
+         MenuView
     },
 
     data() {
         return {
+            show: true,
             showConfig: false
         }
     },
     mounted() {
         //this.showConfig = true
+    },
+    metods: {
+        openMenu() {
+            this.$store.commit('core/showMenu', true)
+        }
     }
     // methods: {
     //     toggleShowConfig() {

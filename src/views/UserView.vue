@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button v-if="user==null" @click="signInWithPopup">SigIn with Google</b-button>
+        <b-button v-if="user==null" @click="signInWithPopup">SigIn</b-button>
         <div v-else>
 {{ user.displayName }}
  <!-- {{ user.uid }} -->

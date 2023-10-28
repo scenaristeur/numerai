@@ -1,7 +1,13 @@
 <template>
     <div>
         Select a mission
-        {{ missions }}
+        <b-form-select v-model="mission" @change="missionChanged">
+            <option v-for="mission in missions" value="mission.id" :key="mission.id">{{ mission.name}} {{ mission.version }}</option>
+       
+            <!-- <option value="stable">Stable Diffusion</option> -->
+        </b-form-select>
+
+        <!-- {{ missions }} -->
         or load yours :
         <b-button onclick="document.getElementById('loadMission').click()">{{ $t('load') }} mission</b-button>
         <input id="loadMission" style="visibility:hidden;" type="file" @change="loadMission" />
@@ -19,13 +25,17 @@ export default {
     name: "MissionSelect",
     data() {
         return {
-            missions: []
+            missions: [],
+            mission: "numerai"
         }
     },
     created() {
         this.missions = Object.values(missions)
     },
     methods: {
+        missionChanged(){
+            
+        },
         loadMission(event) {
             var reader = new FileReader();
             reader.onload = this.onReaderLoad;
