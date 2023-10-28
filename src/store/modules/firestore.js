@@ -1,12 +1,17 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
+
+// provider.setCustomParameters({
+//   'login_hint': 'user@example.com'
+// });
 
 import {
   collection,
   addDoc,
   getDocs,
   doc,
-  getDoc,
+  // getDoc,
   setDoc,
   query,
   where,
@@ -35,13 +40,19 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
+//https://firebase.google.com/docs/auth/web/google-signin?hl=fr
+const provider = new GoogleAuthProvider()
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+const auth = getAuth()
 
 // Initialize Cloud Firestore and get a reference to the service
 
 const state = () => ({
   db: getFirestore(app),
   unsubscribe: null,
-  stories: null
+  stories: null,
+  auth: auth,
+  user: null
 })
 
 const mutations = {
@@ -55,6 +66,57 @@ const mutations = {
 }
 
 const actions = {
+  async checkIfUserLoggedIn(context) {
+    context.state.auth.onAuthStateChanged(function (user) {
+      if (user) {
+        console.log('user connexted', user)
+        context.state.user = user
+        // User is signed in.
+      } else {
+        // No user is signed in.
+      }
+    })
+  },
+
+  async signInWithPopup(context) {
+    context.state.auth = auth
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential.accessToken
+        // The signed-in user info.
+        const user = result.user
+        context.state.user = user
+        context.state.token = token
+        console.log(user, token)
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.customData.email
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        console.log('ERROR', errorCode, errorMessage, email, credential)
+        // ...
+      })
+  },
+  async signOut(context) {
+    signOut(context.state.auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log('signed out')
+        context.state.user = null
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log('ERROR', error)
+      })
+  },
   async startListener(context) {
     const q = query(collection(context.state.db, 'cities'), where('state', '==', 'CA'))
     context.state.unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -69,13 +131,15 @@ const actions = {
     context.state.unsubscribe()
     console.log('listener stopped')
   },
-  async publishStory(context, story){
+  async publishStory(context, story) {
     try {
-        const docRef = await addDoc(collection(context.state.db, 'stories'), story)
-        console.log('Document written with ID: ', docRef.id)
-      } catch (e) {
-        console.error('Error adding document: ', e)
-      }
+      story.userId=context.state.user.uid
+      story.userName = context.state.user.displayName
+      const docRef = await addDoc(collection(context.state.db, 'stories'), story)
+      console.log('Document written with ID: ', docRef.id)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
   },
   async addStory(context) {
     try {
@@ -132,13 +196,28 @@ const actions = {
       regions: ['jingjinji', 'hebei']
     })
   },
+  async userStories(context){
+    console.log("user stories")
+    let stories = []
+    const storiesRef = collection(context.state.db, 'stories')
+    //const q = query(collection(context.state.db, 'cities'), where('state', '==', 'CA'))
+    const q = query(storiesRef, where('userId', '==', context.state.user.uid), orderBy('date', 'desc'), limit(10))
+    console.log('Q', q)
+
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`)
+      stories.push(doc.data())
+    })
+    context.state.stories = stories
+  },
   async updateStories(context) {
     // const storiessCollectionRef = collection(db, 'stories');
     // console.log("000 Stories", storiessCollectionRef)
     let stories = []
     //const querySnapshot = await getDocs(collection(context.state.db, 'stories'))
     const storiesRef = collection(context.state.db, 'stories')
-       const q = query(storiesRef, orderBy('date', 'desc'), limit(10))
+    const q = query(storiesRef, orderBy('date', 'desc'), limit(10))
     console.log('Q', q)
 
     const querySnapshot = await getDocs(q)

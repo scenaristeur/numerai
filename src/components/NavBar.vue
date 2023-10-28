@@ -1,7 +1,8 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar toggleable="lg" type="dark" variant="info" sticky="true" fixed="bottom">
             <b-navbar-brand href="#">Numerai</b-navbar-brand>
+            <UserView />
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -18,6 +19,7 @@
                         <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
                         <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
                     </b-nav-form> -->
+                       <b-button size="sm" class="my-2 my-sm-0 p" type="submit">Search</b-button>
 
                     <b-nav-item-dropdown text="Lang" right>
                         <b-dropdown-item href="#">EN</b-dropdown-item>
@@ -39,7 +41,7 @@
             </b-collapse>
         </b-navbar>
         <BModal title="Config" v-model="modal">
-
+lang: 
             <select v-model="$i18n.locale">
                 <option value="fr">🇲🇫</option>
                 <option value="en">🇬🇧</option>
@@ -52,8 +54,12 @@
 </template>
 
 <script>
+import UserView from '@/views/UserView.vue';
 export default {
     name: "NavBar",
+    components:{
+UserView
+  },
     
     data(){
         return{

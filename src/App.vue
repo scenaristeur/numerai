@@ -4,6 +4,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
 import StoriesView from './views/StoriesView.vue';
 import NavBar from './components/NavBar.vue'
+
 </script>
 
 <template>
@@ -17,7 +18,7 @@ import NavBar from './components/NavBar.vue'
       <HelloWorld :msg="$t('Numerai_Planet')" />
 
       <nav>
-        
+
         <RouterLink to="/">{{ $t('home') }}</RouterLink>
         <!-- <RouterLink to="/chat">{{ $t('Commencer') }}</RouterLink> -->
         <RouterLink to="/about">{{ $t('about') }}</RouterLink>
@@ -26,24 +27,31 @@ import NavBar from './components/NavBar.vue'
       </nav>
 
 
-
+   
 
 
 
     </div>
-    
+
 
   </header>
+
+
 
   <RouterView />
 
   <StoriesView />
+  <footer></footer>
 </template>
 
 <script>
 
 export default {
   name: "App",
+
+  mounted() {
+    this.$store.dispatch('firestore/checkIfUserLoggedIn')
+  },
 
   computed: {
     level() {
@@ -86,9 +94,9 @@ nav a {
   border-left: 1px solid var(--color-border);
 }
 
-a  {
+a {
   color: hsla(160, 100%, 37%, 1);
- }
+}
 
 nav a:first-of-type {
   border: 0;
@@ -119,5 +127,8 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+footer {
+  height: 200px;
 }
 </style>

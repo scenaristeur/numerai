@@ -175,7 +175,6 @@ export default {
             "workers": [],
             images: [],
             status: null
-
         };
     },
     methods: {
