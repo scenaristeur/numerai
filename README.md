@@ -1,6 +1,13 @@
 # numeria
 Créé toi même ton aventure ! 
 
+
+# Add your own adventure 
+- fork project
+- inspire from /src/stories/ copy on, for example : numerai_stoty.json, create your own, add it to /src/stories/index.js , pull request
+
+
+
 # difficulté : 
 - [ ] Une seule IA, créer plusieurs personnages, avec des prompts et messageHistory différents
 - [ ] il faut orienter l'IA à décrire l'environnement. Voir l'exemple "Les 7 fragments"

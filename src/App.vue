@@ -4,7 +4,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
 import StoriesView from './views/StoriesView.vue';
 import NavBar from './components/NavBar.vue'
-import StorySelect from './views/StorySelect.vue';
+import MissionSelect from './views/MissionSelect.vue';
 
 </script>
 
@@ -42,7 +42,7 @@ import StorySelect from './views/StorySelect.vue';
   <RouterView />
 
   <StoriesView />
-  <StorySelect/>
+  <MissionSelect/>
   <footer></footer>
 </template>
 
