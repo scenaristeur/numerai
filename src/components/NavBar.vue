@@ -10,7 +10,8 @@
                 <b-navbar-nav>
                     <b-nav-item href="#">Link</b-nav-item>
                     <b-nav-item href="#" disabled>Disabled</b-nav-item>
-                    <b-nav-item  @click="modal = !modal" ><b-button size="sm" class="btn btn-secondary my-2 my-sm-0" >⚙️</b-button></b-nav-item>
+                    <b-nav-item @click="showConfig = !showConfig"><b-button size="sm"
+                            class="btn btn-secondary my-2 my-sm-0">⚙️</b-button></b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
@@ -19,34 +20,34 @@
                         <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
                         <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
                     </b-nav-form> -->
-                       <b-button size="sm" class="my-2 my-sm-0 p" type="submit">Search</b-button>
 
-                    <b-nav-item-dropdown text="Lang" right>
+                    <!-- 
+                    <b-nav-item-dropdown text="Lang" right >
                         <b-dropdown-item href="#">EN</b-dropdown-item>
                         <b-dropdown-item href="#">ES</b-dropdown-item>
                         <b-dropdown-item href="#">RU</b-dropdown-item>
                         <b-dropdown-item href="#">FA</b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown right>
-                        <!-- Using 'button-content' slot -->
+                    <b-nav-item-dropdown right >
+                       
                         <template #button-content>
                             <em>User</em>
                         </template>
                         <b-dropdown-item href="#">Profile</b-dropdown-item>
                         <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-                    </b-nav-item-dropdown>
-                    
+                    </b-nav-item-dropdown> -->
+
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
-        <BModal title="Config" v-model="modal">
-lang: 
+        <BModal title="Config" v-model="showConfig">
+            lang:
             <select v-model="$i18n.locale">
                 <option value="fr">🇲🇫</option>
                 <option value="en">🇬🇧</option>
                 <!-- <option>ja</option> -->
-              </select>
+            </select>
 
 
         </BModal>
@@ -57,17 +58,17 @@ lang:
 import UserView from '@/views/UserView.vue';
 export default {
     name: "NavBar",
-    components:{
-UserView
-  },
-    
-    data(){
-        return{
-            modal: false
+    components: {
+        UserView
+    },
+
+    data() {
+        return {
+            showConfig: false
         }
     },
-    mounted(){
-        this.modal = true
+    mounted() {
+        //this.showConfig = true
     }
     // methods: {
     //     toggleShowConfig() {
