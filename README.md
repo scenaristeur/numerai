@@ -6,6 +6,8 @@ Créé toi même ton aventure !
 - fork project
 - inspire from /src/stories/ copy on, for example : numerai_stoty.json, create your own, add it to /src/stories/index.js , pull request
 
+# design
+-behance
 
 
 # difficulté : 

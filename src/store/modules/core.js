@@ -3,6 +3,7 @@
 // import * as Automerge from 'automerge'
 // import { v4 as uuidv4 } from 'uuid';
 import { Story } from '@/api/story.js'
+import { HordeClient } from '@/api/horde_client.js'
 
 
 const state = () => ({
@@ -10,7 +11,8 @@ const state = () => ({
   showConfig: false,
   level: 0,
   stories: [],
-  story: null
+  story: null,
+  hordeClient: new HordeClient()
 })
 
 const mutations = {
@@ -38,6 +40,10 @@ const mutations = {
 }
 
 const actions = {
+  async getCompletion(context, story){
+    console.log(context.state, story)
+    context.state.hordeClient.getCompletion({prompt: "blalbla"})
+  }
   // async newDoc(context){
   //   let doc = Automerge.init()
   //   context.commit('setDoc', doc)
