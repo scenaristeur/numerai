@@ -1,16 +1,40 @@
 <template>
     <div>
-        Select a mission
+        Selectionne une mission
         <b-form-select v-model="mission" @change="missionChanged">
-            <option v-for="mission in missions" value="mission.id" :key="mission.id">{{ mission.name}} {{ mission.version }}</option>
-       
+            <option v-for="mission, id in Object.entries(missions)" :value="mission" :key="id">
+                {{ mission[1].name }}
+            </option>
+
             <!-- <option value="stable">Stable Diffusion</option> -->
         </b-form-select>
 
-        <!-- {{ missions }} -->
-        or load yours :
-        <b-button onclick="document.getElementById('loadMission').click()">{{ $t('load') }} mission</b-button>
-        <input id="loadMission" style="visibility:hidden;" type="file" @change="loadMission" />
+
+  
+
+        <div v-if="mission != null">
+            {{ $t('what_is_name') }} <input class="boxsizingBorder" ref="prenom" v-model="prenom"
+                :placeholder="$t('firstname_placeholder')" /><br>
+            {{ $t('are_you') }}<br>
+
+            <b-form-radio name="sexe" style="display: inline-block" v-model="sexe" value="fille"> {{ $t('a_girl') }}
+                {{ $t('or') }}</b-form-radio>
+            <b-form-radio name="sexe" style="display: inline-block" v-model="sexe" value="garçon"> {{ $t('a_boy')
+            }}</b-form-radio>
+
+            <br>
+
+            <b-button :disabled="prenom.length == 0" @click="createStory">Démarrer l'aventure</b-button>
+        </div>
+        <div v-else>
+            ou charge la tienne :
+            <b-button size="sm" onclick="document.getElementById('loadMission').click()">{{ $t('load') }} mission</b-button>
+            <input id="loadMission" style="visibility:hidden;" type="file" @change="loadMission" />
+        </div>
+
+
+
+
     </div>
 </template>
 
@@ -26,15 +50,25 @@ export default {
     data() {
         return {
             missions: [],
-            mission: "numerai"
+            mission: null,
+            prenom: 'Camille',
+            sexe: 'garçon'
         }
     },
     created() {
-        this.missions = Object.values(missions)
+        this.missions = missions
     },
     methods: {
-        missionChanged(){
-            
+        createStory() {
+            let options = {
+                mission: this.mission,
+                heros: { prenom: this.prenom, sexe: this.sexe }
+            }
+            this.$store.commit('core/createStory', options)
+        },
+        missionChanged(v) {
+            console.log(v)
+            this.mission = v
         },
         loadMission(event) {
             var reader = new FileReader();

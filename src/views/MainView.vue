@@ -1,12 +1,13 @@
 <template>
     <div>
-        Carousssel
-        <StoriesView />
-        <hr>
-        Démarrer une MissionSelect
+   
         <MissionSelect />
-        <hr>
-        () mes histoires
+        <!-- <hr>
+        () mes histoires -->
+
+        <StoriesView />
+
+
 
     </div>
 </template>

@@ -3,7 +3,7 @@
         <!-- <input type="radio" v-model="lang" value="fr" checked />Français
         <input type="radio" v-model="lang" value="en" />English -->
 
-        <b-button @click="newStory" variant="success">{{ $t('Commencer') }}</b-button>
+
         <!-- <p>message: {{ $t('hello') }}</p> -->
         <div v-if="level == 0">
             {{ $t('what_is_name') }} <input class="boxsizingBorder" ref="prenom" v-model="prenom"
@@ -58,8 +58,8 @@
 
 
 
-        <!-- <input class="inputMessage" placeholder="Type here..." /> -->
-        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" autofocus
+        <!-- <input class="inputMessage" placeholder="Type here..." /> autofocus-->
+        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" 
             :placeholder="$t('communiquer')" v-on:keyup.enter="transmettre" /><br>
         <div style="text-align:center">
             <b-button variant="success" @click="transmettre" class="btn">{{ $t('envoyer') }}</b-button>

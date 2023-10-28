@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Stories</h3>
+        <h3>Stories Caroussel</h3>
         <button @click="userStories">My 10 last Stories</button>
         <button @click="updateStories">Last 10 Stories</button>
         <!-- <button @click="addStory">Add Story</button>
