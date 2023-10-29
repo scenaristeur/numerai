@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
-import { getStorage, ref, uploadString } from 'firebase/storage'
+import { getStorage, ref, uploadString, listAll } from 'firebase/storage'
 
 // provider.setCustomParameters({
 //   'login_hint': 'user@example.com'
@@ -52,7 +52,7 @@ const storage = getStorage()
 //const storageRef = ref(storage);
 
 // Create a child reference
-const imagesRef = ref(storage, 'images')
+
 // imagesRef now points to 'images'
 
 // Initialize Cloud Firestore and get a reference to the service
@@ -79,33 +79,33 @@ const actions = {
   async uploadB64Image(context, options) {
     console.log(context, options)
     const storage = getStorage()
-  //   let  storageRef = ref(storage, 'text')
+    //   let  storageRef = ref(storage, 'text')
 
-  //   // // Raw string is the default if no format is provided
-  //   const message = 'This is my message.'
-  //   uploadString(storageRef, message).then((snapshot) => {
-  //     console.log('Uploaded a raw string!', snapshot)
-  //   })
+    //   // // Raw string is the default if no format is provided
+    //   const message = 'This is my message.'
+    //   uploadString(storageRef, message).then((snapshot) => {
+    //     console.log('Uploaded a raw string!', snapshot)
+    //   })
 
-  //  storageRef = ref(storage, 'b64')
-  //   // Base64 formatted string
-  //   const message2 = '5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
-  //   uploadString(storageRef, message2, 'base64').then((snapshot) => {
-  //     console.log('Uploaded a base64 string!', snapshot)
-  //   })
-  //   storageRef = ref(storage, 'b64url')
-  //   // Base64url formatted string
-  //   const message3 = '5b6p5Y-344GX44G-44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
-  //   uploadString(storageRef, message3, 'base64url').then((snapshot) => {
-  //     console.log('Uploaded a base64url string!', snapshot)
-  //   })
-  let path = ['images', options.story_id, options.message_id].join('/')
+    //  storageRef = ref(storage, 'b64')
+    //   // Base64 formatted string
+    //   const message2 = '5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+    //   uploadString(storageRef, message2, 'base64').then((snapshot) => {
+    //     console.log('Uploaded a base64 string!', snapshot)
+    //   })
+    //   storageRef = ref(storage, 'b64url')
+    //   // Base64url formatted string
+    //   const message3 = '5b6p5Y-344GX44G-44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+    //   uploadString(storageRef, message3, 'base64url').then((snapshot) => {
+    //     console.log('Uploaded a base64url string!', snapshot)
+    //   })
+    let path = ['images', options.story_id, options.message_id].join('/')
     let storageRef = ref(storage, path)
     // const imagesRef = ref(storage, 'images')
     // Data URL string
-   // const message4 = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+    // const message4 = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
     uploadString(storageRef, options.data_url, 'data_url').then((snapshot) => {
-      console.log('Uploaded a data_url string!',path,  snapshot)
+      console.log('Uploaded a data_url string!', path, snapshot)
     })
 
     // // Data URL string
@@ -184,6 +184,51 @@ const actions = {
     context.state.unsubscribe()
     console.log('listener stopped')
   },
+
+  async getStoryImages(context, story) {
+    console.log(context)
+    const imagesRef = ref(storage, 'images/' + story.id)
+    // Find all the prefixes and items.
+    listAll(imagesRef)
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {
+          console.log('folderRef', folderRef)
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+        })
+        res.items.forEach((itemRef) => {
+          // All the items under listRef.
+          console.log('itemRef', itemRef)
+        })
+      })
+      .catch((error) => {
+        console.log('error', error)
+        // Uh-oh, an error occurred!
+      })
+  },
+  async getStoryFirstImage(context, story) {
+    console.log(context)
+    console.log(story.id, story.name)
+    const imagesRef = ref(storage, 'images/' + story.id, story.messages[0].id)
+    // Find all the prefixes and items.
+    listAll(imagesRef)
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {
+          console.log('1st image folderRef', folderRef)
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+        })
+        res.items.forEach((itemRef) => {
+          // All the items under listRef.
+          console.log('1st image itemRef', itemRef)
+        })
+      })
+      .catch((error) => {
+        console.log('1st image error', error)
+        // Uh-oh, an error occurred!
+      })
+  },
+
   async publishStory(context, story) {
     try {
       story.userId = context.state.user.uid
@@ -202,6 +247,7 @@ const actions = {
           const data_url = m.image.base64
           const options = { message_id: m.id, story_id: story.id, data_url: data_url }
           context.dispatch('uploadB64Image', options)
+          delete m.image
         }
       })
     } catch (e) {

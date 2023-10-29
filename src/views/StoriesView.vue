@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div v-for="s in stories" :key="s.id" class="carousel-item" @click="readStory(s)">
-                        <img :src="s.messages[1].image.base64" class="d-block w-100" alt="...">
+                        <img :src="getStoryFirstImage(s)" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{ s.name }}</h5>
                             <p>Some representative placeholder content for the first slide.
@@ -146,6 +146,12 @@ export default {
         readStory(s) {
             console.log(s)
             this.reading = s
+            this.$store.dispatch('firestore/getStoryImages', s)
+        },
+        getStoryFirstImage(s) {
+            console.log(s)
+            this.reading = s
+            this.$store.dispatch('firestore/getStoryFirstImage', s)
         },
         async startListener() {
             this.$store.dispatch('firestore/startListener')
