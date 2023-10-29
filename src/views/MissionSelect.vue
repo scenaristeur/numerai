@@ -1,38 +1,51 @@
 <template>
     <div>
         Selectionne une mission
-        <b-form-select v-model="mission" @change="missionChanged">
+        <select v-model="mission" @change="missionChanged" class="form-select" aria-label="Select a mission">
             <option v-for="mission, id in Object.entries(missions)" :value="mission" :key="id">
                 {{ mission[1].name[$i18n.locale] }} {{ mission[1].version }}
             </option>
 
             <!-- <option value="stable">Stable Diffusion</option> -->
-        </b-form-select>
+        </select>
 
 
-  
+
 
         <div v-if="mission != null">
 
-{{ mission[1].trailer[$i18n.locale] }}
-<br>
+            {{ mission[1].trailer[$i18n.locale] }}
+            <br>
 
             {{ $t('what_is_name') }} <input class="boxsizingBorder" ref="prenom" v-model="prenom"
                 :placeholder="$t('firstname_placeholder')" /><br>
             {{ $t('are_you') }}<br>
 
-            <b-form-radio name="sexe" style="display: inline-block" v-model="sexe" value="fille"> {{ $t('a_girl') }}
+            <!-- <b-form-radio name="sexe" style="display: inline-block" v-model="sexe" value="fille"> {{ $t('a_girl') }}
                 {{ $t('or') }}</b-form-radio>
             <b-form-radio name="sexe" style="display: inline-block" v-model="sexe" value="garçon"> {{ $t('a_boy')
-            }}</b-form-radio>
+            }}</b-form-radio> -->
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="sexe" id="fille" v-model="sexe" value="fille">
+                <label class="form-check-label" for="flexRadioDefault1">
+                 fille
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="sexe" id="garçon" v-model="sexe" value="garçon" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  garçon
+                </label>
+              </div>
 
             <br>
 
-            <b-button :disabled="prenom.length == 0" @click="createStory">Démarrer l'aventure</b-button>
+            <button type="button" class="btn btn-primary" :disabled="prenom.length == 0" @click="createStory">Démarrer l'aventure</button>
         </div>
         <div v-else>
             ou charge la tienne :
-            <b-button size="sm" onclick="document.getElementById('loadMission').click()">{{ $t('load') }} mission</b-button>
+            <button size="sm" onclick="document.getElementById('loadMission').click()">{{ $t('load') }} mission</button>
             <input id="loadMission" style="visibility:hidden;" type="file" @change="loadMission" />
         </div>
 
@@ -65,7 +78,7 @@ export default {
     methods: {
         createStory() {
             let options = {
-                lang : this.$i18n.locale,
+                lang: this.$i18n.locale,
                 mission: this.mission,
                 heros: { prenom: this.prenom, sexe: this.sexe }
             }
@@ -74,7 +87,9 @@ export default {
         },
         missionChanged(v) {
             console.log(v)
-            this.mission = v
+            console.log(v.target)
+            console.log(v.target.value)
+            this.mission = JSON.parse(v.target.value)
         },
         loadMission(event) {
             var reader = new FileReader();

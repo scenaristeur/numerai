@@ -1,11 +1,15 @@
 <template>
-    <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" :placeholder="$t('communiquer')"
-        v-on:keyup.enter="onNewUserMessage" /><br>
+    <div v-if="story!= null">
+    <textarea class="form-control" ref="input" v-model="input" rows="6" :placeholder="$t('communiquer')"
+        v-on:keyup.enter="onNewUserMessage" id="floatingTextarea" />
+        <label for="floatingTextarea">Comments</label>
+        <br>
     <div style="text-align:center">
-        <b-button variant="success" @click="onNewUserMessage" class="btn">{{ $t('envoyer') }}</b-button>
-        <b-button v-if="story.messages.length > 0" variant="success" ref="continue" @click="continuer"
-            class="btn">Continue</b-button>
+        <button variant="success" @click="onNewUserMessage" class="btn">{{ $t('envoyer') }}</button>
+        <button v-if="story.messages.length > 0" variant="success" ref="continue" @click="continuer"
+            class="btn">Continue</button>
     </div>
+</div>
 </template>
 
 <script>
@@ -17,7 +21,7 @@ export default {
         }
     },
     created() {
-        this.init()
+        //this.init()
     },
     methods: {
         init() {

@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
 //import StoriesView from './views/StoriesView.vue';
-import NavBar from './components/NavBar.vue'
+//import NavBar from './components/NavBar.vue'
 //import MissionSelect from './views/MissionSelect.vue';
 
 
@@ -16,7 +16,7 @@ import NavBar from './components/NavBar.vue'
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
     <div class="wrapper">
-      <NavBar />
+      <!-- <NavBar /> -->
       <HistoryGalery />
       <HelloWorld :msg="$t('Numerai_Planet')" />
 
@@ -24,77 +24,51 @@ import NavBar from './components/NavBar.vue'
 
         <RouterLink to="/">{{ $t('home') }}</RouterLink>
         <!-- <RouterLink to="/chat">{{ $t('Commencer') }}</RouterLink> -->
+        <RouterLink to="/ecrire"> Ecrire</RouterLink>
+        <RouterLink to="/lire">Lire</RouterLink>
         <RouterLink to="/about">{{ $t('about') }}</RouterLink>
 
         <a href="https://discord.gg/X5UqZdSrmP" target="_blank">Join us on Discord</a>
       </nav>
 
-
-
+      lang:
+      <select v-model="$i18n.locale">
+          <option value="fr">🇲🇫</option>
+          <option value="en">🇬🇧</option>
+          <!-- <option>ja</option> -->
+      </select>
+      <UserView />
 
 
 
     </div>
  
+
+ 
   </header>
 
-  <b-container fluid>
-
-    <b-row>
-      <b-col class="mobileHide">
-        <SideBar />
-      </b-col>
-      <b-col>
-
-        <StoriesView />
-    
-        <MainView />
-
-        <hr>
-
-        <!-- https://docs.minionmade.com/developer-tools/show-hide-specific-content-on-mobile-devices -->
-
-        <div class="mobileShow">
-
-          TEXT OR IMAGE FOR MOBILE HERE
-
-        </div>
-
-        <div class="mobileHide">
-
-          TEXT OR IMAGE FOR LARGE HERE
-
-        </div>
-        <div v-if="story != null">
-          <StoryView />
-          <ChatInput />
-        </div>
-
-      </b-col>
-    </b-row>
-
-  </b-container>
 
 
   <RouterView />
+  
 
   <!-- <StoriesView />
   <MissionSelect /> -->
 
-  <footer></footer>
+  <!-- <footer></footer> -->
 </template>
 
 <script>
-import SideBar from '@/views/SideBar.vue';
-import MainView from '@/views/MainView.vue';
-import StoriesView from '@/views/StoriesView.vue';
-import ChatInput from '@/views/ChatInput.vue';
-import StoryView from '@/views/StoryView.vue';
+import UserView from '@/views/UserView.vue';
+// import MainView from '@/views/MainView.vue';
+
+// import ChatInput from '@/views/ChatInput.vue';
+// import StoryView from '@/views/StoryView.vue';
 
 export default {
   name: "App",
   components: {
-    SideBar, MainView, ChatInput, StoryView, StoriesView
+    UserView,/* MainView, ChatInput, StoryView*/
   },
 
   mounted() {
@@ -179,10 +153,10 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
-
+/*
 footer {
   height: 200px;
-}
+}*/
 </style>
 <style>
 .mobileShow {

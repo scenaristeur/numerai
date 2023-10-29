@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="story != null">
         <h1>STORY VIEW</h1>
 
         status : {{ story.status }}
@@ -15,7 +15,8 @@
                 <li v-if="story.status != undefined">
                     <small style="text-align: center" class="iamessage">
 
-                        <div v-if="story.status.queue_position">J'intègre tes paroles {{ story.status.queue_position }}</div>
+                        <div v-if="story.status.queue_position">J'intègre tes paroles {{ story.status.queue_position }}
+                        </div>
                         <div v-if="story.status.wait_time">Je réfléchis {{ story.status.wait_time }}</div>
                         <div v-if="story.status.waiting">Je sens que ça vient {{ story.status.waiting }}</div>
                     </small>
@@ -23,7 +24,7 @@
 
             </ul>
         </div>
-        <b-button @click="publish">{{ $t('publish') }}</b-button><br>
+        <button @click="publish">{{ $t('publish') }}</button><br>
         <!-- {{ story }} -->
     </div>
 </template>
@@ -49,7 +50,7 @@ export default {
         story() {
             return this.$store.state.core.story
         },
-     
+
     }
 }
 </script>

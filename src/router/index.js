@@ -17,13 +17,29 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     },
+    // {
+    //   path: '/chat',
+    //   name: 'chat',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/ChatView.vue')
+    // },
     {
-      path: '/chat',
-      name: 'chat',
+      path: '/lire',
+      name: 'lire',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ChatView.vue')
+      component: () => import('../views/LireView.vue')
+    },
+    {
+      path: '/ecrire',
+      name: 'exrire',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/EcrireView.vue')
     }
   ]
 })

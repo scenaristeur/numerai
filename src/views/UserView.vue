@@ -1,10 +1,10 @@
 <template>
     <div>
-        <b-button v-if="user==null" @click="signInWithPopup">SigIn</b-button>
+        <button v-if="user==null" @click="signInWithPopup">SigIn</button>
         <div v-else>
 {{ user.displayName }}
  <!-- {{ user.uid }} -->
-<b-button variant="danger" @click="signOut">Logout</b-button>
+<button variant="danger" @click="signOut">Logout</button>
         </div>
     </div>
 </template>
