@@ -14,8 +14,10 @@ import NavBar from './components/NavBar.vue'
 
 
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-    <HistoryGalery />
+
     <div class="wrapper">
+      <NavBar />
+      <HistoryGalery />
       <HelloWorld :msg="$t('Numerai_Planet')" />
 
       <nav>
@@ -29,7 +31,7 @@ import NavBar from './components/NavBar.vue'
 
 
 
-      <StoriesView />
+
 
 
     </div>
@@ -38,7 +40,7 @@ import NavBar from './components/NavBar.vue'
   </header>
 
   <b-container fluid>
-    <NavBar />
+
     <b-row>
       <b-col class="mobileHide">
         <SideBar />
@@ -83,14 +85,14 @@ import NavBar from './components/NavBar.vue'
 <script>
 import SideBar from '@/views/SideBar.vue';
 import MainView from '@/views/MainView.vue';
-import StoriesView from '@/views/StoriesView.vue';
+
 import ChatInput from '@/views/ChatInput.vue';
 import StoryView from '@/views/StoryView.vue';
 
 export default {
   name: "App",
   components: {
-    SideBar, MainView, StoriesView, ChatInput, StoryView
+    SideBar, MainView, ChatInput, StoryView
   },
 
   mounted() {
@@ -112,7 +114,7 @@ export default {
 <style scoped>
 header {
   line-height: 1.5;
-  max-height: 100vh;
+  /* max-height: 100vh;*/
 }
 
 .logo {
