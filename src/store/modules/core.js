@@ -39,6 +39,12 @@ const mutations = {
 }
 
 const actions = {
+  async publishStory(context, storyName) {
+    let story = context.state.story.getClean(storyName)
+console.log("Published Story", story)
+    
+    context.dispatch('firestore/publishStory', story, {root:true})
+  },
   async newUserMessage(context, userMessage) {
     context.state.story.onNewUserMessage(userMessage)
     await context.dispatch('getCompletion', context.state.story)

@@ -11,6 +11,8 @@
             <li v-for="s in stories" :key="s.id">
                 {{ s.name }} / by {{ s.userName }}, {{ s.userId }} / {{ s.messages.length }} messages / {{ s.adventure }} /
                 {{ s.date }} / {{ s.likes }}
+                <hr>
+                {{ s }}
                 <ul>
                     <li v-for="m in s.messages" :key="m.id">
                         {{ m.isUser ? 'user' : 'ia' }} : {{ m.text }}

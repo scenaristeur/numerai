@@ -21,4 +21,16 @@ export class Story {
 
     console.log(this)
   }
+
+  getClean(storyName) {
+    let story = {
+      id: this.id,
+      name: storyName,
+      date: Date.now(),
+      likes: 0,
+      //adventure: this.aventure,
+      messages: this.messages
+    }
+    return story
+  }
 }

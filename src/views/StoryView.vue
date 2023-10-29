@@ -23,7 +23,7 @@
 
             </ul>
         </div>
-
+        <b-button @click="publish">{{ $t('publish') }}</b-button><br>
         <!-- {{ story }} -->
     </div>
 </template>
@@ -31,6 +31,20 @@
 <script>
 export default {
     name: "StoryView",
+    methods: {
+        publish() {
+            let storyName = prompt("Please enter a name for your story", Date.now());
+            // let story = {
+            //     id: uuidv4(),
+            //     name: storyName,
+            //     date: Date.now(),
+            //     likes: 0,
+            //     adventure: this.aventure,
+            //     messages: this.story.messageHistory
+            // }
+            this.$store.dispatch('core/publishStory', storyName)
+        },
+    },
     computed: {
         story() {
             return this.$store.state.core.story
