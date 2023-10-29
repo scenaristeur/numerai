@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
+import { getStorage, ref, uploadString } from 'firebase/storage'
 
 // provider.setCustomParameters({
 //   'login_hint': 'user@example.com'
@@ -44,6 +45,15 @@ const app = initializeApp(firebaseConfig)
 const provider = new GoogleAuthProvider()
 provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
 const auth = getAuth()
+// Get a reference to the storage service, which is used to create references in your storage bucket
+const storage = getStorage()
+
+// Create a storage reference from our storage service
+//const storageRef = ref(storage);
+
+// Create a child reference
+const imagesRef = ref(storage, 'images')
+// imagesRef now points to 'images'
 
 // Initialize Cloud Firestore and get a reference to the service
 
@@ -66,6 +76,49 @@ const mutations = {
 }
 
 const actions = {
+  async uploadB64Image(context, options) {
+    console.log(context, options)
+    const storage = getStorage()
+  //   let  storageRef = ref(storage, 'text')
+
+  //   // // Raw string is the default if no format is provided
+  //   const message = 'This is my message.'
+  //   uploadString(storageRef, message).then((snapshot) => {
+  //     console.log('Uploaded a raw string!', snapshot)
+  //   })
+
+  //  storageRef = ref(storage, 'b64')
+  //   // Base64 formatted string
+  //   const message2 = '5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+  //   uploadString(storageRef, message2, 'base64').then((snapshot) => {
+  //     console.log('Uploaded a base64 string!', snapshot)
+  //   })
+  //   storageRef = ref(storage, 'b64url')
+  //   // Base64url formatted string
+  //   const message3 = '5b6p5Y-344GX44G-44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+  //   uploadString(storageRef, message3, 'base64url').then((snapshot) => {
+  //     console.log('Uploaded a base64url string!', snapshot)
+  //   })
+  let path = ['images', options.story_id, options.message_id].join('/')
+    let storageRef = ref(storage, path)
+    // const imagesRef = ref(storage, 'images')
+    // Data URL string
+   // const message4 = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+    uploadString(storageRef, options.data_url, 'data_url').then((snapshot) => {
+      console.log('Uploaded a data_url string!',path,  snapshot)
+    })
+
+    // // Data URL string
+    // console.log(context, options)
+    // try {
+    // //const message4 = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB'
+    // uploadString(imagesRef, options.data_url, options.metadata).then((snapshot, err) => {
+    //   console.log('Uploaded a data_url string!', snapshot, err)
+    // })}
+    // catch(e){
+    //   console.log(e)
+    // }
+  },
   async checkIfUserLoggedIn(context) {
     context.state.auth.onAuthStateChanged(function (user) {
       if (user) {
@@ -133,10 +186,24 @@ const actions = {
   },
   async publishStory(context, story) {
     try {
-      story.userId=context.state.user.uid
+      story.userId = context.state.user.uid
       story.userName = context.state.user.displayName
       const docRef = await addDoc(collection(context.state.db, 'stories'), story)
       console.log('Document written with ID: ', docRef.id)
+
+      story.messages.forEach((m) => {
+        console.log(m)
+
+        if (m.image != undefined) {
+          // const metadata = {
+          //   id: m.id,
+          //   story_id: story.id
+          // }
+          const data_url = m.image.base64
+          const options = { message_id: m.id, story_id: story.id, data_url: data_url }
+          context.dispatch('uploadB64Image', options)
+        }
+      })
     } catch (e) {
       console.error('Error adding document: ', e)
     }
@@ -196,12 +263,17 @@ const actions = {
       regions: ['jingjinji', 'hebei']
     })
   },
-  async userStories(context){
-    console.log("user stories")
+  async userStories(context) {
+    console.log('user stories')
     let stories = []
     const storiesRef = collection(context.state.db, 'stories')
     //const q = query(collection(context.state.db, 'cities'), where('state', '==', 'CA'))
-    const q = query(storiesRef, where('userId', '==', context.state.user.uid), orderBy('date', 'desc'), limit(10))
+    const q = query(
+      storiesRef,
+      where('userId', '==', context.state.user.uid),
+      orderBy('date', 'desc'),
+      limit(10)
+    )
     console.log('Q', q)
 
     const querySnapshot = await getDocs(q)
