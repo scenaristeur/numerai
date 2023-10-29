@@ -5,7 +5,6 @@
 import { Story } from '@/api/story.js'
 import { HordeClient } from '@/api/horde_client.js'
 
-
 const state = () => ({
   showMenu: false,
   showConfig: false,
@@ -40,9 +39,14 @@ const mutations = {
 }
 
 const actions = {
-  async getCompletion(context, story){
+  async newUserMessage(context, userMessage) {
+    context.state.story.onNewUserMessage(userMessage)
+    await context.dispatch('getCompletion', context.state.story)
+  },
+  async getCompletion(context, story) {
     console.log(context.state, story)
-    context.state.hordeClient.getCompletion({prompt: "blalbla"})
+    let completion = await context.state.hordeClient.getCompletion(story)
+    console.log('completion', completion)
   }
   // async newDoc(context){
   //   let doc = Automerge.init()

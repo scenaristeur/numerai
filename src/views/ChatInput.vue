@@ -26,9 +26,10 @@ export default {
         },
         onNewUserMessage() {
             if (this.input.trim().length > 0) {
-                this.story.onNewUserMessage(this.input)
+    
+                this.$store.dispatch('core/newUserMessage', this.input)
                 this.input = "";
-                this.$store.dispatch('core/getCompletion', this.story)
+               // this.$store.dispatch('core/getCompletion', this.story)
             }
         },
         continuer() {
