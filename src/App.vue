@@ -35,8 +35,7 @@ import NavBar from './components/NavBar.vue'
 
 
     </div>
-
-
+ 
   </header>
 
   <b-container fluid>
@@ -46,6 +45,9 @@ import NavBar from './components/NavBar.vue'
         <SideBar />
       </b-col>
       <b-col>
+
+        <StoriesView />
+    
         <MainView />
 
         <hr>
@@ -85,14 +87,14 @@ import NavBar from './components/NavBar.vue'
 <script>
 import SideBar from '@/views/SideBar.vue';
 import MainView from '@/views/MainView.vue';
-
+import StoriesView from '@/views/StoriesView.vue';
 import ChatInput from '@/views/ChatInput.vue';
 import StoryView from '@/views/StoryView.vue';
 
 export default {
   name: "App",
   components: {
-    SideBar, MainView, ChatInput, StoryView
+    SideBar, MainView, ChatInput, StoryView, StoriesView
   },
 
   mounted() {

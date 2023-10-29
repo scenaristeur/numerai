@@ -7,17 +7,17 @@
             <!-- <option>ja</option> -->
         </select>
         <UserView />
-        <StoriesView />
+    
     </div>
 </template>
 
 <script>
 import UserView from '@/views/UserView.vue';
-import StoriesView from '@/views/StoriesView.vue';
+
 export default {
     name: "SideBar",
     components: {
-        UserView,StoriesView
+        UserView
     },
 }
 </script>
