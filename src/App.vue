@@ -10,7 +10,6 @@ import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
-
   <header>
 
 
@@ -40,38 +39,38 @@ import NavBar from './components/NavBar.vue'
 
   <b-container fluid>
     <NavBar />
-  <b-row>
-    <b-col class="mobileHide">
-      <SideBar />
-    </b-col>
-    <b-col>
-      <MainView />
+    <b-row>
+      <b-col class="mobileHide">
+        <SideBar />
+      </b-col>
+      <b-col>
+        <MainView />
 
-<hr>
+        <hr>
 
-  <!-- https://docs.minionmade.com/developer-tools/show-hide-specific-content-on-mobile-devices -->
+        <!-- https://docs.minionmade.com/developer-tools/show-hide-specific-content-on-mobile-devices -->
 
-  <div class="mobileShow">
+        <div class="mobileShow">
 
-    TEXT OR IMAGE FOR MOBILE HERE
+          TEXT OR IMAGE FOR MOBILE HERE
 
-  </div>
+        </div>
 
-  <div class="mobileHide">
+        <div class="mobileHide">
 
-    TEXT OR IMAGE FOR LARGE HERE
+          TEXT OR IMAGE FOR LARGE HERE
 
-  </div>
+        </div>
+        <div v-if="story != null">
+          <StoryView />
+          <ChatInput />
+        </div>
 
-  <ChatInput v-if="story != null"/>
+      </b-col>
+    </b-row>
 
-Story : {{ story }}
-
-    </b-col>
-  </b-row>
-  
   </b-container>
-  
+
 
   <RouterView />
 
@@ -86,12 +85,13 @@ import SideBar from '@/views/SideBar.vue';
 import MainView from '@/views/MainView.vue';
 import StoriesView from '@/views/StoriesView.vue';
 import ChatInput from '@/views/ChatInput.vue';
+import StoryView from '@/views/StoryView.vue';
 
 export default {
   name: "App",
   components: {
-        SideBar, MainView,StoriesView , ChatInput
-    },
+    SideBar, MainView, StoriesView, ChatInput, StoryView
+  },
 
   mounted() {
     this.$store.dispatch('firestore/checkIfUserLoggedIn')
@@ -179,10 +179,8 @@ nav a:first-of-type {
 footer {
   height: 200px;
 }
-
 </style>
 <style>
-
 .mobileShow {
   display: none;
 }

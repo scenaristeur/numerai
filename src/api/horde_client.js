@@ -52,9 +52,10 @@ export class HordeClient {
   }
   async getCompletion(story) {
     let client = this
+    this.story = story
     console.log('get completion', story)
     let llm_request_message = {
-      prompt: this.generatePrompt(story),
+      prompt: this.generateCompletionPrompt(story),
       params: this.params,
       models: this.models,
       workers: this.workers
@@ -100,12 +101,14 @@ export class HordeClient {
           check.data.generations[0].text.trim() == ']'
         ) {
           let end = Date.now()
+          let message_id = uuidv4()
+          let text = check.data.generations[0].text
+            .replace('[RESPONSE]', '')
+            .replace('[/RESPONSE]', '')
+            .trim()
           story.messages.push({
-            id: uuidv4(),
-            text: check.data.generations[0].text
-              .replace('[RESPONSE]', '')
-              .replace('[/RESPONSE]', '')
-              .trim(),
+            id: message_id,
+            text: text,
             isUser: false,
             start: start,
             end: end,
@@ -114,7 +117,8 @@ export class HordeClient {
             worker_name: check.data.generations[0].worker_name,
             duration: Math.round((end - start) / 1000)
           })
-          //app.status = null
+          story.status = null
+          await client.generateImagePrompt({ story: story, message_id: message_id, text: text })
           //app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
         } else {
           console.log('ERROR, should renew Completion request')
@@ -129,13 +133,13 @@ export class HordeClient {
         // console.log("Memory", app.memory);
         clearInterval(timer) //Stop the timer
       } else {
-        //app.status = check.data
+        story.status = check.data
         console.log(check.data)
       }
     }, 1000)
     //this.$store.commit('core/incrementLevel')
   }
-  generatePrompt(story) {
+  generateCompletionPrompt(story) {
     let locale = story.options.lang
     this.lang = this.langues[locale]
     this.prenom = story.options.heros.prenom
@@ -150,5 +154,211 @@ export class HordeClient {
       .map((message) => (message.isUser ? `[INST] ${message.text} [/INST]` : `${message.text}`))
       .join('\n')
     return system_prompt + '\n' + history
+  }
+  async generateImagePrompt(options) {
+    let client = this
+
+    console.log('generate image for ', options)
+    let sys_prompt = `Here’s a formula for a Stable Diffusion image prompt:
+     An image of[adjective][subject][doing action], [creative lighting style],
+    detailed, realistic, trending on artstation, in style of[famous artist 1], [famous artist 2], [famous artist 3].
+    `
+    let prompt = `
+    L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
+        [INST]${sys_prompt}. You must write an image prompt representing ${options.text} following this formula. Give me only the image prompt starting with "an photo of..."[/INST]
+        [RESPONSE]
+        `
+
+    console.log('sd prompt before', prompt)
+
+    let message = {
+      prompt: prompt, //this.generatePrompt(),
+      params: this.params,
+      models: this.models,
+      workers: this.workers
+    }
+    const headers = {
+      Accept: 'application/json',
+      apikey: this.horde_api_key,
+      'Client-Agent': this.client_agent,
+      'Content-Type': 'application/json'
+    }
+    // let start = Date.now();
+
+    let response = await axios({
+      method: 'post',
+      url: client.horde_url + 'generate/text/async',
+      data: message,
+      headers: headers
+    })
+    console.log(response, response.data)
+
+    // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+    let timer
+
+    //let done = false;
+
+    timer = await setInterval(async function () {
+      let check = await axios({
+        method: 'get',
+        url: client.horde_url + 'generate/text/status/' + response.data.id,
+        // data: message,
+        headers: headers
+      })
+      //this.check = check
+      //console.log("check", check, done);
+      // done = check.data.done;
+
+      // app.memory[response.data.id].queue_position == undefined ? app.memory[response.data.id].queue_position = check.data.queue_position : "";
+      // app.memory[response.data.id].wait_time == undefined ? app.memory[response.data.id].wait_time = check.data.wait_time : "";
+      // app.updateCheck(check);
+      // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+      if (check.data.done == true) {
+        //If the current height is not the same as the initial height,
+        if (check.data.generations[0].text.trim().length > 0) {
+          let sd_prompt = check.data.generations[0].text
+          // let end = Date.now()
+
+          console.log('THE SD PROMPT !!!!!', sd_prompt)
+          await client.generateImage(sd_prompt)
+
+          // app.messageHistory.push({
+          //     id: uuidv4(),
+          //     text: check.data.generations[0].text.replace('[RESPONSE]', '').replace('[/RESPONSE]', '').trim(),
+          //     isUser: false,
+          //     start: start,
+          //     end: end,
+          //     model: check.data.generations[0].model,
+          //     worker_id: check.data.generations[0].worker_id,
+          //     worker_name: check.data.generations[0].worker_name,
+          //     duration: Math.round((end - start) / 1000)
+          // });
+          // app.status = null
+          // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+        } else {
+          // app.status = "Attends, j'ai du mal à me concentrer, je recommence... "
+          // app.input = app.story.messageHistory.pop().text
+          // app.transmettre()
+          console.log('error when generating image prompt')
+        }
+        // console.log("it is done", check);
+        // app.memory[response.data.id].end = Date.now();
+        // app.memory[response.data.id].response = check.data.generations[0].text;
+        // app.memory[response.data.id].model = check.data.generations[0].model;
+        // console.log("Memory", app.memory);
+        clearInterval(timer) //Stop the timer
+      } else {
+        options.story.status = check.data
+      }
+    }, 1000)
+  }
+  async generateImage(sd_prompt) {
+    let client = this
+    let message = {
+      prompt: sd_prompt,
+      params: this.imgen_params,
+      //models: this.models,
+      workers: this.workers,
+      nsfw: true,
+      censor_nsfw: false,
+      trusted_workers: false,
+      models: [
+        // "Comic-Diffusion"
+      ],
+      // "models": ["ICBINP - I Can't Believe It's Not Photography", "Dreamshaper"],
+      // "models": ["Dreamshaper", "stable_diffusion"],
+      r2: true,
+      dry_run: false
+    }
+    const headers = {
+      Accept: 'application/json',
+      apikey: this.horde_api_key,
+      'Client-Agent': this.client_agent,
+      'Content-Type': 'application/json'
+    }
+    //let start = Date.now();
+
+    let response = await axios({
+      method: 'post',
+      url: client.horde_url + 'generate/async',
+      data: message,
+      headers: headers
+    })
+    console.log(response, response.data)
+
+    // app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+    if (response.data.id != undefined) {
+      let timer
+
+      //let done = false;
+
+      timer = await setInterval(async function () {
+        let check = await axios({
+          method: 'get',
+          url: client.horde_url + 'generate/check/' + response.data.id,
+          // data: message,
+          headers: headers
+        })
+        //this.check = check
+        console.log('check', check)
+        // done = check.data.done;
+
+        // app.memory[response.data.id].queue_position == undefined ? app.memory[response.data.id].queue_position = check.data.queue_position : "";
+        // app.memory[response.data.id].wait_time == undefined ? app.memory[response.data.id].wait_time = check.data.wait_time : "";
+        // app.updateCheck(check);
+        //     app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
+
+        if (check.data.done == true) {
+          //If the current height is not the same as the initial height,
+          let status = await axios({
+            method: 'get',
+            url: client.horde_url + 'generate/status/' + response.data.id,
+            // data: message,
+            headers: headers
+          })
+          console.log('status', status)
+
+          client.story.images.push(status.data.generations[0])
+
+          const toDataURL = (url) =>
+            fetch(url)
+              .then((response) => response.blob())
+              .then(
+                (blob) =>
+                  new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onloadend = () => resolve(reader.result)
+                    reader.onerror = reject
+                    reader.readAsDataURL(blob)
+                  })
+              )
+
+          toDataURL(status.data.generations[0].img).then((dataUrl) => {
+            console.log('RESULT:', dataUrl)
+          })
+
+          //                         app.toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {
+          //   console.log('RESULT:', dataUrl)
+          // })
+
+          // app.toDataURL(status.data.generations[0])
+          //     .then(dataUrl => {
+          //         console.log('img Base 64 RESULT:', dataUrl)
+          //     })
+          // console.log("it is done", check);
+          // app.memory[response.data.id].end = Date.now();
+          // app.memory[response.data.id].response = check.data.generations[0].text;
+          // app.memory[response.data.id].model = check.data.generations[0].model;
+          // console.log("Memory", app.memory);
+          clearInterval(timer) //Stop the timer
+        } else {
+          client.story.status = check.data
+        }
+      }, 1000)
+    } else {
+      console.log('id undefined', response)
+    }
   }
 }

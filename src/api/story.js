@@ -6,6 +6,7 @@ export class Story {
 
     this.id = uuidv4()
     this.messages = []
+    this.images= []
   }
 
   onNewUserMessage(userMessage) {
