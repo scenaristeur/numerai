@@ -3,6 +3,7 @@
         <h1>STORY VIEW</h1>
 
         status : {{ story.status }}
+        <img v-for="image in story.images" :src="image.img" :key="image.id" width="256" />
 
         <div v-if="story.messages.length > 0" class="chatArea">
             <ul class="messages" ref="messages">
@@ -10,7 +11,6 @@
                     <span v-if="m.isUser == true" class="username">{{ story.options.heros.prenom }}</span>
                     <span v-else class="username">NumerAi</span> :
                     <span :class="m.isUser == true ? 'usermessage' : 'iamessage'">{{ m.text }}</span>
-
                 </li>
                 <li v-if="story.status != undefined">
                     <small style="text-align: center" class="iamessage">

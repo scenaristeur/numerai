@@ -106,6 +106,9 @@ export class HordeClient {
             .replace('[RESPONSE]', '')
             .replace('[/RESPONSE]', '')
             .trim()
+
+          console.log('IA MESSAGE ID', message_id)
+
           story.messages.push({
             id: message_id,
             text: text,
@@ -118,7 +121,7 @@ export class HordeClient {
             duration: Math.round((end - start) / 1000)
           })
           story.status = null
-          await client.generateImagePrompt({ story: story, message_id: message_id, text: text })
+          client.generateImagePrompt({ story: story, message_id: message_id, text: text })
           //app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
         } else {
           console.log('ERROR, should renew Completion request')
@@ -155,6 +158,7 @@ export class HordeClient {
       .join('\n')
     return system_prompt + '\n' + history
   }
+
   async generateImagePrompt(options) {
     let client = this
 
@@ -222,7 +226,12 @@ export class HordeClient {
           // let end = Date.now()
 
           console.log('THE SD PROMPT !!!!!', sd_prompt)
-          await client.generateImage(sd_prompt)
+          let currentMessage = options.story.messages.find((m) => (m.id == options.message_id))
+          currentMessage.sd_prompt = sd_prompt
+
+          console.log(options.message_id, currentMessage, options.story)
+
+          client.generateImage({ sd_prompt: sd_prompt, options: options })
 
           // app.messageHistory.push({
           //     id: uuidv4(),
@@ -254,10 +263,10 @@ export class HordeClient {
       }
     }, 1000)
   }
-  async generateImage(sd_prompt) {
+  async generateImage(options) {
     let client = this
     let message = {
-      prompt: sd_prompt,
+      prompt: options.sd_prompt,
       params: this.imgen_params,
       //models: this.models,
       workers: this.workers,
@@ -322,6 +331,11 @@ export class HordeClient {
 
           client.story.images.push(status.data.generations[0])
 
+          let currentMessage = client.story.messages.find(
+            (m) => (m.id == options.options.message_id)
+          )
+          currentMessage.image = { url: status.data.generations[0] }
+
           const toDataURL = (url) =>
             fetch(url)
               .then((response) => response.blob())
@@ -337,6 +351,8 @@ export class HordeClient {
 
           toDataURL(status.data.generations[0].img).then((dataUrl) => {
             console.log('RESULT:', dataUrl)
+            currentMessage.image.base64 = dataUrl
+            console.log('THE STORY NOW', client.story)
           })
 
           //                         app.toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {

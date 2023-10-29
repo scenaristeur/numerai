@@ -6,20 +6,18 @@ export class Story {
 
     this.id = uuidv4()
     this.messages = []
-    this.images= []
+    this.images = []
   }
 
   onNewUserMessage(userMessage) {
-    console.log('userMessage', userMessage)
+    let message_id = uuidv4()
+    console.log('userMessage', message_id, userMessage)
     this.messages.push({
-      id: uuidv4(),
+      id: message_id,
       text: userMessage,
       isUser: true,
       date: Date.now()
     })
-
-
-
 
     console.log(this)
   }
