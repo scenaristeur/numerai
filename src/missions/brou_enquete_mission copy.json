@@ -1,0 +1,21 @@
+    {
+        "id": "brou_enquete",
+        "version": "0.0.1",
+        "name": {
+            "fr": "Enquête au Monastère de Brou",
+            "en": "Investigation at the Brou Monastery"
+        },
+        "trailer": {
+            "fr": "Un meurtre vient d'être commis au Monastère Royal de Brou. Tu es l'inspecteur chargé de l'enquête. La victime qui apparement se faisait passer pour une marchande d'art s'avère être une faussaire... Avec l'aide de ton assistant numérique intelligent, tu devras trouver qui l'a tuée, pour quelle raison et dans quelles circonstances...",
+            "en": "A murder has just been committed at the Royal Monastery of Brou. You are the inspector in charge of the investigation. The victim who apparently posed as an art dealer turns out to be a forger... With the help of your intelligent digital assistant, you will have to find out who killed her, for what reason and under what circumstances..."
+        },
+        "first_message": {
+            "fr": "Bonjour! Où se trouve la victime? As-tu pu établir son identité ? Montre-moi son corps et décris-moi ce que tu as déjà trouvé.",
+            "en": "Good morning! Where is the victim? Were you able to establish his identity? Show me his body and tell me what you've found so far."
+        },
+        "system_prompt": [
+            "Un meutre vient d'être commis au Monastère de Brou, à Bourg-en-Bresse dont voici un résumé de l'histoire :",
+             "[INST]{{.Input}}[/INST]",
+            "[RESPONSE]"
+        ]
+    }

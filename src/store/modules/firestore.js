@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
-import { getStorage, ref, uploadString, listAll, getDownloadURL } from 'firebase/storage'
+import { getStorage, ref, uploadString, /*listAll,*/ getDownloadURL } from 'firebase/storage'
 
 // provider.setCustomParameters({
 //   'login_hint': 'user@example.com'

@@ -2,8 +2,8 @@
         "id": "brou_enquete",
         "version": "0.0.1",
         "name": {
-            "fr": "Enquête au Monastère de Brou",
-            "en": "Investigation at the Brou Monastery"
+            "fr": "Enquête au Monastère Royal de Brou",
+            "en": "Investigation at the Royal Monastery of Brou"
         },
         "trailer": {
             "fr": "Un meurtre vient d'être commis au Monastère Royal de Brou. Tu es l'inspecteur chargé de l'enquête. La victime qui apparement se faisait passer pour une marchande d'art s'avère être une faussaire... Avec l'aide de ton assistant numérique intelligent, tu devras trouver qui l'a tuée, pour quelle raison et dans quelles circonstances...",
@@ -30,6 +30,6 @@
             "c'est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ;",
             "Décide et rédige une réponse appropriée.",
             "[INST]{{.Input}}[/INST]",
-            "[RESPONSE]`"
+            "[RESPONSE]"
         ]
     }
