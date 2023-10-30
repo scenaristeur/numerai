@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
-import { getStorage, ref, uploadString, listAll } from 'firebase/storage'
+import { getStorage, ref, uploadString, listAll, getDownloadURL } from 'firebase/storage'
 
 // provider.setCustomParameters({
 //   'login_hint': 'user@example.com'
@@ -76,6 +76,16 @@ const mutations = {
 }
 
 const actions = {
+  async getImage(context, story) {
+    console.log(context)
+
+    let path = ['images', story.id, story.messages[1].id].join('/')
+    console.log('path', path)
+
+    return await getDownloadURL(ref(storage, path))
+  
+  },
+
   async uploadB64Image(context, options) {
     console.log(context, options)
     const storage = getStorage()

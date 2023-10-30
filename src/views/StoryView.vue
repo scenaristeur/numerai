@@ -1,8 +1,8 @@
 <template>
     <div v-if="story != null">
-        <h1>STORY VIEW</h1>
+        <!-- <h1>STORY VIEW</h1> -->
 
-        status : {{ story.status }}
+        status : {{ story.status }}<br>
         <img v-for="image in story.images" :src="image.img" :key="image.id" width="256" />
 
         <div v-if="story.messages.length > 0" class="chatArea">
