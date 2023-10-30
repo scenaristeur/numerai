@@ -76,14 +76,18 @@ const mutations = {
 }
 
 const actions = {
-  async getImage(context, story) {
+  async getImage(context, { story, message_id }) {
     console.log(context)
 
-    let path = ['images', story.id, story.messages[1].id].join('/')
+    console.log('get image', story, message_id)
+    if (message_id == undefined) {
+      message_id = story.messages[1].id
+    }
+
+    let path = ['images', story.id, message_id].join('/')
     console.log('path', path)
 
     return await getDownloadURL(ref(storage, path))
-  
   },
 
   async uploadB64Image(context, options) {
@@ -195,49 +199,49 @@ const actions = {
     console.log('listener stopped')
   },
 
-  async getStoryImages(context, story) {
-    console.log(context)
-    const imagesRef = ref(storage, 'images/' + story.id)
-    // Find all the prefixes and items.
-    listAll(imagesRef)
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-          console.log('folderRef', folderRef)
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-        })
-        res.items.forEach((itemRef) => {
-          // All the items under listRef.
-          console.log('itemRef', itemRef)
-        })
-      })
-      .catch((error) => {
-        console.log('error', error)
-        // Uh-oh, an error occurred!
-      })
-  },
-  async getStoryFirstImage(context, story) {
-    console.log(context)
-    console.log(story.id, story.name)
-    const imagesRef = ref(storage, 'images/' + story.id, story.messages[0].id)
-    // Find all the prefixes and items.
-    listAll(imagesRef)
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-          console.log('1st image folderRef', folderRef)
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-        })
-        res.items.forEach((itemRef) => {
-          // All the items under listRef.
-          console.log('1st image itemRef', itemRef)
-        })
-      })
-      .catch((error) => {
-        console.log('1st image error', error)
-        // Uh-oh, an error occurred!
-      })
-  },
+  // async getStoryImages(context, story) {
+  //   console.log(context)
+  //   const imagesRef = ref(storage, 'images/' + story.id)
+  //   // Find all the prefixes and items.
+  //   listAll(imagesRef)
+  //     .then((res) => {
+  //       res.prefixes.forEach((folderRef) => {
+  //         console.log('folderRef', folderRef)
+  //         // All the prefixes under listRef.
+  //         // You may call listAll() recursively on them.
+  //       })
+  //       res.items.forEach((itemRef) => {
+  //         // All the items under listRef.
+  //         console.log('itemRef', itemRef)
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log('error', error)
+  //       // Uh-oh, an error occurred!
+  //     })
+  // },
+  // async getStoryFirstImage(context, story) {
+  //   console.log(context)
+  //   console.log(story.id, story.name)
+  //   const imagesRef = ref(storage, 'images/' + story.id, story.messages[0].id)
+  //   // Find all the prefixes and items.
+  //   listAll(imagesRef)
+  //     .then((res) => {
+  //       res.prefixes.forEach((folderRef) => {
+  //         console.log('1st image folderRef', folderRef)
+  //         // All the prefixes under listRef.
+  //         // You may call listAll() recursively on them.
+  //       })
+  //       res.items.forEach((itemRef) => {
+  //         // All the items under listRef.
+  //         console.log('1st image itemRef', itemRef)
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log('1st image error', error)
+  //       // Uh-oh, an error occurred!
+  //     })
+  // },
 
   async publishStory(context, story) {
     try {
@@ -246,23 +250,47 @@ const actions = {
       const docRef = await addDoc(collection(context.state.db, 'stories'), story)
       console.log('Document written with ID: ', docRef.id)
 
-      story.messages.forEach((m) => {
-        console.log(m)
+      // story.messages.forEach((m) => {
+      //   console.log(m)
 
-        if (m.image != undefined) {
-          // const metadata = {
-          //   id: m.id,
-          //   story_id: story.id
-          // }
-          const data_url = m.image.base64
-          const options = { message_id: m.id, story_id: story.id, data_url: data_url }
-          context.dispatch('uploadB64Image', options)
-          delete m.image
-        }
-      })
+      //   if (m.image != undefined) {
+      //     // const metadata = {
+      //     //   id: m.id,
+      //     //   story_id: story.id
+      //     // }
+      //     const data_url = m.image.base64
+      //     const options = { message_id: m.id, story_id: story.id, data_url: data_url }
+      //     context.dispatch('uploadB64Image', options)
+      //     delete m.image
+      //   }
+      // })
     } catch (e) {
       console.error('Error adding document: ', e)
     }
+  },
+  async publishImages(context, { images, story_id }) {
+    console.log(context)
+
+    for (const [message_id, data_url] of Object.entries(images)) {
+      console.log(`${message_id}: ${data_url}`)
+      const options = { message_id: message_id, story_id: story_id, data_url: data_url }
+      context.dispatch('uploadB64Image', options)
+    }
+
+    // images.forEach((m) => {
+    //   console.log(m)
+
+    //   if (m.image != undefined) {
+    //     // const metadata = {
+    //     //   id: m.id,
+    //     //   story_id: story.id
+    //     // }
+    //     const data_url = m.image.base64
+    //     const options = { message_id: m.id, story_id: story.id, data_url: data_url }
+    //     context.dispatch('uploadB64Image', options)
+    //     delete m.image
+    //   }
+    // })
   },
   async addStory(context) {
     try {

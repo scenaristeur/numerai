@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="close">Close</button>
+        <button @click="close" ref="close">Close</button>
 
 
         <!-- Reading {{ reading }} -->
@@ -34,7 +34,9 @@
                         <!-- <span>
                        
                     </span> -->
-                        <img :src="m.image.base64" width="320" /></span>
+                        <!-- <img v-if="m.image" :src="m.image.base64" width="320" /></span> -->
+                        <FirebaseImage :story="reading" :message_id="m.id" />
+                    </span>
 
                 </li>
 
@@ -53,8 +55,12 @@
 </template>
 
 <script>
+import FirebaseImage from '@/components/FirebaseImage.vue'
 export default {
     name: "ReadingStory",
+    components: {
+        FirebaseImage
+    },
     methods: {
         close() {
             this.$store.commit('core/setReading', null)
@@ -64,6 +70,11 @@ export default {
         reading() {
             return this.$store.state.core.reading
         }
+    },
+    mounted() {
+        this.$refs.close.scrollIntoView({
+            behavior: 'smooth'
+        });
     }
 }
 </script>

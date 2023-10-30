@@ -6,7 +6,7 @@ export class Story {
 
     this.id = uuidv4()
     this.messages = []
-    this.images = []
+    this.images = {}
   }
 
   onNewUserMessage(userMessage) {
@@ -29,8 +29,10 @@ export class Story {
       date: Date.now(),
       likes: 0,
       //adventure: this.aventure,
+      mission: this.options.mission,
       messages: this.messages
     }
-    return story
+    let images = this.images
+    return {story, images}
   }
 }

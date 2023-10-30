@@ -329,12 +329,13 @@ export class HordeClient {
           })
           console.log('status', status)
 
-          client.story.images.push(status.data.generations[0])
+        //   client.story.images.push(status.data.generations[0])
 
-          let currentMessage = client.story.messages.find(
-            (m) => (m.id == options.options.message_id)
-          )
-          currentMessage.image = { url: status.data.generations[0] }
+        //   let currentMessage = client.story.messages.find(
+        //     (m) => (m.id == options.options.message_id)
+        //   )
+        //   currentMessage.image = { url: status.data.generations[0] }
+        const message_id = options.options.message_id
 
           const toDataURL = (url) =>
             fetch(url)
@@ -351,8 +352,8 @@ export class HordeClient {
 
           toDataURL(status.data.generations[0].img).then((dataUrl) => {
             console.log('RESULT:', dataUrl)
-            currentMessage.image.base64 = dataUrl
-            console.log('THE STORY NOW', client.story)
+            client.story.images[message_id]= dataUrl
+            console.log('THE STORY WITH IMAGE', client.story)
           })
 
           //                         app.toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {

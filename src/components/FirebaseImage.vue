@@ -5,16 +5,22 @@
 <script>
 export default {
     name: "FirebaseImage",
-    props: ['story'],
+    props: ['story', 'message_id'],
     data() {
         return {
             img_url: null
         }
     },
     async created() {
-        let src = await this.$store.dispatch('firestore/getImage', this.story)
-        //console.log(src)
-        this.img_url = src
+        try {
+            let src = await this.$store.dispatch('firestore/getImage', {story: this.story, message_id: this.message_id})
+            //console.log(src)
+            this.img_url = src
+        } catch (e) {
+            console.log("image not found")
+        }
+
+
     }
 }
 </script>

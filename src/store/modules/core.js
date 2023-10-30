@@ -44,10 +44,16 @@ const mutations = {
 
 const actions = {
   async publishStory(context, storyName) {
-    let story = context.state.story.getClean(storyName)
+    let { story, images } = context.state.story.getClean(storyName)
     console.log('Published Story', story)
+    console.log(images)
 
     context.dispatch('firestore/publishStory', story, { root: true })
+    context.dispatch(
+      'firestore/publishImages',
+      { images: images, story_id: story.id },
+      { root: true }
+    )
   },
   async newUserMessage(context, userMessage) {
     context.state.story.onNewUserMessage(userMessage)

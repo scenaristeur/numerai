@@ -3,8 +3,8 @@
         <!-- <h1>STORY VIEW</h1> -->
 
         status : {{ story.status }}<br>
-        <img v-for="image in story.images" :src="image.img" :key="image.id" width="256" />
-
+        <img v-for="image,message_id in story.images" :src="image" :key="message_id" width="256" />
+   
         <div v-if="story.messages.length > 0" class="chatArea">
             <ul class="messages" ref="messages">
                 <li v-for="m of  story.messages " :key="m.id">
