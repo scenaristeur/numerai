@@ -29,7 +29,6 @@
             "L'invite ci-dessous correspond à un propos émis par ${this.prenom} dans la conversation, ",
             "c'est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ;",
             "Décide et rédige une réponse appropriée.",
-            "[INST]{{.Input}}[/INST]",
-            "[RESPONSE]"
+            "[INST]{{.Input}}[/INST]"
         ]
     }

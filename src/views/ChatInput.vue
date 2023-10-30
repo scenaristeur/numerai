@@ -5,9 +5,12 @@
         <label for="floatingTextarea">Comments</label>
         <br>
     <div style="text-align:center">
-        <button variant="success" @click="onNewUserMessage" class="btn">{{ $t('envoyer') }}</button>
-        <button v-if="story.messages.length > 0" variant="success" ref="continue" @click="continuer"
-            class="btn">Continue</button>
+        <button variant="success" @click="onNewUserMessage" class="btn btn-success">{{ $t('envoyer') }}</button>
+        <span v-if="story.messages.length > 0" >
+        <button variant="success" ref="continue" @click="continuer"
+            class="btn btn-success">Continue</button>
+            <button @click="publish" class="btn">{{ $t('publish') }}</button>
+        </span>
     </div>
 </div>
 </template>
@@ -24,6 +27,18 @@ export default {
         //this.init()
     },
     methods: {
+        publish() {
+            let storyName = prompt("Please enter a name for your story", Date.now());
+            // let story = {
+            //     id: uuidv4(),
+            //     name: storyName,
+            //     date: Date.now(),
+            //     likes: 0,
+            //     adventure: this.aventure,
+            //     messages: this.story.messageHistory
+            // }
+            this.$store.dispatch('core/publishStory', storyName)
+        },
         init() {
             this.input = this.$store.state.core.story.options.mission[1].first_message[this.$i18n.locale]
             console.log(this.input)

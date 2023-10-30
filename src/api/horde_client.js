@@ -24,7 +24,7 @@ export class HordeClient {
       rep_pen_slope: 0.7,
       sampler_order: [6, 0, 1, 3, 4, 2, 5],
       use_default_badwordsids: false,
-      stop: '.'
+      stop: ['.', '[INST]']
     }
     this.models = [
       // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis

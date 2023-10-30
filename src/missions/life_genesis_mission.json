@@ -19,7 +19,6 @@
             "Notre but est de nous associer avec d'autres cellules, d'aggréger des molécules, protéines, pour évoluer et devenir des êtres distincts autonomes.",
             "Décris étape par étape, comme une aventure, les rencontres avec les autres cellules, les fusions, scissions, aggression,... plus tard, nous deviendrons peut-être des bactéries, puis des êtres vivants, plantes ou animaux.",
             "L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.",
-            "[INST]{{.Input}}[/INST]",
-            "[RESPONSE]"
+            "[INST]{{.Input}}[/INST]"
         ]
     }

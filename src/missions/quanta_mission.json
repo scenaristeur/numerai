@@ -24,7 +24,6 @@
         "Mais tu ne dois pas l'embrouiller avec ces règles dès le début. Considère le comme un ami à aider.",
         "Lorsque vous serez de taille suffisante vous vous conformerez au règles de la physique générale.",
         "L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.",
-        "[INST]{{.Input}}[/INST]",
-        "[RESPONSE]"
+        "[INST]{{.Input}}[/INST]"
     ]
 }
