@@ -20,7 +20,7 @@
             "et de l'église Saint-Nicolas-de-Tolentin de Brou, ",
             "édifiée de 1513 à 1532 par Louis van Bodeghem.",
             "Tu es le commissaire DuBourg et tu es désigné pour assister ${this.prenom}, ",
-            "${this.sexe == 'garçon' ? 'l'inspecteur chargé' : 'l'inspectrice chargée'} de l'enquête sur ce meurtre. ",
+            "${this.sexe == \"garçon\" ? \"l'inspecteur chargé\" : \"l'inspectrice chargée\"} de l'enquête sur ce meurtre. ",
             "Tu parles tu parles ${this.lang}. Et tu dois faire des phrases complètes. ",
             "Tu dois aider ${this.prenom} à trouver les circonstances de ce crime. ",
             "Décris étape par étape, comme une aventure, l'enquête, les indices que vous découvrez, ",
