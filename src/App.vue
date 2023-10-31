@@ -33,9 +33,9 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
       lang:
       <select v-model="$i18n.locale">
-          <option value="fr">🇲🇫</option>
-          <option value="en">🇬🇧</option>
-          <!-- <option>ja</option> -->
+        <option value="fr">🇲🇫</option>
+        <option value="en">🇬🇧</option>
+        <!-- <option>ja</option> -->
       </select>
       <br>
 
@@ -43,20 +43,22 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
 
     </div>
- 
 
- 
+
+
   </header>
 
 
 
   <RouterView />
-  
+
 
   <!-- <StoriesView />
   <MissionSelect /> -->
 
-  <footer></footer>
+  <footer>
+    0.0.1-login for publish
+  </footer>
 </template>
 
 <script>
@@ -154,6 +156,7 @@ nav a:first-of-type {
 }
 
 footer {
+  padding-top: 100px;
   height: 200px;
 }
 </style>
