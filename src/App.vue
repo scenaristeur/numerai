@@ -37,7 +37,8 @@ import HistoryGalery from './views/HistoryGalery.vue';
           <option value="en">🇬🇧</option>
           <!-- <option>ja</option> -->
       </select>
-      <UserView />
+      <br>
+
 
 
 
@@ -59,7 +60,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
 </template>
 
 <script>
-import UserView from '@/views/UserView.vue';
+
 // import MainView from '@/views/MainView.vue';
 
 // import ChatInput from '@/views/ChatInput.vue';
@@ -67,9 +68,7 @@ import UserView from '@/views/UserView.vue';
 
 export default {
   name: "App",
-  components: {
-    UserView,/* MainView, ChatInput, StoryView*/
-  },
+
 
   mounted() {
     this.$store.dispatch('firestore/checkIfUserLoggedIn')

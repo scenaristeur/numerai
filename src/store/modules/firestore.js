@@ -373,7 +373,7 @@ const actions = {
     let stories = []
     //const querySnapshot = await getDocs(collection(context.state.db, 'stories'))
     const storiesRef = collection(context.state.db, 'stories')
-    const q = query(storiesRef, orderBy('date', 'desc'), limit(10))
+    const q = query(storiesRef, orderBy('likes', 'desc'), orderBy('date', 'desc'), limit(50))
     console.log('Q', q)
 
     const querySnapshot = await getDocs(q)

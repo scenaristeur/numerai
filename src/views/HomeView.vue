@@ -2,7 +2,7 @@
   <main>
 
       <TheWelcome  v-if="level==0"/>
-      <ChatView />
+      <!-- <ChatView /> -->
    
   </main>
 </template>
@@ -11,13 +11,13 @@
 
 <script>
 import TheWelcome from '../components/TheWelcome.vue'
-import ChatView from '@/views/ChatView.vue'
+// import ChatView from '@/views/ChatView.vue'
 
 
 export default {
   name: "HomeView",
   components: {
-    TheWelcome, ChatView
+    TheWelcome, /*ChatView*/
   },
   computed: {
     level() {

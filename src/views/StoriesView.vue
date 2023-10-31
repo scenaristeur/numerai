@@ -75,6 +75,7 @@
                     <div class="ms-2 me-auto">
                         <h4 class="fw-bold">{{ s.name }}</h4>
                         by {{ s.userName }}
+                        <br><small>{{ s.id }}</small>
                     </div>
 
 

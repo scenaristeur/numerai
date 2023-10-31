@@ -1,10 +1,14 @@
 <template>
     <div>
-        <button v-if="user==null" @click="signInWithPopup">SigIn</button>
+        <div v-if="user == null">
+            Tu dois t'enregistrer pour publier tes histoires
+            <button @click="signInWithPopup">SigIn</button>
+        </div>
+
         <div v-else>
-{{ user.displayName }}
- <!-- {{ user.uid }} -->
-<button variant="danger" @click="signOut">Logout</button>
+            {{ user.displayName }}
+            <!-- {{ user.uid }} -->
+            <button variant="danger" @click="signOut">Logout</button>
         </div>
     </div>
 </template>
@@ -16,15 +20,15 @@ export default {
         signInWithPopup() {
             this.$store.dispatch('firestore/signInWithPopup')
         },
-        signOut(){
+        signOut() {
             this.$store.dispatch('firestore/signOut')
         }
     },
     computed: {
-    user() {
-      return this.$store.state.firestore.user
+        user() {
+            return this.$store.state.firestore.user
+        }
     }
-  }
 }
 </script>
 

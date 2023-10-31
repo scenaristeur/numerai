@@ -1,4 +1,5 @@
 <template>
+ 
     <div v-if="story != null">
         <!-- <h1>STORY VIEW</h1> -->
 
@@ -27,6 +28,7 @@
    
         <!-- {{ story }} -->
     </div>
+
 </template>
 
 <script>

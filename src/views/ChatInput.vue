@@ -1,23 +1,35 @@
 <template>
-    <div v-if="story!= null">
-    <textarea class="form-control" ref="input" v-model="input" rows="6" :placeholder="$t('communiquer')"
-        v-on:keyup.enter="onNewUserMessage" id="floatingTextarea" />
+    <div v-if="story != null">
+        <textarea class="form-control" ref="input" v-model="input" rows="6" :placeholder="$t('communiquer')"
+            v-on:keyup.enter="onNewUserMessage" id="floatingTextarea" />
         <label for="floatingTextarea">Comments</label>
         <br>
-    <div style="text-align:center">
-        <button variant="success" @click="onNewUserMessage" class="btn btn-success">{{ $t('envoyer') }}</button>
-        <span v-if="story.messages.length > 0" >
-        <button variant="success" ref="continue" @click="continuer"
-            class="btn btn-success">Continue</button>
-            <button @click="publish" class="btn">{{ $t('publish') }}</button>
-        </span>
+        <div style="text-align:center">
+            <button variant="success" @click="onNewUserMessage" class="btn btn-success">{{ $t('envoyer') }}</button>
+            <span v-if="story.messages.length > 0">
+                <button variant="success" ref="continue" @click="continuer" class="btn btn-success">Continue</button>
+
+
+                
+
+
+                <button v-if="user != null" @click="publish" class="btn" :disabled="user==null">{{ $t('publish') }}</button>
+              
+            </span>
+        </div>
+        <UserView />
     </div>
-</div>
 </template>
 
 <script>
+
+import UserView from '@/views/UserView.vue';
+
 export default {
     name: "ChatInput",
+    components: {
+    UserView,/* MainView, ChatInput, StoryView*/
+  },
     data() {
         return {
             input: ""
@@ -45,10 +57,10 @@ export default {
         },
         onNewUserMessage() {
             if (this.input.trim().length > 0) {
-    
+
                 this.$store.dispatch('core/newUserMessage', this.input)
                 this.input = "";
-               // this.$store.dispatch('core/getCompletion', this.story)
+                // this.$store.dispatch('core/getCompletion', this.story)
             }
         },
         continuer() {
@@ -67,7 +79,12 @@ export default {
     computed: {
         story() {
             return this.$store.state.core.story
+        },
+
+        user() {
+            return this.$store.state.firestore.user
         }
+
     }
 }
 </script>

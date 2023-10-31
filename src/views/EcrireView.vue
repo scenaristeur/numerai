@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
 <h1>Ecrire / Démarrer</h1>
 
 <MissionSelect />
