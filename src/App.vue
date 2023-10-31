@@ -56,7 +56,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
   <!-- <StoriesView />
   <MissionSelect /> -->
 
-  <!-- <footer></footer> -->
+  <footer></footer>
 </template>
 
 <script>
@@ -152,10 +152,10 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
-/*
+
 footer {
   height: 200px;
-}*/
+}
 </style>
 <style>
 .mobileShow {
