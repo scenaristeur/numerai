@@ -12,7 +12,8 @@ const state = () => ({
   stories: [],
   story: null,
   hordeClient: new HordeClient(),
-  reading: null
+  reading: null,
+  hordeApi: "0000000000"
 })
 
 const mutations = {
@@ -39,6 +40,10 @@ const mutations = {
   setShowConfig(state, value) {
     state.showConfig = value
     console.log(this.setShowConfig)
+  },
+  changeApi(state, api){
+    localStorage.setItem("hordeApi", api);
+    state.hordeApi = api
   }
 }
 

@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import HistoryGalery from './views/HistoryGalery.vue';
+
 //import StoriesView from './views/StoriesView.vue';
 //import NavBar from './components/NavBar.vue'
 //import MissionSelect from './views/MissionSelect.vue';
@@ -44,15 +45,12 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
     </div>
 
-
-
   </header>
 
-
+ 
 
   <RouterView />
-
-
+ 
   <!-- <StoriesView />
   <MissionSelect /> -->
 
@@ -66,10 +64,11 @@ import HistoryGalery from './views/HistoryGalery.vue';
 // import MainView from '@/views/MainView.vue';
 
 // import ChatInput from '@/views/ChatInput.vue';
-// import StoryView from '@/views/StoryView.vue';
+// import NavBar from '@/components/NavBar.vue';
 
 export default {
   name: "App",
+
 
 
   mounted() {

@@ -35,11 +35,19 @@ const router = createRouter({
     },
     {
       path: '/ecrire',
-      name: 'exrire',
+      name: 'ecrire',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/EcrireView.vue')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/MonCompte.vue')
     }
   ]
 })

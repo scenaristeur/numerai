@@ -8,12 +8,8 @@
             <button variant="success" @click="onNewUserMessage" class="btn btn-success">{{ $t('envoyer') }}</button>
             <span v-if="story.messages.length > 0">
                 <button variant="success" ref="continue" @click="continuer" class="btn btn-success">Continue</button>
-
-
-                
-
-
-                <button v-if="user != null" @click="publish" class="btn" :disabled="user==null">{{ $t('publish') }}</button>
+        
+                <button v-if="user != null" @click="publish" class="btn btn-info" :disabled="user==null">{{ $t('publish') }}</button>
               
             </span>
         </div>

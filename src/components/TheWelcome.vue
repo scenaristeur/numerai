@@ -41,6 +41,18 @@ import CommunityIcon from './icons/IconCommunity.vue'
 
   </WelcomeItem>
 
+
+  <nav>
+
+    <RouterLink to="/">{{ $t('home') }}</RouterLink>
+    <!-- <RouterLink to="/chat">{{ $t('Commencer') }}</RouterLink> -->
+    <RouterLink to="/ecrire"> Ecrire</RouterLink>
+    <RouterLink to="/lire">Lire</RouterLink>
+    <RouterLink to="/about">{{ $t('about') }}</RouterLink>
+
+    <a href="https://discord.gg/X5UqZdSrmP" target="_blank">Join us on Discord</a>
+  </nav>
+
   <!-- <WelcomeItem>
     <template #icon>
       <EcosystemIcon />
@@ -107,6 +119,35 @@ import CommunityIcon from './icons/IconCommunity.vue'
     /* Scaling button to 0.98 to its original size */
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
     /* Lowering the shadow */
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+a {
+  color: hsla(160, 100%, 37%, 1);
+}
+
+nav a:first-of-type {
+  border: 0;
 }
 </style>
 
