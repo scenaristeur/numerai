@@ -30,6 +30,11 @@ export default {
     components: {
         IconQuestionIcon
     },
+    data(){
+        return {
+            newHordeApi: null
+        }
+    },
     computed: {
         hordeApi() {
             return this.$store.state.core.hordeApi
