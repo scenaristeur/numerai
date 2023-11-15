@@ -55,7 +55,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
   <MissionSelect /> -->
 
   <footer>
-    0.0.1-login for publish
+    0.0.2-horde api key
   </footer>
 </template>
 
@@ -68,9 +68,6 @@ import HistoryGalery from './views/HistoryGalery.vue';
 
 export default {
   name: "App",
-
-
-
   mounted() {
     this.$store.dispatch('firestore/checkIfUserLoggedIn')
   },
