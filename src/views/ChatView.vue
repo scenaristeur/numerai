@@ -969,6 +969,10 @@ export default {
 
 }
 
+.messages li {
+    margin-bottom: 30px;
+}
+
 .usermessage {
     color: rgb(0, 17, 94);
     font-size: 20px;
