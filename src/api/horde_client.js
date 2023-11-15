@@ -11,7 +11,7 @@ export class HordeClient {
     this.langues = { fr: 'french', en: 'english' }
     this.params = {
       n: 1,
-      max_context_length: 8192,
+      max_context_length: 2048,
       max_length: 200,
       rep_pen: 1.1,
       temperature: 0.8,
@@ -27,7 +27,7 @@ export class HordeClient {
       stop: ['.', '[INST]']
     }
     this.models = [
-      "koboldcpp/Xwin-MLewd-13B-V0.2",
+      //"koboldcpp/Xwin-MLewd-13B-V0.2",
       // "koboldcpp/LLaMA2-13B-Tiefighter",
       // "koboldcpp/Xwin-LM-7B-V0.2",
       // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis
