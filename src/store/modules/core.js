@@ -13,7 +13,7 @@ const state = () => ({
   story: null,
   hordeClient: new HordeClient(),
   reading: null,
-  hordeApi: "0000000000"
+  hordeApi: localStorage.getItem('hordeApi') || '0000000000'
 })
 
 const mutations = {
@@ -41,8 +41,8 @@ const mutations = {
     state.showConfig = value
     console.log(this.setShowConfig)
   },
-  changeApi(state, api){
-    localStorage.setItem("hordeApi", api);
+  changeApi(state, api) {
+    localStorage.setItem('hordeApi', api)
     state.hordeApi = api
   }
 }
@@ -65,6 +65,7 @@ const actions = {
     await context.dispatch('getCompletion', context.state.story)
   },
   async getCompletion(context, story) {
+    story.hordeApiKey = context.state.hordeApi
     console.log(context.state, story)
     let completion = await context.state.hordeClient.getCompletion(story)
     console.log('completion', completion)

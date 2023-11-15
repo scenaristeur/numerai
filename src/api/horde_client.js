@@ -27,6 +27,9 @@ export class HordeClient {
       stop: ['.', '[INST]']
     }
     this.models = [
+      "koboldcpp/Xwin-MLewd-13B-V0.2",
+      "koboldcpp/LLaMA2-13B-Tiefighter",
+      "koboldcpp/Xwin-LM-7B-V0.2",
       // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis
       // "3080 | KoboldAI-GPTQ Exllama | x.com/justthirst1",  // llama
       // "KoboldAI/LLaMA2-13B-Holomax"                        //llama 2
@@ -53,6 +56,7 @@ export class HordeClient {
   async getCompletion(story) {
     let client = this
     this.story = story
+    this.horde_api_key = story.hordeApiKey
     console.log('get completion', story)
     let llm_request_message = {
       prompt: this.generateCompletionPrompt(story),
@@ -125,6 +129,7 @@ export class HordeClient {
           //app.$refs.messages.scroll({ top: app.$refs.messages.scrollHeight, behavior: "smooth" })
         } else {
           console.log('ERROR, should renew Completion request')
+          client.getCompletion(story)
           //app.status = "Attends, j'ai du mal à me concentrer, je recommence... "
           //app.input = app.story.messageHistory.pop().text
           //app.transmettre()
