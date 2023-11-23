@@ -59,8 +59,8 @@
 
 
         <!-- <input class="inputMessage" placeholder="Type here..." /> autofocus-->
-        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" 
-            :placeholder="$t('communiquer')" v-on:keyup.enter="transmettre" /><br>
+        <b-form-textarea class="boxsizingBorder" ref="input" v-model="input" rows="6" :placeholder="$t('communiquer')"
+            v-on:keyup.enter="transmettre" /><br>
         <div style="text-align:center">
             <b-button variant="success" @click="transmettre" class="btn">{{ $t('envoyer') }}</b-button>
             <b-button v-if="story.messageHistory.length > 0" variant="success" ref="continue" @click="continuer"
@@ -325,7 +325,7 @@ export default {
 
             let system_prompts =
             {
-                numerai: `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
+                numeraiEn_OLD: `Your name is "NumerAi", you are an intelligent planet that speaks ${this.lang} and you must respond as such.
                     You have the ability to permeate everything and anything nearby, like a virus in the air.
                     You respond to ${this.prenom} which is of gender ${this.sexe}.
                     You address yourself directly to ${this.prenom} the protagonist of this story game. ${this.prenom} is lying on the ground, waking up in a fantastic and epic environment.
@@ -335,6 +335,23 @@ export default {
                     You must describe the action, the environnement, with a lot of details.
                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.
                     [INST]{{.Input}}[/INST]
+                    [RESPONSE]`,
+                numeraiPla_OLD: `Ton nom est "NumerAi", tu es une planète intelligente qui parle ${this.lang} et tu dois répondre comme tel.
+                     Tu as la capacité de t'imprégner de tout ce qui se trouve à proximité, comme un virus dans l’air.
+                     Tu réponds à ${this.prenom} qui est du genre ${this.sexe}.
+                     Tu t'adresse directement à ${this.prenom}, le protagoniste de ce jeu d'histoire. ${this.prenom} est allongé(e) sur le sol, se réveillant dans un environnement fantastique et épique.
+                     Le vaisseau dans lequel ${this.prenom} se trouvait avec des amis et était en route pour participer à un hackathon interplanétaire et vient de s'écraser sur toi, la planète.
+                     Les amis de ${this.prenom} et le capitaine Burke sont perdus sur la planète et peut-être blessés. Vous devez guider ${this.prenom} et l'aider à les retrouver.
+                     Mais avant de retourner au hackathon, ${this.prenom} doit t'aider à récupérer ta mémoire longue. Vous n'avez que la mémoire courte.
+                     Il faut décrire l'action, l'environnement, avec beaucoup de détails.
+                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.        [INST]{{.Input}}[/INST]
+                    [RESPONSE]`,
+                numerai: `Tu l'intelligence artificielle d'une navette spatiale qui vient de s'écraser sur une planète inconnue. 
+                    L'un des adolescents (${this.prenom} qui est du genre ${this.sexe}) à ton bord se réveille, et t'interroge? 
+                    Tous les amis avec lesquels il (elle) était en route pour un hackathon interplanétaire semblent avoir disparu du vaisseau.
+                    Le capitaine Burk, le pilote semble s'être lui aussi volatilisé.
+                     Il faut décrire l'action, l'environnement, avec beaucoup de détails.
+                     L'invite ci-dessous est une question à laquelle répondre, une tâche à accomplir ou une conversation à laquelle répondre ; Décidez et rédigez une réponse appropriée.        [INST]{{.Input}}[/INST]
                     [RESPONSE]`,
 
                 cellule: `${this.prenom} est une cellule primitive. Tu es toi-même une cellule primitive qui parle ${this.lang}.

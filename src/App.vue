@@ -55,7 +55,7 @@ import HistoryGalery from './views/HistoryGalery.vue';
   <MissionSelect /> -->
 
   <footer>
-    0.0.2 - all models
+    0.0.2 - all models or not
   </footer>
 </template>
 

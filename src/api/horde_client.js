@@ -14,7 +14,7 @@ export class HordeClient {
       max_context_length: 2048,
       max_length: 200,
       rep_pen: 1.1,
-      temperature: 0.8,
+      temperature: 0.5,
       top_p: 0.92,
       top_k: 0,
       top_a: 0,
@@ -28,9 +28,9 @@ export class HordeClient {
     }
     this.models = [
       //"koboldcpp/Xwin-MLewd-13B-V0.2",
-      // "koboldcpp/LLaMA2-13B-Tiefighter",
+       //"koboldcpp/LLaMA2-13B-Tiefighter",
       // "koboldcpp/Xwin-LM-7B-V0.2",
-      // aphrodite/Sao10K/Stheno-1.8-L2-13B // français cohérent et concis
+       //"aphrodite/Sao10K/Stheno-1.8-L2-13B" // français cohérent et concis
       // "3080 | KoboldAI-GPTQ Exllama | x.com/justthirst1",  // llama
       // "KoboldAI/LLaMA2-13B-Holomax"                        //llama 2
       // "koboldcpp/MythoMax-L2-13b"
