@@ -27,6 +27,7 @@ export class HordeClient {
       stop: ['.', '[INST]']
     }
     this.models = [
+      //"bigscience/bloom-1b7"
       //"koboldcpp/Xwin-MLewd-13B-V0.2",
        //"koboldcpp/LLaMA2-13B-Tiefighter",
       // "koboldcpp/Xwin-LM-7B-V0.2",

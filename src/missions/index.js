@@ -3,5 +3,6 @@ import quanta_mission from "@/missions/quanta_mission.json";
 import life_genesis_mission from "@/missions/life_genesis_mission.json";
 import brou_enquete_mission from "@/missions/brou_enquete_mission.json";
 import llm_trainer_mission from "@/missions/llm_trainer_mission.json";
+import chasseur_primes_mission from "@/missions/chasseur_primes_mission.json";
 
-export {numerai_mission, quanta_mission, life_genesis_mission, brou_enquete_mission, llm_trainer_mission}
+export {chasseur_primes_mission, numerai_mission, quanta_mission, life_genesis_mission, brou_enquete_mission, llm_trainer_mission}
