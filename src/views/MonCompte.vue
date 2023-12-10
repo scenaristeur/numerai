@@ -2,14 +2,14 @@
     <div>
         <h1>Mon Compte</h1>
         <ul>
-            <li>
+            <!-- <li>
                 <h2>OpenAi Key</h2>
                 obtenir une <a href="https://platform.openai.com/account/api-keys" target="_blank">clé openAi</a><br>
                 <input id="openai_api_input" placeholder="clé d'Api OpenAI" v-model="newOpenAiApi" autocomplete="off"
                     @change="changeOpenAiApi" />
-            </li>
+            </li> -->
             <li>
-                <h2>alternative : Horde API Key</h2>
+                <h2>Horde API Key</h2>
                 <HordeApi />
             </li>
             <li>
